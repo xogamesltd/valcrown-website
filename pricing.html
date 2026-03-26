@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ValCrown — Pricing</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="js/i18n.js"></script>
+<script src="js/currency.js"></script>
+<style>
+.pricing-wrap{max-width:1060px;margin:0 auto;padding:0 20px 80px;}
+.pricing-grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:32px;}
+@media(max-width:900px){.pricing-grid-5{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.pricing-grid-5{grid-template-columns:1fr;}}
+
+.plan-card{background:var(--bg1);border:1px solid var(--border2);border-radius:14px;padding:22px 18px;position:relative;display:flex;flex-direction:column;}
+.plan-card.popular{border-color:var(--accent);background:linear-gradient(160deg,rgba(124,106,255,0.08),var(--bg1));}
+.plan-card.free-card{border-color:rgba(34,212,122,0.3);background:linear-gradient(160deg,rgba(34,212,122,0.06),var(--bg1));}
+.plan-card.trial-card{border-color:rgba(77,159,255,0.3);background:linear-gradient(160deg,rgba(77,159,255,0.06),var(--bg1));}
+.plan-card.lifetime-card{border-color:rgba(245,166,35,0.3);background:linear-gradient(160deg,rgba(245,166,35,0.06),var(--bg1));}
+
+.plan-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);white-space:nowrap;padding:3px 12px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
+.badge-popular{background:var(--accent);color:#fff;}
+.badge-free{background:var(--green);color:#000;}
+.badge-best{background:var(--yellow);color:#000;}
+
+.plan-name{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.plan-price{font-size:32px;font-weight:800;line-height:1;margin-bottom:4px;}
+.plan-price.free{color:var(--green);}
+.plan-period{font-size:11px;color:var(--text3);margin-bottom:16px;min-height:32px;line-height:1.4;}
+.plan-divider{height:1px;background:var(--border);margin-bottom:14px;}
+
+.plan-features{list-style:none;margin-bottom:20px;flex:1;}
+.plan-features li{font-size:12px;color:var(--text2);padding:5px 0;display:flex;align-items:flex-start;gap:7px;line-height:1.4;}
+.plan-features li .ck{color:var(--green);font-size:11px;flex-shrink:0;margin-top:1px;}
+.plan-features li .cx{color:var(--text3);font-size:11px;flex-shrink:0;margin-top:1px;}
+
+.plan-btn{display:block;text-align:center;padding:10px;border-radius:8px;font-size:13px;font-weight:700;transition:all 0.15s;cursor:pointer;text-decoration:none;border:none;font-family:inherit;width:100%;}
+.plan-btn.accent{background:var(--accent);color:#fff;}.plan-btn.accent:hover{background:var(--accent2);}
+.plan-btn.green{background:var(--green);color:#000;}.plan-btn.green:hover{opacity:0.85;}
+.plan-btn.ghost{background:var(--bg3);border:1px solid var(--border2);color:var(--text1);}.plan-btn.ghost:hover{background:var(--bg4);}
+.plan-btn.yellow{background:var(--yellow);color:#000;}.plan-btn.yellow:hover{opacity:0.85;}
+
+.savings-tag{display:inline-block;background:rgba(34,212,122,0.15);color:var(--green);font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-top:4px;}
+
+.currency-bar{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:28px;flex-wrap:wrap;}
+.currency-bar span{font-size:12px;color:var(--text3);}
+.currency-select{background:var(--bg2);border:1px solid var(--border2);border-radius:6px;padding:5px 10px;color:var(--text1);font-size:12px;cursor:pointer;outline:none;}
+
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:640px){.faq-grid{grid-template-columns:1fr;}}
+.faq-item{background:var(--bg1);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.faq-q{font-size:13px;font-weight:600;margin-bottom:6px;}
+.faq-a{font-size:12px;color:var(--text2);line-height:1.6;}
+
+.compare-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:40px;}
+.compare-table th{padding:10px 12px;text-align:center;font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;border-bottom:2px solid var(--border2);}
+.compare-table th:first-child{text-align:left;}
+.compare-table td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:center;color:var(--text1);}
+.compare-table td:first-child{text-align:left;font-weight:500;color:var(--text2);}
+.compare-table tr:last-child td{border:none;}
+.ck{color:var(--green);font-size:14px;}
+.cx{color:var(--text3);font-size:14px;}
+.lim{color:var(--yellow);font-size:11px;font-weight:600;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo"><div class="logo-ico">V</div><span class="logo-name">ValCrown</span></div>
+    <div class="nav-links">
+      <a href="index.html" data-i18n="nav_home">Home</a>
+      <a href="pricing.html" data-i18n="nav_pricing">Pricing</a>
+      <a href="download.html" data-i18n="nav_download">Download</a>
+    </div>
+    <div class="nav-actions">
+      <div class="lang-switcher">
+        <select id="lang-select" onchange="setLanguage(this.value)">
+          <option value="en">🇬🇧 EN</option>
+          <option value="hi">🇮🇳 हिं</option>
+          <option value="es">🇪🇸 ES</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="de">🇩🇪 DE</option>
+          <option value="pt">🇧🇷 PT</option>
+          <option value="ar">🇸🇦 AR</option>
+          <option value="zh">🇨🇳 中文</option>
+        </select>
+      </div>
+      <a href="auth.html" class="btn-nav">Sign In</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <h1>Simple, honest pricing</h1>
+  <p>Start free. No credit card needed. Upgrade when you're ready.</p>
+</div>
+
+<div class="pricing-wrap">
+
+  <!-- Currency selector -->
+  <div class="currency-bar">
+    <span>Showing prices in:</span>
+    <select class="currency-select" onchange="setCurrency(this.value)" id="manual-currency">
+      <option value="INR">🇮🇳 INR — Indian Rupee</option>
+      <option value="USD">🇺🇸 USD — US Dollar</option>
+      <option value="EUR">🇪🇺 EUR — Euro</option>
+      <option value="GBP">🇬🇧 GBP — British Pound</option>
+      <option value="AED">🇦🇪 AED — UAE Dirham</option>
+      <option value="SGD">🇸🇬 SGD — Singapore Dollar</option>
+      <option value="AUD">🇦🇺 AUD — Australian Dollar</option>
+      <option value="CAD">🇨🇦 CAD — Canadian Dollar</option>
+      <option value="BRL">🇧🇷 BRL — Brazilian Real</option>
+      <option value="JPY">🇯🇵 JPY — Japanese Yen</option>
+      <option value="KRW">🇰🇷 KRW — Korean Won</option>
+      <option value="MYR">🇲🇾 MYR — Malaysian Ringgit</option>
+      <option value="NGN">🇳🇬 NGN — Nigerian Naira</option>
+      <option value="PKR">🇵🇰 PKR — Pakistani Rupee</option>
+      <option value="BDT">🇧🇩 BDT — Bangladeshi Taka</option>
+      <option value="TRY">🇹🇷 TRY — Turkish Lira</option>
+      <option value="ZAR">🇿🇦 ZAR — South African Rand</option>
+    </select>
+    <span id="currency-label" style="color:var(--accent);font-weight:600;font-size:12px;"></span>
+  </div>
+
+  <!-- 5 Plan Cards -->
+  <div class="pricing-grid-5">
+
+    <!-- 3-Day Free Trial -->
+    <div class="plan-card free-card">
+      <div class="plan-badge badge-free">Free Trial</div>
+      <div class="plan-name">3-Day Trial</div>
+      <div class="plan-price free" id="p-trial3">Free</div>
+      <div class="plan-period">3 days · No card needed<br>Full access</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="ck">✓</span>Full Boost Engine</li>
+        <li><span class="ck">✓</span>Auto Game Detection</li>
+        <li><span class="ck">✓</span>AI Advisor (5 calls)</li>
+        <li><span class="ck">✓</span>Network Optimizer</li>
+        <li><span class="ck">✓</span>Discord Presence</li>
+        <li><span class="cx">✗</span>No credit card</li>
+      </ul>
+      <button class="plan-btn green" onclick="startCheckout('trial_3day')">Start Free Trial</button>
+    </div>
+
+    <!-- 14-Day Trial -->
+    <div class="plan-card trial-card">
+      <div class="plan-badge" style="background:var(--blue);color:#fff;">Low Risk</div>
+      <div class="plan-name">14-Day Trial</div>
+      <div class="plan-price" id="p-trial14">--</div>
+      <div class="plan-period">14 days full access<br>One-time charge</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="ck">✓</span>Full Boost Engine</li>
+        <li><span class="ck">✓</span>Auto Game Detection</li>
+        <li><span class="ck">✓</span>AI Advisor (20 calls)</li>
+        <li><span class="ck">✓</span>Network Optimizer</li>
+        <li><span class="ck">✓</span>Discord Presence</li>
+        <li><span class="ck">✓</span>Session History</li>
+      </ul>
+      <button class="plan-btn ghost" onclick="startCheckout('trial_14day')">Get 14-Day Trial</button>
+    </div>
+
+    <!-- Monthly -->
+    <div class="plan-card">
+      <div class="plan-name">Monthly</div>
+      <div class="plan-price" id="p-monthly">--</div>
+      <div class="plan-period">Per month<br>Cancel anytime</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="ck">✓</span>Full Boost Engine</li>
+        <li><span class="ck">✓</span>Auto Game Detection</li>
+        <li><span class="ck">✓</span>AI Advisor (50 calls/day)</li>
+        <li><span class="ck">✓</span>Network Optimizer</li>
+        <li><span class="ck">✓</span>Discord Presence</li>
+        <li><span class="ck">✓</span>Email Support</li>
+      </ul>
+      <button class="plan-btn ghost" onclick="startCheckout('monthly')">Get Monthly</button>
+    </div>
+
+    <!-- Yearly (featured) -->
+    <div class="plan-card popular">
+      <div class="plan-badge badge-popular">Most Popular</div>
+      <div class="plan-name">Yearly</div>
+      <div class="plan-price" id="p-yearly">--</div>
+      <div class="plan-period">Per year · billed once
+        <div><span class="savings-tag">Save 40% vs monthly</span></div>
+      </div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="ck">✓</span>Everything in Monthly</li>
+        <li><span class="ck">✓</span>Priority AI Support</li>
+        <li><span class="ck">✓</span>Early Access Features</li>
+        <li><span class="ck">✓</span>AI Advisor (50 calls/day)</li>
+        <li><span class="ck">✓</span>Discord Presence</li>
+        <li><span class="ck">✓</span>Priority Email Support</li>
+      </ul>
+      <button class="plan-btn accent" onclick="startCheckout('yearly')">Get Yearly — Best Value</button>
+    </div>
+
+    <!-- Lifetime -->
+    <div class="plan-card lifetime-card">
+      <div class="plan-badge badge-best">Best Deal</div>
+      <div class="plan-name">Lifetime</div>
+      <div class="plan-price" id="p-lifetime">--</div>
+      <div class="plan-period">One-time payment<br>Never pay again</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="ck">✓</span>Everything in Yearly</li>
+        <li><span class="ck">✓</span>All Future Updates</li>
+        <li><span class="ck">✓</span>Lifetime License</li>
+        <li><span class="ck">✓</span>Priority Support</li>
+        <li><span class="ck">✓</span>1 Device Forever</li>
+        <li><span class="ck">✓</span>Never Expires</li>
+      </ul>
+      <button class="plan-btn yellow" onclick="startCheckout('lifetime')">Get Lifetime</button>
+    </div>
+
+  </div>
+
+  <!-- Feature Comparison Table -->
+  <div style="margin-bottom:48px;">
+    <h2 style="font-size:18px;font-weight:700;margin-bottom:20px;text-align:center;">Full Feature Comparison</h2>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th style="text-align:left;">Feature</th>
+          <th>3-Day Free</th>
+          <th>14-Day Trial</th>
+          <th>Monthly</th>
+          <th>Yearly</th>
+          <th>Lifetime</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Boost Engine</td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
+        <tr><td>Auto Game Detection (200+ games)</td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
+        <tr><td>Network Optimizer</td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
+        <tr><td>Discord Rich Presence</td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
+        <tr><td>System Tray</td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
+        <tr><td>AI Advisor calls/day</td><td><span class="lim">5</span></td><td><span class="lim">20</span></td><td><span class="lim">50</span></td><td><span class="lim">50</span></td><td><span class="lim">50</span></td></tr>
+        <tr><td>Session History</td><td><span class="cx">✗</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
+        <tr><td>Priority Support</td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
+        <tr><td>Early Access Features</td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
+        <tr><td>All Future Updates</td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="ck">✓</span></td></tr>
+        <tr><td>Credit Card Required</td><td><span class="cx">✗ No</span></td><td><span class="ck">Yes</span></td><td><span class="ck">Yes</span></td><td><span class="ck">Yes</span></td><td><span class="ck">Yes</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FAQ -->
+  <h2 style="font-size:18px;font-weight:700;margin-bottom:20px;text-align:center;">Frequently Asked Questions</h2>
+  <div class="faq-grid">
+    <div class="faq-item">
+      <div class="faq-q">How does the 3-day free trial work?</div>
+      <div class="faq-a">Download ValCrown, create a free account, and you get 3 days of full access. No credit card needed. After 3 days, upgrade to continue using it.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What's the difference between 3-day and 14-day trials?</div>
+      <div class="faq-a">The 3-day trial is completely free — no card needed. The 14-day trial costs a small one-time fee but gives you 14 full days to test every feature thoroughly.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How do I activate my license after purchase?</div>
+      <div class="faq-a">After payment, your license key is shown on the success page. Download ValCrown, open the app, sign in, and enter the key to activate on your device.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I use ValCrown on multiple PCs?</div>
+      <div class="faq-a">Each license activates on 1 device. Need to transfer to a new PC? Contact support@valcrown.com and we reset it for free.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Does it work with cloud gaming?</div>
+      <div class="faq-a">Yes — ValCrown is built for GeForce NOW, Xbox Cloud Gaming, Boosteroid, Shadow PC, Amazon Luna and all major cloud platforms.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What is the refund policy?</div>
+      <div class="faq-a">7-day refund on all paid plans, no questions asked. Contact support@valcrown.com with your order email and we process it within 24 hours.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What Windows versions are supported?</div>
+      <div class="faq-a">Windows 10 and Windows 11 (64-bit only). Administrator privileges required for the boost engine and network features.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is the Lifetime plan really lifetime?</div>
+      <div class="faq-a">Yes — one payment, never pay again. Includes all updates for the life of the product. This is the best value if you game regularly.</div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand"><div class="logo-ico">V</div><span class="logo-name">ValCrown</span></div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="download.html">Download</a>
+      <a href="auth.html">Sign In</a>
+      <a href="mailto:support@valcrown.com">Support</a>
+    </div>
+    <div class="footer-copy">© 2026 ValCrown. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+const API_URL = 'https://api.valcrown.com';
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await initCurrency();
+  initLanguage();
+  // Set currency dropdown to detected currency
+  const sel = document.getElementById('manual-currency');
+  if (sel) {
+    const opt = Array.from(sel.options).find(o => o.value === currentCurrency);
+    if (opt) sel.value = currentCurrency;
+  }
+});
+
+async function startCheckout(planId) {
+  const planMap = {
+    trial_3day:  { plan: 'trial',    days: 3,   label: '3-Day Free Trial' },
+    trial_14day: { plan: 'trial14',  days: 14,  label: '14-Day Trial' },
+    monthly:     { plan: 'pro',      days: 30,  label: 'Monthly' },
+    yearly:      { plan: 'pro',      days: 365, label: 'Yearly' },
+    lifetime:    { plan: 'lifetime', days: null, label: 'Lifetime' },
+  };
+
+  const plan = planMap[planId];
+
+  // 3-day free — just redirect to download
+  if (planId === 'trial_3day') {
+    window.location.href = 'download.html';
+    return;
+  }
+
+  const userEmail = localStorage.getItem('vc_user_email') || '';
+
+  try {
+    const res = await fetch(`${API_URL}/api/stripe/create-checkout`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        plan: plan.plan,
+        planId,
+        currency: currentCurrency,
+        expiresInDays: plan.days,
+        userEmail,
+        successUrl: window.location.origin + '/success.html?session_id={CHECKOUT_SESSION_ID}',
+        cancelUrl: window.location.href,
+      }),
+    });
+
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      alert('Payment setup failed. Please try again or contact support@valcrown.com');
+    }
+  } catch (err) {
+    alert('Cannot connect to payment server. Please try again.');
+  }
+}
+</script>
+</body>
+</html>
