@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ValCrown — Sign In</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="js/i18n.js"></script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <div class="logo-ico">V</div>
+      <span class="logo-name">ValCrown</span>
+    </div>
+    <div class="nav-links">
+      <a href="index.html" data-i18n="nav_home">Home</a>
+      <a href="pricing.html" data-i18n="nav_pricing">Pricing</a>
+      <a href="download.html" data-i18n="nav_download">Download</a>
+    </div>
+    <div class="nav-actions">
+      <div class="lang-switcher">
+        <select id="lang-select" onchange="setLanguage(this.value)">
+          <option value="en">🇬🇧 EN</option>
+          <option value="hi">🇮🇳 हिं</option>
+          <option value="es">🇪🇸 ES</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="de">🇩🇪 DE</option>
+          <option value="pt">🇧🇷 PT</option>
+          <option value="ar">🇸🇦 AR</option>
+          <option value="zh">🇨🇳 中文</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="form-page">
+  <div class="form-box">
+    <div class="form-logo">
+      <div class="form-ico">V</div>
+      <div class="form-title" id="form-title" data-i18n="signin_title">Welcome back</div>
+      <div class="form-sub" id="form-sub" data-i18n="signin_sub">Sign in to your ValCrown account</div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" id="tab-signin" onclick="switchTab('signin')" data-i18n="nav_signin">Sign In</button>
+      <button class="tab" id="tab-signup" onclick="switchTab('signup')" data-i18n="signup_title">Create Account</button>
+    </div>
+
+    <div class="form-err" id="form-err"></div>
+    <div class="form-ok" id="form-ok"></div>
+
+    <!-- Sign In Form -->
+    <div id="signin-form">
+      <div class="form-grp">
+        <label class="form-lbl" data-i18n="email_lbl">Email Address</label>
+        <input class="form-inp" type="email" id="si-email" placeholder="you@example.com" />
+      </div>
+      <div class="form-grp">
+        <label class="form-lbl" data-i18n="pass_lbl">Password</label>
+        <input class="form-inp" type="password" id="si-pass" placeholder="••••••••"
+          onkeypress="if(event.key==='Enter')doSignIn()" />
+      </div>
+      <button class="form-btn" onclick="doSignIn()" data-i18n="signin_btn">Sign In</button>
+      <div class="form-footer" style="margin-top:12px;">
+        <span data-i18n="no_account">Don't have an account?</span>
+        <a onclick="switchTab('signup')" style="cursor:pointer;" data-i18n="signup_title"> Create Account</a>
+      </div>
+    </div>
+
+    <!-- Sign Up Form -->
+    <div id="signup-form" style="display:none;">
+      <div class="form-grp">
+        <label class="form-lbl" data-i18n="name_lbl">Full Name</label>
+        <input class="form-inp" type="text" id="su-name" placeholder="Your name" />
+      </div>
+      <div class="form-grp">
+        <label class="form-lbl" data-i18n="email_lbl">Email Address</label>
+        <input class="form-inp" type="email" id="su-email" placeholder="you@example.com" />
+      </div>
+      <div class="form-grp">
+        <label class="form-lbl" data-i18n="pass_lbl">Password</label>
+        <input class="form-inp" type="password" id="su-pass" placeholder="Min 8 characters" />
+      </div>
+      <button class="form-btn" onclick="doSignUp()" data-i18n="signup_btn">Create Account</button>
+      <div class="form-footer" style="margin-top:12px;">
+        <span data-i18n="have_account">Already have an account?</span>
+        <a onclick="switchTab('signin')" style="cursor:pointer;" data-i18n="nav_signin"> Sign In</a>
+      </div>
+    </div>
+
+    <div class="form-footer" style="margin-top:16px;">
+      <a href="pricing.html" data-i18n="nav_getvalcrown">Get a license key →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const API_URL = 'https://api.valcrown.com';
+
+document.addEventListener('DOMContentLoaded', () => {
+  initLanguage();
+  // Check if coming from pricing (auto switch to signup)
+  if (window.location.hash === '#signup') switchTab('signup');
+});
+
+function switchTab(tab) {
+  const isSignin = tab === 'signin';
+  document.getElementById('signin-form').style.display = isSignin ? 'block' : 'none';
+  document.getElementById('signup-form').style.display = isSignin ? 'none' : 'block';
+  document.getElementById('tab-signin').classList.toggle('active', isSignin);
+  document.getElementById('tab-signup').classList.toggle('active', !isSignin);
+  clearMsgs();
+}
+
+function showErr(msg) {
+  const el = document.getElementById('form-err');
+  el.textContent = msg; el.classList.add('show');
+  document.getElementById('form-ok').classList.remove('show');
+}
+
+function showOk(msg) {
+  const el = document.getElementById('form-ok');
+  el.textContent = msg; el.classList.add('show');
+  document.getElementById('form-err').classList.remove('show');
+}
+
+function clearMsgs() {
+  document.getElementById('form-err').classList.remove('show');
+  document.getElementById('form-ok').classList.remove('show');
+}
+
+async function doSignIn() {
+  clearMsgs();
+  const email = document.getElementById('si-email').value.trim();
+  const pass = document.getElementById('si-pass').value;
+  if (!email || !pass) { showErr('Please enter your email and password.'); return; }
+
+  const btn = document.querySelector('#signin-form .form-btn');
+  btn.disabled = true; btn.textContent = 'Signing in...';
+
+  try {
+    const res = await fetch(`${API_URL}/api/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password: pass, deviceVid: 'WEB-' + Date.now() }),
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      localStorage.setItem('vc_token', data.accessToken);
+      localStorage.setItem('vc_user_email', email);
+      showOk('Signed in! Redirecting...');
+      setTimeout(() => window.location.href = 'download.html', 1200);
+    } else {
+      if (data.code === 'NO_LICENSE') {
+        showErr('No license found. Purchase a plan to get started.');
+      } else if (res.status === 401) {
+        showErr('Wrong email or password.');
+      } else {
+        showErr(data.error || 'Sign in failed.');
+      }
+      btn.disabled = false; btn.textContent = 'Sign In';
+    }
+  } catch (err) {
+    showErr('Cannot connect. Check your internet connection.');
+    btn.disabled = false; btn.textContent = 'Sign In';
+  }
+}
+
+async function doSignUp() {
+  clearMsgs();
+  const name = document.getElementById('su-name').value.trim();
+  const email = document.getElementById('su-email').value.trim();
+  const pass = document.getElementById('su-pass').value;
+
+  if (!name || !email || !pass) { showErr('Please fill in all fields.'); return; }
+  if (pass.length < 8) { showErr('Password must be at least 8 characters.'); return; }
+  if (!email.includes('@')) { showErr('Please enter a valid email.'); return; }
+
+  const btn = document.querySelector('#signup-form .form-btn');
+  btn.disabled = true; btn.textContent = 'Creating account...';
+
+  try {
+    const res = await fetch(`${API_URL}/api/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password: pass, fullName: name }),
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      localStorage.setItem('vc_user_email', email);
+      showOk('Account created! Now get a license key to activate ValCrown.');
+      setTimeout(() => window.location.href = 'pricing.html', 1800);
+    } else {
+      showErr(data.error || 'Account creation failed.');
+      btn.disabled = false; btn.textContent = 'Create Account';
+    }
+  } catch (err) {
+    showErr('Cannot connect. Check your internet connection.');
+    btn.disabled = false; btn.textContent = 'Create Account';
+  }
+}
+</script>
+</body>
+</html>
