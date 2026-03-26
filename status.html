@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ValCrown — Server Status</title>
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><div class="logo-mark">V</div><span class="logo-text">ValCrown</span></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="download.html">Download</a>
+      <a href="status.html" class="active">Status</a>
+      <a href="contact.html">Support</a>
+    </div>
+    <div class="nav-actions">
+      <a href="auth.html" class="btn-nav">Sign In</a>
+      <a href="pricing.html" class="btn-nav-cta">Get ValCrown</a>
+    </div>
+  </div>
+</nav>
+
+<div class="status-hero">
+  <div class="status-indicator ok" id="overall-status">
+    <span class="status-dot ok" id="overall-dot"></span>
+    <span id="overall-text">All Systems Operational</span>
+  </div>
+  <h1 style="font-size:28px;font-weight:800;margin-bottom:8px;">ValCrown System Status</h1>
+  <p style="font-size:14px;color:var(--text2);">Real-time status of all ValCrown services. Auto-refreshes every 30 seconds.</p>
+  <p style="font-size:12px;color:var(--text3);margin-top:8px;">Last checked: <span id="last-check">Checking...</span></p>
+</div>
+
+<div class="status-cards">
+
+  <div class="status-card" id="sc-api">
+    <div class="sc-left">
+      <div class="sc-icon">⚡</div>
+      <div>
+        <div class="sc-name">API Server</div>
+        <div class="sc-detail">api.valcrown.com — Backend services</div>
+      </div>
+    </div>
+    <div class="sc-right">
+      <span class="sc-ping" id="ping-api">--ms</span>
+      <span class="sc-badge sc-ok" id="badge-api">Checking...</span>
+    </div>
+  </div>
+
+  <div class="status-card" id="sc-db">
+    <div class="sc-left">
+      <div class="sc-icon">🗄️</div>
+      <div>
+        <div class="sc-name">Database</div>
+        <div class="sc-detail">PostgreSQL — User data & licenses</div>
+      </div>
+    </div>
+    <div class="sc-right">
+      <span class="sc-ping" id="ping-db">--ms</span>
+      <span class="sc-badge sc-ok" id="badge-db">Checking...</span>
+    </div>
+  </div>
+
+  <div class="status-card" id="sc-ai">
+    <div class="sc-left">
+      <div class="sc-icon">🤖</div>
+      <div>
+        <div class="sc-name">AI Services</div>
+        <div class="sc-detail">Claude + Gemini — AI Advisor</div>
+      </div>
+    </div>
+    <div class="sc-right">
+      <span class="sc-ping" id="ping-ai">--ms</span>
+      <span class="sc-badge sc-ok" id="badge-ai">Checking...</span>
+    </div>
+  </div>
+
+  <div class="status-card" id="sc-web">
+    <div class="sc-left">
+      <div class="sc-icon">🌐</div>
+      <div>
+        <div class="sc-name">Website</div>
+        <div class="sc-detail">valcrown.com — Marketing & downloads</div>
+      </div>
+    </div>
+    <div class="sc-right">
+      <span class="sc-ping" id="ping-web">--ms</span>
+      <span class="sc-badge sc-ok" id="badge-web">Checking...</span>
+    </div>
+  </div>
+
+  <div class="status-card" id="sc-payment">
+    <div class="sc-left">
+      <div class="sc-icon">💳</div>
+      <div>
+        <div class="sc-name">Payment Processing</div>
+        <div class="sc-detail">Stripe — License purchases</div>
+      </div>
+    </div>
+    <div class="sc-right">
+      <span class="sc-ping" id="ping-payment">--ms</span>
+      <span class="sc-badge sc-ok" id="badge-payment">Checking...</span>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:20px;font-size:12px;color:var(--text3);">
+    Having issues? <a href="contact.html" style="color:var(--accent3);">Create a support ticket →</a>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 ValCrown. Created by <a href="https://xogamess.com" target="_blank" style="color:var(--accent3);">XOGAMESLTD</a></div>
+    <div class="footer-legal">
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="contact.html">Support</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const API = 'https://api.valcrown.com';
+
+async function checkService(name, url, badgeId, pingId) {
+  const start = Date.now();
+  try {
+    const res = await fetch(url, { method: 'GET', signal: AbortSignal.timeout(5000) });
+    const ms = Date.now() - start;
+    const ok = res.ok || res.status < 500;
+    const badge = document.getElementById(badgeId);
+    const ping = document.getElementById(pingId);
+    if (badge) {
+      badge.textContent = ok ? 'Operational' : 'Degraded';
+      badge.className = 'sc-badge ' + (ok ? 'sc-ok' : 'sc-warn');
+    }
+    if (ping) ping.textContent = ms + 'ms';
+    return ok;
+  } catch (e) {
+    const badge = document.getElementById(badgeId);
+    const ping = document.getElementById(pingId);
+    if (badge) { badge.textContent = 'Down'; badge.className = 'sc-badge sc-down'; }
+    if (ping) ping.textContent = '--';
+    return false;
+  }
+}
+
+async function checkAll() {
+  const results = await Promise.all([
+    checkService('api', API + '/health', 'badge-api', 'ping-api'),
+    checkService('db', API + '/health', 'badge-db', 'ping-db'),
+    checkService('ai', API + '/health', 'badge-ai', 'ping-ai'),
+    checkService('web', 'https://valcrown.com', 'badge-web', 'ping-web'),
+    checkService('payment', 'https://status.stripe.com', 'badge-payment', 'ping-payment'),
+  ]);
+
+  const allOk = results.every(Boolean);
+  const anyDown = results.some(r => r === false);
+
+  const overall = document.getElementById('overall-status');
+  const dot = document.getElementById('overall-dot');
+  const text = document.getElementById('overall-text');
+
+  if (allOk) {
+    overall.className = 'status-indicator ok';
+    dot.className = 'status-dot ok';
+    text.textContent = 'All Systems Operational';
+  } else if (anyDown) {
+    overall.className = 'status-indicator down';
+    dot.className = 'status-dot down';
+    text.textContent = 'Service Disruption Detected';
+  } else {
+    overall.className = 'status-indicator warn';
+    dot.className = 'status-dot warn';
+    text.textContent = 'Partial Degradation';
+  }
+
+  document.getElementById('last-check').textContent = new Date().toLocaleTimeString();
+}
+
+// Initial check + auto-refresh every 30 seconds
+checkAll();
+setInterval(checkAll, 30000);
+</script>
+</body>
+</html>

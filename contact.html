@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ValCrown — Support</title>
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><div class="logo-mark">V</div><span class="logo-text">ValCrown</span></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a><a href="pricing.html">Pricing</a>
+      <a href="download.html">Download</a><a href="status.html">Status</a>
+      <a href="contact.html" class="active">Support</a>
+    </div>
+    <div class="nav-actions"><a href="auth.html" class="btn-nav">Sign In</a></div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <h1>Support Center</h1>
+  <p>Create a ticket and we'll respond within 24 hours. Check server status if you're experiencing issues.</p>
+</div>
+
+<!-- Quick links -->
+<div style="max-width:700px;margin:0 auto 40px;padding:0 24px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+  <a href="status.html" style="background:var(--bg1);border:1px solid var(--border2);border-radius:12px;padding:16px;text-align:center;text-decoration:none;transition:all 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)'">
+    <div style="font-size:24px;margin-bottom:6px;">🟢</div>
+    <div style="font-size:13px;font-weight:600;color:var(--text1);">Server Status</div>
+    <div style="font-size:11px;color:var(--text3);margin-top:2px;">Check if services are up</div>
+  </a>
+  <a href="refund.html" style="background:var(--bg1);border:1px solid var(--border2);border-radius:12px;padding:16px;text-align:center;text-decoration:none;transition:all 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)'">
+    <div style="font-size:24px;margin-bottom:6px;">💰</div>
+    <div style="font-size:13px;font-weight:600;color:var(--text1);">Refund Policy</div>
+    <div style="font-size:11px;color:var(--text3);margin-top:2px;">7-day money back</div>
+  </a>
+  <a href="mailto:support@valcrown.com" style="background:var(--bg1);border:1px solid var(--border2);border-radius:12px;padding:16px;text-align:center;text-decoration:none;transition:all 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)'">
+    <div style="font-size:24px;margin-bottom:6px;">✉️</div>
+    <div style="font-size:13px;font-weight:600;color:var(--text1);">Direct Email</div>
+    <div style="font-size:11px;color:var(--text3);margin-top:2px;">support@valcrown.com</div>
+  </a>
+</div>
+
+<!-- Ticket Form -->
+<div class="ticket-form">
+  <div style="background:var(--bg1);border:1px solid var(--border2);border-radius:14px;padding:28px;margin-bottom:20px;">
+    <h2 style="font-size:18px;font-weight:700;margin-bottom:4px;">Create Support Ticket</h2>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:20px;">We reply within 24 hours. Include as much detail as possible.</p>
+
+    <div class="form-success" id="form-success">✅ Ticket submitted! We'll reply to your email within 24 hours.</div>
+    <div class="form-err-msg" id="form-err"></div>
+
+    <div class="form-grp">
+      <label class="form-lbl">Your Name</label>
+      <input class="form-inp" type="text" id="t-name" placeholder="Full name" />
+    </div>
+    <div class="form-grp">
+      <label class="form-lbl">Email Address</label>
+      <input class="form-inp" type="email" id="t-email" placeholder="your@email.com" />
+    </div>
+    <div class="form-grp">
+      <label class="form-lbl">Category</label>
+      <select class="form-inp form-select" id="t-category">
+        <option value="">Select a category...</option>
+        <option value="billing">Billing / Payment Issue</option>
+        <option value="license">License / Key Problem</option>
+        <option value="technical">Technical Issue / Bug</option>
+        <option value="refund">Refund Request</option>
+        <option value="device">Device Transfer / Reset</option>
+        <option value="feature">Feature Request</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="form-grp">
+      <label class="form-lbl">License Key (if applicable)</label>
+      <input class="form-inp" type="text" id="t-license" placeholder="VC-XXXXXXXX-XXXXXXXX-XXXXXXXX (optional)" style="font-family:var(--mono);letter-spacing:1px;" />
+    </div>
+    <div class="form-grp">
+      <label class="form-lbl">Subject</label>
+      <input class="form-inp" type="text" id="t-subject" placeholder="Brief description of your issue" />
+    </div>
+    <div class="form-grp">
+      <label class="form-lbl">Message</label>
+      <textarea class="form-inp form-textarea" id="t-message" placeholder="Describe your issue in detail. Include any error messages, what you tried, and what happened."></textarea>
+    </div>
+    <button class="submit-btn" onclick="submitTicket()">Submit Support Ticket</button>
+  </div>
+
+  <div style="text-align:center;font-size:12px;color:var(--text3);">
+    Powered by XOGAMESLTD · <a href="https://xogamess.com" target="_blank" style="color:var(--accent3);">xogamess.com</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 ValCrown. Created by <a href="https://xogamess.com" target="_blank" style="color:var(--accent3);">XOGAMESLTD</a></div>
+    <div class="footer-legal"><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="refund.html">Refund</a></div>
+  </div>
+</footer>
+
+<script>
+const API = 'https://api.valcrown.com';
+
+async function submitTicket() {
+  const name = document.getElementById('t-name').value.trim();
+  const email = document.getElementById('t-email').value.trim();
+  const category = document.getElementById('t-category').value;
+  const subject = document.getElementById('t-subject').value.trim();
+  const message = document.getElementById('t-message').value.trim();
+  const license = document.getElementById('t-license').value.trim();
+
+  const err = document.getElementById('form-err');
+  const ok = document.getElementById('form-success');
+  err.classList.remove('show');
+  ok.classList.remove('show');
+
+  if (!name || !email || !category || !subject || !message) {
+    err.textContent = 'Please fill in all required fields.';
+    err.classList.add('show');
+    return;
+  }
+
+  if (!email.includes('@')) {
+    err.textContent = 'Please enter a valid email address.';
+    err.classList.add('show');
+    return;
+  }
+
+  const btn = document.querySelector('.submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  try {
+    const res = await fetch(`${API}/api/tickets/create`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, category, subject, message, licenseKey: license }),
+    });
+
+    if (res.ok) {
+      ok.classList.add('show');
+      document.getElementById('t-name').value = '';
+      document.getElementById('t-email').value = '';
+      document.getElementById('t-category').value = '';
+      document.getElementById('t-subject').value = '';
+      document.getElementById('t-message').value = '';
+      document.getElementById('t-license').value = '';
+    } else {
+      err.textContent = 'Submission failed. Please email us directly at support@valcrown.com';
+      err.classList.add('show');
+    }
+  } catch (e) {
+    // Fallback — show email option
+    ok.textContent = '✅ Could not connect to server. Please email support@valcrown.com directly — we respond within 24 hours.';
+    ok.classList.add('show');
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Submit Support Ticket';
+}
+</script>
+</body>
+</html>
