@@ -4,300 +4,506 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ValCrown — Cloud Gaming Optimizer</title>
-<meta name="description" content="ValCrown automatically boosts your PC for cloud gaming. AI-powered optimizer detecting 200+ games. Built by XOGAMESLTD.">
-<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
-<link rel="stylesheet" href="css/style.css">
+<meta name="description" content="ValCrown auto-detects your games and boosts your PC for cloud gaming. AI-powered. 200+ games. Free trial.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%237c6aff'/><text x='16' y='23' font-family='Arial Black' font-size='18' font-weight='900' fill='white' text-anchor='middle'>V</text></svg>">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg0:#07070f;--bg1:#0e0e1c;--bg2:#141428;--bg3:#1c1c38;--bg4:#242448;
+--b1:rgba(255,255,255,.07);--b2:rgba(255,255,255,.12);
+--t1:#f0f0ff;--t2:#9090c0;--t3:#505080;
+--ac:#7c6aff;--ac2:#6254e0;--ac3:#a89fff;--acg:rgba(124,106,255,.25);--acd:rgba(124,106,255,.12);
+--gr:#00e87a;--gd:rgba(0,232,122,.1);--yw:#ffb800;--rd:#ff4757;--bl:#5daaff;
+--f:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--f);background:var(--bg0);color:var(--t1);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.6}
+a{text-decoration:none;color:inherit}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
+
+/* ─ NAV ─ */
+.nav{position:sticky;top:0;z-index:100;background:rgba(7,7,15,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--b1)}
+.nav-in{max-width:1180px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;gap:6px}
+.logo{display:flex;align-items:center;gap:10px;margin-right:auto}
+.logo-v{width:34px;height:34px;background:linear-gradient(135deg,#7c6aff,#a89fff);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#fff;box-shadow:0 4px 16px var(--acg);flex-shrink:0}
+.logo-n{font-size:18px;font-weight:800;letter-spacing:-.5px;background:linear-gradient(90deg,#fff,#a89fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nm{display:flex;gap:2px}
+.nm a{padding:7px 13px;border-radius:7px;font-size:14px;font-weight:500;color:var(--t2);transition:.15s}
+.nm a:hover{background:var(--bg3);color:var(--t1)}
+.na{display:flex;align-items:center;gap:8px;margin-left:8px}
+.lsel{background:var(--bg2);border:1px solid var(--b2);border-radius:7px;padding:6px 9px;color:var(--t2);font-size:13px;outline:none;font-family:var(--f);cursor:pointer}
+.bsi{padding:8px 16px;border-radius:8px;font-size:14px;font-weight:500;color:var(--t2);background:var(--bg2);border:1px solid var(--b2);transition:.15s;cursor:pointer;font-family:var(--f)}
+.bsi:hover{color:var(--t1);border-color:var(--ac)}
+.bct{padding:9px 20px;border-radius:8px;font-size:14px;font-weight:700;background:linear-gradient(135deg,#7c6aff,#a89fff);color:#fff;transition:.2s;box-shadow:0 4px 16px var(--acg);cursor:pointer}
+.bct:hover{transform:translateY(-1px);box-shadow:0 8px 28px var(--acg)}
+
+/* ─ HERO ─ */
+.hero{max-width:1180px;margin:0 auto;padding:88px 24px 72px;text-align:center;position:relative}
+.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:900px;height:500px;background:radial-gradient(ellipse at 50% 30%,rgba(124,106,255,.07),transparent 65%);pointer-events:none}
+.ey{display:inline-flex;align-items:center;gap:8px;background:var(--acd);border:1px solid rgba(124,106,255,.22);color:var(--ac3);padding:7px 18px;border-radius:40px;font-size:13px;font-weight:600;margin-bottom:28px}
+.ey-d{width:6px;height:6px;background:var(--gr);border-radius:50%;animation:bl 2s infinite}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.3}}
+.ht{font-size:clamp(46px,7vw,84px);font-weight:900;line-height:1.04;letter-spacing:-3px;margin-bottom:22px}
+.ht .hg{background:linear-gradient(135deg,#a89fff,#c4b5fd 40%,#00e87a);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hd{font-size:18px;color:var(--t2);max-width:600px;margin:0 auto 38px;line-height:1.72}
+.hbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.bh{padding:15px 36px;border-radius:12px;font-size:16px;font-weight:700;background:linear-gradient(135deg,#7c6aff,#a89fff);color:#fff;transition:.2s;box-shadow:0 6px 28px var(--acg);font-family:var(--f);cursor:pointer}
+.bh:hover{transform:translateY(-2px);box-shadow:0 12px 44px var(--acg)}
+.bg{padding:15px 36px;border-radius:12px;font-size:16px;font-weight:600;background:var(--bg2);border:1px solid var(--b2);color:var(--t1);transition:.2s;font-family:var(--f);cursor:pointer}
+.bg:hover{background:var(--bg3);border-color:var(--ac)}
+.hn{font-size:13px;color:var(--t3);margin-bottom:64px}
+.hn strong{color:var(--gr);font-weight:600}
+
+/* ─ APP MOCKUP ─ */
+.mock{max-width:740px;margin:0 auto;background:var(--bg1);border:1px solid var(--b2);border-radius:20px;overflow:hidden;box-shadow:0 48px 120px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.04)}
+.mbar{background:var(--bg2);padding:12px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--b1)}
+.mdots{display:flex;gap:6px}
+.mdots span{width:11px;height:11px;border-radius:50%}
+.dr{background:#ff5f56}.dy{background:#ffbd2e}.dg{background:#27c93f}
+.mt{font-size:12px;color:var(--t3);margin:0 auto}
+.mbody{padding:20px}
+.gc{background:linear-gradient(135deg,rgba(124,106,255,.1),rgba(0,232,122,.04));border:1px solid rgba(124,106,255,.2);border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:16px;margin-bottom:14px;position:relative;overflow:hidden}
+.gc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ac),var(--gr))}
+.gce{font-size:40px;flex-shrink:0}
+.gcl{font-size:10px;font-weight:700;color:var(--gr);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.gcd{width:6px;height:6px;background:var(--gr);border-radius:50%;animation:bl 1.5s infinite}
+.gcn{font-size:22px;font-weight:800;letter-spacing:-.5px}
+.gcm{font-size:13px;color:var(--t2);margin-top:3px}
+.gcb{background:var(--gr);color:#000;font-size:11px;font-weight:800;padding:5px 12px;border-radius:7px;margin-left:auto;flex-shrink:0}
+.mets{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.met{background:var(--bg2);border-radius:10px;padding:13px;text-align:center}
+.mv{font-size:22px;font-weight:800;line-height:1;font-family:monospace}
+.ml{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-top:4px;font-weight:600}
+.cg{color:var(--gr)}.cb{color:var(--bl)}.ca{color:var(--ac3)}.cy{color:var(--yw)}
+
+/* ─ PROOF BAR ─ */
+.proof{background:var(--bg1);border-top:1px solid var(--b1);border-bottom:1px solid var(--b1)}
+.proof-in{max-width:1180px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(4,1fr)}
+.pi{padding:40px 24px;text-align:center;border-right:1px solid var(--b1)}
+.pi:last-child{border-right:none}
+.pn{font-size:42px;font-weight:900;line-height:1;margin-bottom:7px;background:linear-gradient(135deg,var(--ac3),var(--gr));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-family:monospace}
+.pl{font-size:14px;color:var(--t2);font-weight:500}
+
+/* ─ COMMON SECTION ─ */
+.sec{max-width:1180px;margin:0 auto;padding:88px 24px}
+.sec-bg{background:var(--bg1);border-top:1px solid var(--b1);border-bottom:1px solid var(--b1)}
+.stag{display:inline-block;background:var(--acd);color:var(--ac3);padding:5px 14px;border-radius:40px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px}
+.sh{font-size:clamp(30px,4vw,48px);font-weight:900;letter-spacing:-1.5px;line-height:1.08;margin-bottom:14px}
+.ss{font-size:17px;color:var(--t2);line-height:1.7;max-width:560px}
+
+/* ─ 3-COL INFO ─ */
+.info3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+.i3{background:var(--bg2);border:1px solid var(--b2);border-radius:16px;padding:28px}
+.i3-ico{font-size:28px;margin-bottom:12px}
+.i3-h{font-size:15px;font-weight:700;margin-bottom:8px}
+.i3-p{font-size:14px;color:var(--t2);line-height:1.65}
+
+/* ─ HOW IT WORKS ─ */
+.how{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
+.hw{background:var(--bg1);border:1px solid var(--b1);border-radius:16px;padding:28px 24px}
+.hwn{font-size:44px;font-weight:900;color:var(--acd);line-height:1;margin-bottom:14px;font-family:monospace}
+.hwt{font-size:15px;font-weight:700;margin-bottom:9px}
+.hwp{font-size:14px;color:var(--t2);line-height:1.65}
+
+/* ─ FEATURES GRID ─ */
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:48px}
+.fc{background:var(--bg1);border:1px solid var(--b1);border-radius:16px;padding:26px;transition:.2s;position:relative;overflow:hidden}
+.fc:hover{border-color:rgba(124,106,255,.35);transform:translateY(-3px)}
+.fc::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--ac),transparent);opacity:0;transition:.2s}
+.fc:hover::after{opacity:1}
+.fi{font-size:30px;margin-bottom:14px}
+.fn{font-size:15px;font-weight:700;margin-bottom:9px}
+.fp{font-size:14px;color:var(--t2);line-height:1.65}
+
+/* ─ COMPARE TABLE ─ */
+.ctbl{width:100%;border-collapse:collapse;margin-top:44px}
+.ctbl th{padding:14px 18px;text-align:left;font-size:13px;font-weight:600;color:var(--t2);border-bottom:2px solid var(--b2);background:var(--bg1)}
+.ctbl td{padding:13px 18px;border-bottom:1px solid var(--b1);font-size:14px}
+.ctbl tr:last-child td{border:none}
+.ctbl tr:hover td{background:rgba(255,255,255,.02)}
+.ctbl .vc{color:var(--gr);font-weight:700}
+.ck{color:var(--gr)}.cx{color:var(--t3)}.pt{color:var(--yw);font-size:12px}
+
+/* ─ PLANS ─ */
+.plans{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:44px}
+.plan{background:var(--bg2);border:1px solid var(--b2);border-radius:16px;padding:22px 16px;display:flex;flex-direction:column;position:relative}
+.plan.pop{background:linear-gradient(160deg,rgba(124,106,255,.1),var(--bg2));border-color:var(--ac);transform:translateY(-4px);box-shadow:0 20px 56px rgba(124,106,255,.18)}
+.plan.fr{border-color:rgba(0,232,122,.2)}
+.ptag{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#7c6aff,#a89fff);color:#fff;font-size:10px;font-weight:700;padding:4px 14px;border-radius:40px;white-space:nowrap}
+.pname{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:12px}
+.pprice{font-size:30px;font-weight:900;line-height:1;margin-bottom:4px;font-family:monospace}
+.pprice.free{color:var(--gr)}
+.pper{font-size:12px;color:var(--t3);line-height:1.5;margin-bottom:6px;min-height:34px}
+.psave{display:inline-block;background:rgba(0,232,122,.12);color:var(--gr);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px}
+.pdiv{height:1px;background:var(--b1);margin:12px 0}
+.plist{list-style:none;flex:1;margin-bottom:16px}
+.plist li{font-size:12px;color:var(--t2);padding:5px 0;display:flex;align-items:flex-start;gap:7px;border-bottom:1px solid var(--b1);line-height:1.4}
+.plist li:last-child{border:none}
+.pck{color:var(--gr);font-size:11px;flex-shrink:0;margin-top:1px}
+.pcx{color:var(--t3);font-size:11px;flex-shrink:0;margin-top:1px}
+.plm{color:var(--yw);font-size:10px;font-weight:700;flex-shrink:0}
+.pbtn{display:block;text-align:center;padding:11px;border-radius:10px;font-size:13px;font-weight:700;transition:.15s;cursor:pointer;border:none;font-family:var(--f)}
+.pbg{background:linear-gradient(135deg,#7c6aff,#a89fff);color:#fff}.pbg:hover{transform:translateY(-1px);box-shadow:0 6px 20px var(--acg)}
+.pbgh{background:var(--bg3);border:1px solid var(--b2);color:var(--t1)}.pbgh:hover{background:var(--bg4)}
+.pbgr{background:var(--gr);color:#000}.pbgr:hover{opacity:.85}
+
+/* ─ CTA ─ */
+.cta{max-width:1180px;margin:0 auto;padding:88px 24px}
+.ctab{background:linear-gradient(135deg,rgba(124,106,255,.08),rgba(0,232,122,.04));border:1px solid rgba(124,106,255,.18);border-radius:28px;padding:76px 48px;text-align:center;position:relative;overflow:hidden}
+.ctab::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(124,106,255,.08),transparent 70%);pointer-events:none}
+.cth{font-size:clamp(28px,4vw,48px);font-weight:900;letter-spacing:-1.5px;margin-bottom:14px}
+.cts{font-size:18px;color:var(--t2);margin-bottom:36px}
+
+/* ─ STATUS BAR ─ */
+.sbar{background:var(--bg0);border-top:1px solid var(--b1);border-bottom:1px solid var(--b1)}
+.sbar-in{max-width:1180px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between}
+.sind{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500}
+.sdot{width:10px;height:10px;border-radius:50%}
+.sdot.ok{background:var(--gr);animation:pulse 2s infinite}
+.sdot.warn{background:var(--yw)}
+.sdot.err{background:var(--rd)}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,232,122,.5)}50%{box-shadow:0 0 0 6px rgba(0,232,122,0)}}
+.sok{color:var(--gr);font-weight:600}
+.swarn{color:var(--yw);font-weight:600}
+.serr{color:var(--rd);font-weight:600}
+.slink{font-size:12px;color:var(--ac3);transition:.15s}
+.slink:hover{opacity:.7}
+
+/* ─ FOOTER ─ */
+.ft{background:var(--bg1);border-top:1px solid var(--b1)}
+.ftm{max-width:1180px;margin:0 auto;padding:60px 24px 36px;display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr;gap:44px}
+.ftd{font-size:14px;color:var(--t2);line-height:1.75;max-width:270px;margin:14px 0 20px}
+.ftso{display:flex;gap:8px}
+.fsi{width:36px;height:36px;background:var(--bg3);border:1px solid var(--b2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;transition:.15s;color:var(--t2)}
+.fsi:hover{background:var(--acd);border-color:var(--ac)}
+.fct{font-size:12px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px}
+.fc a{display:block;font-size:14px;color:var(--t2);padding:5px 0;transition:.15s}
+.fc a:hover{color:var(--t1)}
+.ftb{border-top:1px solid var(--b1);max-width:1180px;margin:0 auto;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.ftc{font-size:13px;color:var(--t3)}
+.ftco{font-size:13px;color:var(--t3)}
+.ftco a{color:var(--ac3);font-weight:600}
+.ftl{display:flex;gap:18px}
+.ftl a{font-size:13px;color:var(--t3);transition:.15s}
+.ftl a:hover{color:var(--t1)}
+
+/* ─ RESPONSIVE ─ */
+@media(max-width:1024px){.plans{grid-template-columns:1fr 1fr}.feat{grid-template-columns:1fr 1fr}.how{grid-template-columns:1fr 1fr}.ftm{grid-template-columns:1fr 1fr}.info3{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.nm{display:none}.proof-in{grid-template-columns:1fr 1fr}.pi{border-right:none;border-bottom:1px solid var(--b1)}.ctab{padding:44px 24px}}
+@media(max-width:600px){.plans{grid-template-columns:1fr}.feat{grid-template-columns:1fr}.how{grid-template-columns:1fr}.ftm{grid-template-columns:1fr}.info3{grid-template-columns:1fr}.mets{grid-template-columns:repeat(2,1fr)}.hbtns{flex-direction:column;align-items:center}}
+</style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav class="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <div class="nav-logo-icon">V</div>
-      <span class="nav-logo-text">ValCrown</span>
+  <div class="nav-in">
+    <a href="index.html" class="logo">
+      <div class="logo-v">V</div>
+      <span class="logo-n">ValCrown</span>
     </a>
-    <div class="nav-links">
+    <div class="nm">
       <a href="index.html">Home</a>
       <a href="pricing.html">Pricing</a>
       <a href="download.html">Download</a>
       <a href="status.html">Status</a>
       <a href="contact.html">Support</a>
     </div>
-    <div class="nav-right">
-      <select class="lang-sel" id="lang-select" onchange="setLanguage(this.value)">
-        <option value="en">🇬🇧 EN</option>
-        <option value="hi">🇮🇳 HI</option>
-        <option value="es">🇪🇸 ES</option>
-        <option value="fr">🇫🇷 FR</option>
-        <option value="de">🇩🇪 DE</option>
-        <option value="pt">🇧🇷 PT</option>
-        <option value="ar">🇸🇦 AR</option>
-        <option value="zh">🇨🇳 ZH</option>
+    <div class="na">
+      <select class="lsel" id="lang-select" onchange="setLanguage&&setLanguage(this.value)">
+        <option value="en">🇬🇧 EN</option><option value="hi">🇮🇳 HI</option>
+        <option value="es">🇪🇸 ES</option><option value="fr">🇫🇷 FR</option>
+        <option value="de">🇩🇪 DE</option><option value="pt">🇧🇷 PT</option>
       </select>
-      <a href="auth.html" class="btn-signin">Sign In</a>
-      <a href="pricing.html" class="btn-cta">Get ValCrown</a>
+      <a href="auth.html" class="bsi">Sign In</a>
+      <a href="pricing.html" class="bct">Get ValCrown</a>
     </div>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-badge">
-    <span class="hero-badge-dot"></span>
-    AI-Powered Cloud Gaming Optimizer
+  <div class="ey"><span class="ey-d"></span>AI-Powered Cloud Gaming Optimizer</div>
+  <h1 class="ht">Stop Losing Frames.<br><span class="hg">Boost Automatically.</span></h1>
+  <p class="hd">ValCrown detects when you launch a game and instantly optimizes your entire PC — CPU priority, RAM, network latency, and thermal management. Built specifically for cloud gaming.</p>
+  <div class="hbtns">
+    <a href="download.html" class="bh">⬇ Download Free Trial</a>
+    <a href="pricing.html" class="bg">View Pricing →</a>
   </div>
-  <h1 class="hero-title">
-    Stop Losing Frames.<br>
-    <span class="line2">Boost Automatically.</span>
-  </h1>
-  <p class="hero-sub">ValCrown detects when you launch a game and instantly optimizes your PC — CPU, RAM, network latency. Built specifically for cloud gaming, not just any booster.</p>
-  <div class="hero-btns">
-    <a href="download.html" class="btn-hero-primary">⬇ Download Free Trial</a>
-    <a href="pricing.html" class="btn-hero-secondary">View Pricing</a>
-  </div>
-  <div class="hero-meta">Windows 10/11 &nbsp;·&nbsp; 200+ games &nbsp;·&nbsp; Starts from <strong id="hero-price">loading...</strong> &nbsp;·&nbsp; No credit card for trial</div>
+  <p class="hn">Windows 10/11 · 200+ games · Starts from <strong id="hero-price">₹349/mo</strong> · <strong>3-day free trial — no card</strong></p>
 
-  <!-- App Preview -->
-  <div class="app-preview">
-    <div class="preview-titlebar">
-      <div class="preview-dots">
-        <span class="d-red"></span>
-        <span class="d-yel"></span>
-        <span class="d-grn"></span>
-      </div>
-      <span class="preview-title">ValCrown — Gaming Optimizer v1.0.0</span>
+  <div class="mock">
+    <div class="mbar">
+      <div class="mdots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div>
+      <span class="mt">ValCrown Gaming Optimizer — v1.0.0</span>
     </div>
-    <div class="preview-body">
-      <div class="preview-game-card">
-        <div class="pgc-emoji">🎮</div>
+    <div class="mbody">
+      <div class="gc">
+        <div class="gce">🎮</div>
         <div>
-          <div class="pgc-status"><span class="pgc-dot"></span> ValCrown is boosting</div>
-          <div class="pgc-name">GTA V</div>
-          <div class="pgc-info">Action · 1h 23m · Cloud Mode Active</div>
+          <div class="gcl"><span class="gcd"></span>ValCrown is boosting</div>
+          <div class="gcn">GTA V</div>
+          <div class="gcm">Action · 1h 23m · Cloud Mode Active</div>
         </div>
-        <div class="pgc-badge">LIVE</div>
+        <div class="gcb">LIVE</div>
       </div>
-      <div class="preview-metrics">
-        <div class="pm-item"><div class="pm-val c-green">31%</div><div class="pm-lbl">CPU</div></div>
-        <div class="pm-item"><div class="pm-val c-green">52%</div><div class="pm-lbl">RAM</div></div>
-        <div class="pm-item"><div class="pm-val c-blue">18ms</div><div class="pm-lbl">Ping</div></div>
-        <div class="pm-item"><div class="pm-val c-accent">ON</div><div class="pm-lbl">Boost</div></div>
+      <div class="mets">
+        <div class="met"><div class="mv cg">31%</div><div class="ml">CPU</div></div>
+        <div class="met"><div class="mv cg">52%</div><div class="ml">RAM</div></div>
+        <div class="met"><div class="mv cb">18ms</div><div class="ml">Ping</div></div>
+        <div class="met"><div class="mv ca">ON</div><div class="ml">Boost</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- STATS -->
-<div class="stats-strip">
-  <div class="stats-strip-inner">
-    <div class="stat-item"><div class="stat-num">200+</div><div class="stat-label">Games Detected</div></div>
-    <div class="stat-item"><div class="stat-num">~40%</div><div class="stat-label">Avg Ping Reduction</div></div>
-    <div class="stat-item"><div class="stat-num">AI</div><div class="stat-label">Claude + Gemini</div></div>
-    <div class="stat-item"><div class="stat-num">3 day</div><div class="stat-label">Free Trial</div></div>
+<!-- PROOF BAR -->
+<div class="proof">
+  <div class="proof-in">
+    <div class="pi"><div class="pn">200+</div><div class="pl">Games Auto-Detected</div></div>
+    <div class="pi"><div class="pn">~40%</div><div class="pl">Avg Ping Reduction</div></div>
+    <div class="pi"><div class="pn">AI</div><div class="pl">Claude + Gemini</div></div>
+    <div class="pi"><div class="pn">Free</div><div class="pl">3-Day Trial No Card</div></div>
+  </div>
+</div>
+
+<!-- WHY VALCROWN -->
+<div class="sec-bg">
+  <div class="sec">
+    <div class="stag">The Problem</div>
+    <h2 class="sh">Cloud gaming has unique bottlenecks.<br>Generic boosters miss all of them.</h2>
+    <p class="ss">Traditional boosters optimize GPU settings that cloud games don't even use. Cloud gaming performance depends on your video decoder, your network quality, and your CPU staying cool under sustained load. ValCrown tackles all three.</p>
+    <div class="info3">
+      <div class="i3">
+        <div class="i3-ico">📺</div>
+        <div class="i3-h">Video Decoder Priority</div>
+        <div class="i3-p">Cloud gaming is decode-heavy, not render-heavy. ValCrown frees CPU resources specifically for your video decoder — making streams smooth even on mid-range hardware.</div>
+      </div>
+      <div class="i3">
+        <div class="i3-ico">🌐</div>
+        <div class="i3-h">Network Traffic Priority</div>
+        <div class="i3-p">Game data gets bandwidth priority over background updates and cloud syncs. DNS optimized to nearest cloud gaming edge servers for lowest possible latency.</div>
+      </div>
+      <div class="i3">
+        <div class="i3-ico">🌡️</div>
+        <div class="i3-h">Thermal Management</div>
+        <div class="i3-p">Extended gaming causes heat throttling — your smooth 60fps drops to 30fps mid-game. ValCrown monitors temperature and warns you before throttling kicks in.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="sec">
+  <div class="stag">How It Works</div>
+  <h2 class="sh">Zero setup. Install and play.</h2>
+  <p class="ss">ValCrown runs silently in the background. From install onwards, it watches for your games and handles everything automatically — no configuration needed.</p>
+  <div class="how">
+    <div class="hw"><div class="hwn">01</div><div class="hwt">Install ValCrown</div><div class="hwp">Download and run as Administrator. Takes 30 seconds. ValCrown starts monitoring your system silently immediately after.</div></div>
+    <div class="hw"><div class="hwn">02</div><div class="hwt">Game Detected</div><div class="hwp">Recognizes 200+ games by process name. GTA V, Valorant, GeForce NOW, Xbox Cloud — the moment any launch, you get a notification.</div></div>
+    <div class="hw"><div class="hwn">03</div><div class="hwt">Boost Fires</div><div class="hwp">CPU to High Priority. High Performance power plan. Background apps suspended. Network optimized. All instantly, no clicks from you.</div></div>
+    <div class="hw"><div class="hwn">04</div><div class="hwt">Auto Restored</div><div class="hwp">When you exit the game, ValCrown reverts all changes. Your PC returns to normal. Session logged with ping stats and performance data.</div></div>
   </div>
 </div>
 
 <!-- FEATURES -->
-<section class="features-section">
-  <div class="section-header">
-    <div class="section-tag">Why ValCrown</div>
-    <h2 class="section-title">Built for cloud gaming.<br>Not just any booster.</h2>
-    <p class="section-sub">Traditional boosters optimize for local rendering. ValCrown solves the real cloud gaming problems — decoder pipeline, network latency, thermal throttling.</p>
-  </div>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">🎮</div>
-      <div class="feature-title">Auto Game Detection</div>
-      <div class="feature-desc">Detects 200+ games silently. GTA V, Valorant, Fortnite, CS2, GeForce NOW, Xbox Cloud — boost activates the moment you launch. No clicks needed.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">☁️</div>
-      <div class="feature-title">Cloud Mode</div>
-      <div class="feature-desc">Specialized mode for GeForce NOW, Xbox Cloud, Boosteroid. Prioritizes video decoder pipeline — the real bottleneck in cloud gaming, not the game engine.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">⚡</div>
-      <div class="feature-title">Instant Boost Engine</div>
-      <div class="feature-desc">High CPU priority, High Performance power plan, background app suspension. Activates instantly when your game launches, reverts cleanly when you exit.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🌐</div>
-      <div class="feature-title">Network Optimizer</div>
-      <div class="feature-desc">DNS flush, TCP optimization, real-time ping monitoring. Routes traffic to nearest cloud gaming edge servers. AI diagnoses connection issues with specific fixes.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🌡️</div>
-      <div class="feature-title">Thermal Management</div>
-      <div class="feature-desc">Monitors CPU temperature and warns before throttling. Extended gaming sessions generate heat — ValCrown catches it before your 60fps drops to 30fps.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🤖</div>
-      <div class="feature-title">AI Advisor</div>
-      <div class="feature-desc">Claude Sonnet 4.6 + Gemini 2.0 Flash analyze your system in real time. Specific, actionable recommendations — not generic advice.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🎯</div>
-      <div class="feature-title">Discord Presence</div>
-      <div class="feature-desc">Your Discord profile shows "Boosting GTA V with ValCrown" automatically. Friends see every session — free marketing with zero effort.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🔄</div>
-      <div class="feature-title">Auto Updates</div>
-      <div class="feature-desc">ValCrown updates itself silently in the background. New features, game database updates, and bug fixes delivered automatically — always stay current.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🔒</div>
-      <div class="feature-title">Device Security</div>
-      <div class="feature-desc">License binds to your device. One license, one PC. Self-service device reset every 30 days — no waiting for support if you switch hardware.</div>
+<div class="sec-bg">
+  <div class="sec">
+    <div class="stag">Features</div>
+    <h2 class="sh">Everything you need.<br>Nothing you don't.</h2>
+    <p class="ss">ValCrown focuses on what actually moves the needle for cloud gaming — not bloated feature lists.</p>
+    <div class="feat">
+      <div class="fc"><div class="fi">🎮</div><div class="fn">Auto Game Detection</div><div class="fp">200+ games detected silently. GTA V, Valorant, Fortnite, CS2, GeForce NOW, Xbox Cloud — boost fires the moment any of them launch.</div></div>
+      <div class="fc"><div class="fi">☁️</div><div class="fn">Cloud Mode</div><div class="fp">Specialized mode for cloud gaming apps. Prioritizes video decoder pipeline — the real bottleneck that other boosters completely ignore.</div></div>
+      <div class="fc"><div class="fi">⚡</div><div class="fn">Boost Engine</div><div class="fp">High CPU priority, High Performance power plan, background suspension. Fires in under a second. Reverts cleanly when you're done.</div></div>
+      <div class="fc"><div class="fi">🌐</div><div class="fn">Network Optimizer</div><div class="fp">DNS flush, TCP optimization, real-time ping monitoring. Routes to nearest cloud gaming servers. AI diagnoses issues with specific fixes.</div></div>
+      <div class="fc"><div class="fi">🤖</div><div class="fn">AI Advisor</div><div class="fp">Claude Sonnet 4.6 + Gemini 2.0 Flash analyze your system. Specific, actionable recommendations based on your actual usage data.</div></div>
+      <div class="fc"><div class="fi">🎯</div><div class="fn">Discord Presence</div><div class="fp">Your Discord profile shows "Boosting GTA V with ValCrown" automatically. Every gamer friend sees ValCrown — free word of mouth every session.</div></div>
+      <div class="fc"><div class="fi">📊</div><div class="fn">Session History</div><div class="fp">Full history of every gaming session — game, duration, average ping, boost applied. Track your performance over time.</div></div>
+      <div class="fc"><div class="fi">🔄</div><div class="fn">Auto Updates</div><div class="fp">ValCrown updates itself silently. New games, bug fixes, performance improvements — always current, zero effort from you.</div></div>
+      <div class="fc"><div class="fi">🔐</div><div class="fn">Self-Service Device Reset</div><div class="fp">Switched PCs? Reset your device binding yourself from app settings. Once every 30 days for security. No support ticket needed.</div></div>
     </div>
   </div>
-</section>
+</div>
+
+<!-- COMPARE -->
+<div class="sec">
+  <div class="stag">Comparison</div>
+  <h2 class="sh">ValCrown vs the alternatives.</h2>
+  <p class="ss">WTFast charges $13/month for network-only optimization — no AI, no game detection, no thermal management. ValCrown does more for less.</p>
+  <div style="overflow-x:auto;margin-top:44px">
+    <table class="ctbl">
+      <thead><tr><th>Feature</th><th style="color:var(--gr)">ValCrown</th><th>WTFast</th><th>Generic Boosters</th></tr></thead>
+      <tbody>
+        <tr><td>Auto Game Detection</td><td class="vc"><span class="ck">✓</span> 200+ games</td><td><span class="cx">✗</span></td><td><span class="pt">Partial</span></td></tr>
+        <tr><td>Cloud Gaming Specific</td><td class="vc"><span class="ck">✓</span> Cloud Mode</td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td></tr>
+        <tr><td>AI Advisor</td><td class="vc"><span class="ck">✓</span> Claude + Gemini</td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td></tr>
+        <tr><td>Network Optimization</td><td class="vc"><span class="ck">✓</span> Full</td><td><span class="ck" style="color:var(--gr)">✓</span> Full</td><td><span class="pt">Basic</span></td></tr>
+        <tr><td>Thermal Management</td><td class="vc"><span class="ck">✓</span></td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td></tr>
+        <tr><td>Discord Presence</td><td class="vc"><span class="ck">✓</span></td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td></tr>
+        <tr><td>Free Trial</td><td class="vc"><span class="ck">✓</span> 3 days free, no card</td><td><span class="cx">✗</span></td><td><span class="pt">Limited</span></td></tr>
+        <tr><td>Monthly Price</td><td class="vc" id="cp">₹349/mo</td><td>$13.37/mo</td><td>$5–10/mo</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 <!-- PRICING -->
-<section class="pricing-section">
-  <div class="pricing-inner">
-    <div class="section-tag">Pricing</div>
-    <h2 class="section-title">Start free. Pay when ready.</h2>
-    <p class="section-sub">5 plans from free trial to lifetime. Prices shown in your local currency.</p>
-    <div class="currency-info" id="currency-info"></div>
-
-    <div class="plans-grid">
-      <div class="plan-card free-plan">
-        <div class="plan-name">3-Day Trial</div>
-        <div class="plan-price is-free">Free</div>
-        <div class="plan-period">3 days full access<br>No card needed</div>
-        <div class="plan-divider"></div>
-        <ul class="plan-features">
-          <li><span class="pf-yes">✓</span>Full Boost Engine</li>
-          <li><span class="pf-yes">✓</span>Auto Game Detection</li>
-          <li><span class="pf-lim">5</span>AI calls/day</li>
-          <li><span class="pf-yes">✓</span>Network Optimizer</li>
-          <li><span class="pf-no">✗</span>Session History</li>
-          <li><span class="pf-no">✗</span>Discord Presence</li>
+<div class="sec-bg">
+  <div class="sec">
+    <div class="stag">Pricing</div>
+    <h2 class="sh">Start free. Pay when ready.</h2>
+    <p class="ss">5 plans from free trial to lifetime. Prices shown in your local currency.</p>
+    <p style="font-size:13px;color:var(--t3);margin-top:8px" id="clbl"></p>
+    <div class="plans">
+      <div class="plan fr">
+        <div class="pname">3-Day Trial</div>
+        <div class="pprice free">Free</div>
+        <div class="pper">3 days full access<br>No card needed</div>
+        <div class="pdiv"></div>
+        <ul class="plist">
+          <li><span class="pck">✓</span>Full Boost Engine</li>
+          <li><span class="pck">✓</span>Auto Game Detection</li>
+          <li><span class="plm">5/day</span>AI Advisor</li>
+          <li><span class="pck">✓</span>Network Optimizer</li>
+          <li><span class="pcx">✗</span>Session History</li>
+          <li><span class="pcx">✗</span>Discord Presence</li>
         </ul>
-        <a href="download.html" class="plan-btn pb-free">Start Free</a>
+        <a href="download.html" class="pbtn pbgr">Start Free →</a>
       </div>
-      <div class="plan-card">
-        <div class="plan-name">14-Day Trial</div>
-        <div class="plan-price" id="p-trial14">--</div>
-        <div class="plan-period">14 days · One-time charge</div>
-        <div class="plan-divider"></div>
-        <ul class="plan-features">
-          <li><span class="pf-yes">✓</span>Full Boost Engine</li>
-          <li><span class="pf-yes">✓</span>Auto Game Detection</li>
-          <li><span class="pf-lim">20</span>AI calls/day</li>
-          <li><span class="pf-yes">✓</span>Session History</li>
-          <li><span class="pf-yes">✓</span>Discord Presence</li>
-          <li><span class="pf-yes">✓</span>Cloud Mode</li>
+      <div class="plan">
+        <div class="pname">14-Day Trial</div>
+        <div class="pprice" id="p-trial14">₹99</div>
+        <div class="pper">14 days · One-time charge</div>
+        <div class="pdiv"></div>
+        <ul class="plist">
+          <li><span class="pck">✓</span>Full Boost Engine</li>
+          <li><span class="pck">✓</span>Auto Game Detection</li>
+          <li><span class="plm">20/day</span>AI Advisor</li>
+          <li><span class="pck">✓</span>Session History</li>
+          <li><span class="pck">✓</span>Discord Presence</li>
+          <li><span class="pck">✓</span>Cloud Mode</li>
         </ul>
-        <a href="pricing.html" class="plan-btn pb-ghost">Get Trial</a>
+        <a href="pricing.html" class="pbtn pbgh">Get Trial →</a>
       </div>
-      <div class="plan-card">
-        <div class="plan-name">Monthly</div>
-        <div class="plan-price" id="p-monthly">--</div>
-        <div class="plan-period">Per month · Cancel anytime</div>
-        <div class="plan-divider"></div>
-        <ul class="plan-features">
-          <li><span class="pf-yes">✓</span>Everything in Trial</li>
-          <li><span class="pf-lim">50</span>AI calls/day</li>
-          <li><span class="pf-yes">✓</span>Cloud Mode</li>
-          <li><span class="pf-yes">✓</span>Thermal Management</li>
-          <li><span class="pf-yes">✓</span>Email Support</li>
-          <li><span class="pf-yes">✓</span>Auto Updates</li>
+      <div class="plan">
+        <div class="pname">Monthly</div>
+        <div class="pprice" id="p-monthly">₹349</div>
+        <div class="pper">Per month · Cancel anytime</div>
+        <div class="pdiv"></div>
+        <ul class="plist">
+          <li><span class="pck">✓</span>Everything in Trial</li>
+          <li><span class="plm">50/day</span>AI Advisor</li>
+          <li><span class="pck">✓</span>Thermal Management</li>
+          <li><span class="pck">✓</span>Email Support</li>
+          <li><span class="pck">✓</span>All Cloud Modes</li>
+          <li><span class="pck">✓</span>Auto Updates</li>
         </ul>
-        <a href="pricing.html" class="plan-btn pb-ghost">Get Monthly</a>
+        <a href="pricing.html" class="pbtn pbgh">Get Monthly →</a>
       </div>
-      <div class="plan-card featured">
-        <div class="plan-popular">Most Popular</div>
-        <div class="plan-name">Yearly</div>
-        <div class="plan-price" id="p-yearly">--</div>
-        <div class="plan-period">Per year · billed once<br><span class="plan-save">Save 40% vs monthly</span></div>
-        <div class="plan-divider"></div>
-        <ul class="plan-features">
-          <li><span class="pf-yes">✓</span>Everything in Monthly</li>
-          <li><span class="pf-lim">50</span>AI calls/day</li>
-          <li><span class="pf-yes">✓</span>Priority Support</li>
-          <li><span class="pf-yes">✓</span>Early Access Features</li>
-          <li><span class="pf-yes">✓</span>All Cloud Modes</li>
-          <li><span class="pf-yes">✓</span>Auto Updates</li>
+      <div class="plan pop">
+        <div class="ptag">Most Popular</div>
+        <div class="pname">Yearly</div>
+        <div class="pprice" id="p-yearly">₹2,499</div>
+        <div class="pper">Per year · billed once<br><span class="psave">Save 40%</span></div>
+        <div class="pdiv"></div>
+        <ul class="plist">
+          <li><span class="pck">✓</span>Everything in Monthly</li>
+          <li><span class="plm">50/day</span>AI Advisor</li>
+          <li><span class="pck">✓</span>Priority Support</li>
+          <li><span class="pck">✓</span>Early Access Features</li>
+          <li><span class="pck">✓</span>All Cloud Modes</li>
+          <li><span class="pck">✓</span>Auto Updates</li>
         </ul>
-        <a href="pricing.html" class="plan-btn pb-featured">Get Yearly</a>
+        <a href="pricing.html" class="pbtn pbg">Get Yearly →</a>
       </div>
-      <div class="plan-card">
-        <div class="plan-name">Lifetime</div>
-        <div class="plan-price" id="p-lifetime">--</div>
-        <div class="plan-period">One-time · Never pay again</div>
-        <div class="plan-divider"></div>
-        <ul class="plan-features">
-          <li><span class="pf-yes">✓</span>Everything in Yearly</li>
-          <li><span class="pf-yes">✓</span>All Future Updates</li>
-          <li><span class="pf-yes">✓</span>Lifetime License</li>
-          <li><span class="pf-yes">✓</span>Priority Support</li>
-          <li><span class="pf-yes">✓</span>1 Device Forever</li>
-          <li><span class="pf-yes">✓</span>Never Expires</li>
+      <div class="plan">
+        <div class="pname">Lifetime</div>
+        <div class="pprice" id="p-lifetime">₹5,999</div>
+        <div class="pper">One-time · Never pay again</div>
+        <div class="pdiv"></div>
+        <ul class="plist">
+          <li><span class="pck">✓</span>Everything in Yearly</li>
+          <li><span class="pck">✓</span>All Future Updates</li>
+          <li><span class="pck">✓</span>Lifetime License</li>
+          <li><span class="pck">✓</span>Priority Support</li>
+          <li><span class="pck">✓</span>1 Device Forever</li>
+          <li><span class="pck">✓</span>Never Expires</li>
         </ul>
-        <a href="pricing.html" class="plan-btn pb-ghost">Get Lifetime</a>
+        <a href="pricing.html" class="pbtn pbgh">Get Lifetime →</a>
       </div>
     </div>
   </div>
-</section>
+</div>
 
 <!-- CTA -->
-<section class="cta-section">
-  <div class="cta-box">
-    <h2 class="cta-title">Ready to stop losing frames?</h2>
-    <p class="cta-sub">Download the free 3-day trial. No card needed. Works in 30 seconds.</p>
-    <div class="hero-btns">
-      <a href="download.html" class="btn-hero-primary">⬇ Download Free Trial</a>
-      <a href="auth.html" class="btn-hero-secondary">Create Account</a>
+<div class="cta">
+  <div class="ctab">
+    <h2 class="cth">Ready to stop losing frames?</h2>
+    <p class="cts">Download the free 3-day trial. No card needed. Works in 30 seconds.</p>
+    <div class="hbtns">
+      <a href="download.html" class="bh">⬇ Download Free Trial</a>
+      <a href="auth.html" class="bg">Create Account →</a>
     </div>
   </div>
-</section>
+</div>
+
+<!-- FOOTER STATUS BAR -->
+<div class="sbar">
+  <div class="sbar-in">
+    <div class="sind">
+      <span class="sdot ok" id="sdot"></span>
+      <span>All systems: <span class="sok" id="stxt">Checking...</span></span>
+    </div>
+    <a href="status.html" class="slink">View detailed status →</a>
+  </div>
+</div>
 
 <!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-top">
-    <div class="footer-brand">
-      <div class="footer-logo">
-        <div class="nav-logo-icon">V</div>
-        <span class="nav-logo-text">ValCrown</span>
+<footer class="ft">
+  <div class="ftm">
+    <div>
+      <div class="logo" style="margin-bottom:0">
+        <div class="logo-v">V</div>
+        <span class="logo-n">ValCrown</span>
       </div>
-      <p class="footer-brand-desc">AI-powered gaming optimizer built specifically for cloud gaming. Auto-detect, auto-boost, auto-optimize.</p>
-      <div class="footer-socials">
-        <a href="https://www.instagram.com/xogamesspresence" target="_blank" class="social-link" title="Instagram">📷</a>
-        <a href="https://www.youtube.com/channel/UCQYo32IcKfPmcn4bNBe0KbA" target="_blank" class="social-link" title="YouTube">▶</a>
-        <a href="mailto:support@valcrown.com" class="social-link" title="Email">✉</a>
+      <p class="ftd">AI-powered gaming optimizer built specifically for cloud gaming. Auto-detect, auto-boost, auto-optimize.</p>
+      <div class="ftso">
+        <a href="https://www.instagram.com/xogamesspresence" target="_blank" class="fsi" title="Instagram">📷</a>
+        <a href="https://www.youtube.com/channel/UCQYo32IcKfPmcn4bNBe0KbA" target="_blank" class="fsi" title="YouTube">▶</a>
+        <a href="mailto:support@valcrown.com" class="fsi" title="Email">✉</a>
       </div>
     </div>
-    <div class="footer-col">
-      <div class="footer-col-title">Product</div>
+    <div class="fc">
+      <div class="fct">Product</div>
       <a href="index.html">Home</a>
       <a href="pricing.html">Pricing</a>
       <a href="download.html">Download</a>
       <a href="status.html">Server Status</a>
       <a href="contact.html">Support</a>
     </div>
-    <div class="footer-col">
-      <div class="footer-col-title">Legal</div>
+    <div class="fc">
+      <div class="fct">Legal</div>
       <a href="terms.html">Terms of Service</a>
       <a href="privacy.html">Privacy Policy</a>
       <a href="refund.html">Refund Policy</a>
       <a href="eula.html">EULA</a>
       <a href="delivery.html">Instant Delivery</a>
     </div>
-    <div class="footer-col">
-      <div class="footer-col-title">XOGAMESLTD</div>
+    <div class="fc">
+      <div class="fct">XOGAMESLTD</div>
       <a href="https://xogamess.com" target="_blank">Our Website</a>
       <a href="https://www.instagram.com/xogamesspresence" target="_blank">Instagram</a>
       <a href="https://www.youtube.com/channel/UCQYo32IcKfPmcn4bNBe0KbA" target="_blank">YouTube</a>
       <a href="mailto:support@valcrown.com">Contact Us</a>
     </div>
   </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2026 ValCrown. All rights reserved.</div>
-    <div class="footer-xo">A company of <a href="https://xogamess.com" target="_blank">XOGAMESLTD</a></div>
-    <div class="footer-legal-links">
+  <div class="ftb">
+    <div class="ftc">© 2026 ValCrown. All rights reserved.</div>
+    <div class="ftco">A company of <a href="https://xogamess.com" target="_blank">XOGAMESLTD</a></div>
+    <div class="ftl">
       <a href="terms.html">Terms</a>
       <a href="privacy.html">Privacy</a>
       <a href="refund.html">Refund</a>
@@ -308,13 +514,38 @@
 <script src="js/i18n.js"></script>
 <script src="js/currency.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', async () => {
-  await initCurrency();
-  initLanguage();
-  const hp = document.getElementById('hero-price');
-  if (hp) hp.textContent = formatPrice(PRICES.monthly);
-  const ci = document.getElementById('currency-info');
-  if (ci) ci.textContent = 'Prices auto-detected in ' + currentCurrency + ' based on your location · Change currency on the pricing page';
+const API='https://api.valcrown.com';
+document.addEventListener('DOMContentLoaded',async()=>{
+  // Currency
+  if(typeof initCurrency==='function'){
+    await initCurrency();
+    const ids={trial14:'p-trial14',monthly:'p-monthly',yearly:'p-yearly',lifetime:'p-lifetime'};
+    Object.entries(ids).forEach(([k,id])=>{
+      const el=document.getElementById(id);
+      if(el&&PRICES[k])el.textContent=formatPrice(PRICES[k]);
+    });
+    const hp=document.getElementById('hero-price');
+    if(hp&&PRICES.monthly)hp.textContent=formatPrice(PRICES.monthly)+'/mo';
+    const cp=document.getElementById('cp');
+    if(cp&&PRICES.monthly)cp.textContent=formatPrice(PRICES.monthly)+'/mo';
+    const cl=document.getElementById('clbl');
+    if(cl)cl.textContent='Prices auto-detected in '+currentCurrency+' · Change on the pricing page';
+  }
+  if(typeof initLanguage==='function')initLanguage();
+  // Footer status check
+  try{
+    const t=Date.now();
+    const r=await fetch(API+'/health',{signal:AbortSignal.timeout(4000)});
+    const ms=Date.now()-t;
+    const d=document.getElementById('sdot');
+    const s=document.getElementById('stxt');
+    if(r.ok){d.className='sdot ok';s.className='sok';s.textContent='Operational ('+ms+'ms)'}
+    else{d.className='sdot warn';s.className='swarn';s.textContent='Degraded'}
+  }catch(e){
+    const d=document.getElementById('sdot');
+    const s=document.getElementById('stxt');
+    if(d){d.className='sdot err';s.className='serr';s.textContent='Service disruption'}
+  }
 });
 </script>
 </body>
