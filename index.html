@@ -4,227 +4,240 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ValCrown — Cloud Gaming Optimizer</title>
-<meta name="description" content="ValCrown automatically detects your games and optimizes your PC for cloud gaming. AI-powered boost engine, network optimizer, and Discord presence.">
-<meta property="og:title" content="ValCrown — Cloud Gaming Optimizer">
-<meta property="og:description" content="Auto game detection, AI boost engine, network optimizer. Built for cloud gaming.">
-<meta property="og:image" content="https://valcrown.com/img/og.png">
+<meta name="description" content="ValCrown automatically boosts your PC for cloud gaming. AI-powered optimizer detecting 200+ games. Built by XOGAMESLTD.">
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <link rel="stylesheet" href="css/style.css">
-<script src="js/i18n.js"></script>
-<script src="js/currency.js"></script>
 </head>
 <body>
 
+<!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
-      <div class="logo-mark">V</div>
-      <span class="logo-text">ValCrown</span>
+      <div class="nav-logo-icon">V</div>
+      <span class="nav-logo-text">ValCrown</span>
     </a>
     <div class="nav-links">
-      <a href="index.html" class="active">Home</a>
+      <a href="index.html">Home</a>
       <a href="pricing.html">Pricing</a>
       <a href="download.html">Download</a>
       <a href="status.html">Status</a>
       <a href="contact.html">Support</a>
     </div>
-    <div class="nav-actions">
-      <div class="lang-switcher">
-        <select class="lang-sel" id="lang-select" onchange="setLanguage(this.value)">
-          <option value="en">🇬🇧 EN</option>
-          <option value="hi">🇮🇳 हिं</option>
-          <option value="es">🇪🇸 ES</option>
-          <option value="fr">🇫🇷 FR</option>
-          <option value="de">🇩🇪 DE</option>
-          <option value="pt">🇧🇷 PT</option>
-          <option value="ar">🇸🇦 AR</option>
-          <option value="zh">🇨🇳 中文</option>
-        </select>
-      </div>
-      <a href="auth.html" class="btn-nav">Sign In</a>
-      <a href="pricing.html" class="btn-nav-cta">Get ValCrown</a>
+    <div class="nav-right">
+      <select class="lang-sel" id="lang-select" onchange="setLanguage(this.value)">
+        <option value="en">🇬🇧 EN</option>
+        <option value="hi">🇮🇳 HI</option>
+        <option value="es">🇪🇸 ES</option>
+        <option value="fr">🇫🇷 FR</option>
+        <option value="de">🇩🇪 DE</option>
+        <option value="pt">🇧🇷 PT</option>
+        <option value="ar">🇸🇦 AR</option>
+        <option value="zh">🇨🇳 ZH</option>
+      </select>
+      <a href="auth.html" class="btn-signin">Sign In</a>
+      <a href="pricing.html" class="btn-cta">Get ValCrown</a>
     </div>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-eyebrow">AI-Powered Cloud Gaming Optimizer</div>
-  <h1 class="hero-title">
-    Game Smarter.<br>
-    <span class="grad">Boost Automatically.</span>
-  </h1>
-  <p class="hero-sub">ValCrown detects your games and instantly optimizes your PC — CPU, RAM, network latency. Built specifically for cloud gaming.</p>
-  <div class="hero-cta">
-    <a href="download.html" class="btn-hero">⬇ Download Free Trial</a>
-    <a href="pricing.html" class="btn-ghost">View Pricing</a>
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    AI-Powered Cloud Gaming Optimizer
   </div>
-  <div class="hero-note">Windows 10/11 · 200+ games · Starts from <span id="hero-price">loading...</span></div>
+  <h1 class="hero-title">
+    Stop Losing Frames.<br>
+    <span class="line2">Boost Automatically.</span>
+  </h1>
+  <p class="hero-sub">ValCrown detects when you launch a game and instantly optimizes your PC — CPU, RAM, network latency. Built specifically for cloud gaming, not just any booster.</p>
+  <div class="hero-btns">
+    <a href="download.html" class="btn-hero-primary">⬇ Download Free Trial</a>
+    <a href="pricing.html" class="btn-hero-secondary">View Pricing</a>
+  </div>
+  <div class="hero-meta">Windows 10/11 &nbsp;·&nbsp; 200+ games &nbsp;·&nbsp; Starts from <strong id="hero-price">loading...</strong> &nbsp;·&nbsp; No credit card for trial</div>
 
-  <div class="hero-mockup">
-    <div class="mockup-bar">
-      <div class="mockup-dots"><span></span><span></span><span></span></div>
-      <div class="mockup-title">ValCrown — Gaming Optimizer v1.0</div>
-    </div>
-    <div class="mockup-body">
-      <div class="mockup-game">
-        <div class="mg-icon">🎮</div>
-        <div>
-          <div class="mg-now"><span class="mg-dot"></span> ValCrown is boosting</div>
-          <div class="mg-name">GTA V</div>
-          <div class="mg-meta">Action · 1h 23m · Cloud Mode Active</div>
-        </div>
-        <div class="mg-badge">BOOSTING</div>
+  <!-- App Preview -->
+  <div class="app-preview">
+    <div class="preview-titlebar">
+      <div class="preview-dots">
+        <span class="d-red"></span>
+        <span class="d-yel"></span>
+        <span class="d-grn"></span>
       </div>
-      <div class="mockup-stats">
-        <div class="ms-item"><div class="ms-val c-green">31%</div><div class="ms-lbl">CPU</div></div>
-        <div class="ms-item"><div class="ms-val c-green">54%</div><div class="ms-lbl">RAM</div></div>
-        <div class="ms-item"><div class="ms-val c-blue">18ms</div><div class="ms-lbl">Ping</div></div>
-        <div class="ms-item"><div class="ms-val c-accent">ON</div><div class="ms-lbl">Boost</div></div>
+      <span class="preview-title">ValCrown — Gaming Optimizer v1.0.0</span>
+    </div>
+    <div class="preview-body">
+      <div class="preview-game-card">
+        <div class="pgc-emoji">🎮</div>
+        <div>
+          <div class="pgc-status"><span class="pgc-dot"></span> ValCrown is boosting</div>
+          <div class="pgc-name">GTA V</div>
+          <div class="pgc-info">Action · 1h 23m · Cloud Mode Active</div>
+        </div>
+        <div class="pgc-badge">LIVE</div>
+      </div>
+      <div class="preview-metrics">
+        <div class="pm-item"><div class="pm-val c-green">31%</div><div class="pm-lbl">CPU</div></div>
+        <div class="pm-item"><div class="pm-val c-green">52%</div><div class="pm-lbl">RAM</div></div>
+        <div class="pm-item"><div class="pm-val c-blue">18ms</div><div class="pm-lbl">Ping</div></div>
+        <div class="pm-item"><div class="pm-val c-accent">ON</div><div class="pm-lbl">Boost</div></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- STATS -->
-<div class="stats-bar">
-  <div class="stats-inner">
-    <div><div class="stat-num">200+</div><div class="stat-lbl">Games Detected</div></div>
-    <div><div class="stat-num">~40%</div><div class="stat-lbl">Avg Ping Reduction</div></div>
-    <div><div class="stat-num">AI</div><div class="stat-lbl">Claude + Gemini Powered</div></div>
-    <div><div class="stat-num">5</div><div class="stat-lbl">Flexible Plans</div></div>
+<div class="stats-strip">
+  <div class="stats-strip-inner">
+    <div class="stat-item"><div class="stat-num">200+</div><div class="stat-label">Games Detected</div></div>
+    <div class="stat-item"><div class="stat-num">~40%</div><div class="stat-label">Avg Ping Reduction</div></div>
+    <div class="stat-item"><div class="stat-num">AI</div><div class="stat-label">Claude + Gemini</div></div>
+    <div class="stat-item"><div class="stat-num">3 day</div><div class="stat-label">Free Trial</div></div>
   </div>
 </div>
 
 <!-- FEATURES -->
-<section class="section">
-  <div class="section-inner">
-    <div class="section-tag">Features</div>
+<section class="features-section">
+  <div class="section-header">
+    <div class="section-tag">Why ValCrown</div>
     <h2 class="section-title">Built for cloud gaming.<br>Not just any booster.</h2>
-    <p class="section-sub">ValCrown solves the real problems — decoder pipeline, network latency, thermal throttling — not just RAM clearing.</p>
-    <div class="feat-grid">
-      <div class="feat-card">
-        <div class="feat-ico">🎮</div>
-        <div class="feat-name">Auto Game Detection</div>
-        <div class="feat-desc">Detects 200+ games silently in background. GTA V, Valorant, Fortnite, GeForce NOW, Xbox Cloud and more — boost activates the moment you launch.</div>
-      </div>
-      <div class="feat-card">
-        <div class="feat-ico">☁️</div>
-        <div class="feat-name">Cloud Mode</div>
-        <div class="feat-desc">Specialized mode for GeForce NOW, Xbox Cloud, Boosteroid. Prioritizes the video decoder pipeline — the real bottleneck in cloud gaming, not the game engine.</div>
-      </div>
-      <div class="feat-card">
-        <div class="feat-ico">⚡</div>
-        <div class="feat-name">Boost Engine</div>
-        <div class="feat-desc">Sets CPU to High Priority, activates High Performance power plan, suspends background apps. Instant when your game launches, reverts when you close it.</div>
-      </div>
-      <div class="feat-card">
-        <div class="feat-ico">🌐</div>
-        <div class="feat-name">Network Optimizer</div>
-        <div class="feat-desc">DNS flush, TCP optimization, real-time ping monitor. Routes traffic to nearest cloud gaming edge servers. AI diagnoses connection issues with specific fixes.</div>
-      </div>
-      <div class="feat-card">
-        <div class="feat-ico">🌡️</div>
-        <div class="feat-name">Thermal Management</div>
-        <div class="feat-desc">Monitors CPU temperature and alerts before throttling kicks in. Extended cloud gaming sessions generate heat — ValCrown warns you before performance drops.</div>
-      </div>
-      <div class="feat-card">
-        <div class="feat-ico">🤖</div>
-        <div class="feat-name">AI Advisor</div>
-        <div class="feat-desc">Powered by Claude Sonnet 4.6 and Gemini 2.0 Flash. Analyzes your system in real-time and gives specific, actionable optimization recommendations.</div>
-      </div>
-      <div class="feat-card">
-        <div class="feat-ico">🎯</div>
-        <div class="feat-name">Discord Presence</div>
-        <div class="feat-desc">Your Discord profile shows "Boosting GTA V with ValCrown" automatically. Friends see what you're playing — free word of mouth for every session.</div>
-      </div>
-      <div class="feat-card">
-        <div class="feat-ico">📊</div>
-        <div class="feat-name">Session History</div>
-        <div class="feat-desc">Tracks every gaming session — duration, game, boost applied, ping during session. See your gaming history and performance trends over time.</div>
-      </div>
-      <div class="feat-card">
-        <div class="feat-ico">🔒</div>
-        <div class="feat-name">Device Security</div>
-        <div class="feat-desc">License binds to your device. One license, one PC. Self-service device reset every 30 days if you switch hardware — no waiting for support.</div>
-      </div>
+    <p class="section-sub">Traditional boosters optimize for local rendering. ValCrown solves the real cloud gaming problems — decoder pipeline, network latency, thermal throttling.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🎮</div>
+      <div class="feature-title">Auto Game Detection</div>
+      <div class="feature-desc">Detects 200+ games silently. GTA V, Valorant, Fortnite, CS2, GeForce NOW, Xbox Cloud — boost activates the moment you launch. No clicks needed.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">☁️</div>
+      <div class="feature-title">Cloud Mode</div>
+      <div class="feature-desc">Specialized mode for GeForce NOW, Xbox Cloud, Boosteroid. Prioritizes video decoder pipeline — the real bottleneck in cloud gaming, not the game engine.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <div class="feature-title">Instant Boost Engine</div>
+      <div class="feature-desc">High CPU priority, High Performance power plan, background app suspension. Activates instantly when your game launches, reverts cleanly when you exit.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌐</div>
+      <div class="feature-title">Network Optimizer</div>
+      <div class="feature-desc">DNS flush, TCP optimization, real-time ping monitoring. Routes traffic to nearest cloud gaming edge servers. AI diagnoses connection issues with specific fixes.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌡️</div>
+      <div class="feature-title">Thermal Management</div>
+      <div class="feature-desc">Monitors CPU temperature and warns before throttling. Extended gaming sessions generate heat — ValCrown catches it before your 60fps drops to 30fps.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🤖</div>
+      <div class="feature-title">AI Advisor</div>
+      <div class="feature-desc">Claude Sonnet 4.6 + Gemini 2.0 Flash analyze your system in real time. Specific, actionable recommendations — not generic advice.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <div class="feature-title">Discord Presence</div>
+      <div class="feature-desc">Your Discord profile shows "Boosting GTA V with ValCrown" automatically. Friends see every session — free marketing with zero effort.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔄</div>
+      <div class="feature-title">Auto Updates</div>
+      <div class="feature-desc">ValCrown updates itself silently in the background. New features, game database updates, and bug fixes delivered automatically — always stay current.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <div class="feature-title">Device Security</div>
+      <div class="feature-desc">License binds to your device. One license, one PC. Self-service device reset every 30 days — no waiting for support if you switch hardware.</div>
     </div>
   </div>
 </section>
 
-<!-- PRICING PREVIEW -->
-<section class="section" style="background:var(--bg1);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
-  <div class="section-inner">
+<!-- PRICING -->
+<section class="pricing-section">
+  <div class="pricing-inner">
     <div class="section-tag">Pricing</div>
     <h2 class="section-title">Start free. Pay when ready.</h2>
-    <p class="section-sub">5 flexible plans. Prices shown in your local currency automatically.</p>
-    <div id="currency-bar" style="margin-top:12px;font-size:12px;color:var(--text3);"></div>
-    <div class="price-grid">
-      <div class="price-card free">
-        <div class="price-name">3-Day Trial</div>
-        <div class="price-amt free-text">Free</div>
-        <div class="price-period">3 days · No card needed</div>
-        <ul class="price-features">
-          <li><span class="pf-ck">✓</span>Full Boost Engine</li>
-          <li><span class="pf-ck">✓</span>Auto Game Detection</li>
+    <p class="section-sub">5 plans from free trial to lifetime. Prices shown in your local currency.</p>
+    <div class="currency-info" id="currency-info"></div>
+
+    <div class="plans-grid">
+      <div class="plan-card free-plan">
+        <div class="plan-name">3-Day Trial</div>
+        <div class="plan-price is-free">Free</div>
+        <div class="plan-period">3 days full access<br>No card needed</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li><span class="pf-yes">✓</span>Full Boost Engine</li>
+          <li><span class="pf-yes">✓</span>Auto Game Detection</li>
           <li><span class="pf-lim">5</span>AI calls/day</li>
-          <li><span class="pf-ck">✓</span>Network Optimizer</li>
-          <li><span class="pf-cx">✗</span>Session History</li>
+          <li><span class="pf-yes">✓</span>Network Optimizer</li>
+          <li><span class="pf-no">✗</span>Session History</li>
+          <li><span class="pf-no">✗</span>Discord Presence</li>
         </ul>
-        <a href="download.html" class="price-btn pb-green">Start Free</a>
+        <a href="download.html" class="plan-btn pb-free">Start Free</a>
       </div>
-      <div class="price-card">
-        <div class="price-name">14-Day Trial</div>
-        <div class="price-amt" id="p-trial14">--</div>
-        <div class="price-period">14 days · One-time</div>
-        <ul class="price-features">
-          <li><span class="pf-ck">✓</span>Full Boost Engine</li>
-          <li><span class="pf-ck">✓</span>Auto Game Detection</li>
+      <div class="plan-card">
+        <div class="plan-name">14-Day Trial</div>
+        <div class="plan-price" id="p-trial14">--</div>
+        <div class="plan-period">14 days · One-time charge</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li><span class="pf-yes">✓</span>Full Boost Engine</li>
+          <li><span class="pf-yes">✓</span>Auto Game Detection</li>
           <li><span class="pf-lim">20</span>AI calls/day</li>
-          <li><span class="pf-ck">✓</span>Session History</li>
-          <li><span class="pf-ck">✓</span>Discord Presence</li>
+          <li><span class="pf-yes">✓</span>Session History</li>
+          <li><span class="pf-yes">✓</span>Discord Presence</li>
+          <li><span class="pf-yes">✓</span>Cloud Mode</li>
         </ul>
-        <a href="pricing.html" class="price-btn pb-ghost">Get Trial</a>
+        <a href="pricing.html" class="plan-btn pb-ghost">Get Trial</a>
       </div>
-      <div class="price-card">
-        <div class="price-name">Monthly</div>
-        <div class="price-amt" id="p-monthly">--</div>
-        <div class="price-period">Per month · Cancel anytime</div>
-        <ul class="price-features">
-          <li><span class="pf-ck">✓</span>Everything in Trial</li>
+      <div class="plan-card">
+        <div class="plan-name">Monthly</div>
+        <div class="plan-price" id="p-monthly">--</div>
+        <div class="plan-period">Per month · Cancel anytime</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li><span class="pf-yes">✓</span>Everything in Trial</li>
           <li><span class="pf-lim">50</span>AI calls/day</li>
-          <li><span class="pf-ck">✓</span>Cloud Mode</li>
-          <li><span class="pf-ck">✓</span>Thermal Management</li>
-          <li><span class="pf-ck">✓</span>Email Support</li>
+          <li><span class="pf-yes">✓</span>Cloud Mode</li>
+          <li><span class="pf-yes">✓</span>Thermal Management</li>
+          <li><span class="pf-yes">✓</span>Email Support</li>
+          <li><span class="pf-yes">✓</span>Auto Updates</li>
         </ul>
-        <a href="pricing.html" class="price-btn pb-ghost">Get Monthly</a>
+        <a href="pricing.html" class="plan-btn pb-ghost">Get Monthly</a>
       </div>
-      <div class="price-card pop">
-        <div class="price-pop-badge">Most Popular</div>
-        <div class="price-name">Yearly</div>
-        <div class="price-amt" id="p-yearly">--</div>
-        <div class="price-period">Per year<div><span class="price-save">Save 40%</span></div></div>
-        <ul class="price-features">
-          <li><span class="pf-ck">✓</span>Everything in Monthly</li>
-          <li><span class="pf-ck">✓</span>Priority Support</li>
-          <li><span class="pf-ck">✓</span>Early Access Features</li>
-          <li><span class="pf-ck">✓</span>50 AI calls/day</li>
-          <li><span class="pf-ck">✓</span>All Cloud Modes</li>
+      <div class="plan-card featured">
+        <div class="plan-popular">Most Popular</div>
+        <div class="plan-name">Yearly</div>
+        <div class="plan-price" id="p-yearly">--</div>
+        <div class="plan-period">Per year · billed once<br><span class="plan-save">Save 40% vs monthly</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li><span class="pf-yes">✓</span>Everything in Monthly</li>
+          <li><span class="pf-lim">50</span>AI calls/day</li>
+          <li><span class="pf-yes">✓</span>Priority Support</li>
+          <li><span class="pf-yes">✓</span>Early Access Features</li>
+          <li><span class="pf-yes">✓</span>All Cloud Modes</li>
+          <li><span class="pf-yes">✓</span>Auto Updates</li>
         </ul>
-        <a href="pricing.html" class="price-btn pb-accent">Get Yearly</a>
+        <a href="pricing.html" class="plan-btn pb-featured">Get Yearly</a>
       </div>
-      <div class="price-card">
-        <div class="price-name">Lifetime</div>
-        <div class="price-amt" id="p-lifetime">--</div>
-        <div class="price-period">One-time · Never pay again</div>
-        <ul class="price-features">
-          <li><span class="pf-ck">✓</span>Everything in Yearly</li>
-          <li><span class="pf-ck">✓</span>All Future Updates</li>
-          <li><span class="pf-ck">✓</span>Lifetime License</li>
-          <li><span class="pf-ck">✓</span>Priority Support</li>
-          <li><span class="pf-ck">✓</span>1 Device Forever</li>
+      <div class="plan-card">
+        <div class="plan-name">Lifetime</div>
+        <div class="plan-price" id="p-lifetime">--</div>
+        <div class="plan-period">One-time · Never pay again</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li><span class="pf-yes">✓</span>Everything in Yearly</li>
+          <li><span class="pf-yes">✓</span>All Future Updates</li>
+          <li><span class="pf-yes">✓</span>Lifetime License</li>
+          <li><span class="pf-yes">✓</span>Priority Support</li>
+          <li><span class="pf-yes">✓</span>1 Device Forever</li>
+          <li><span class="pf-yes">✓</span>Never Expires</li>
         </ul>
-        <a href="pricing.html" class="price-btn pb-ghost">Get Lifetime</a>
+        <a href="pricing.html" class="plan-btn pb-ghost">Get Lifetime</a>
       </div>
     </div>
   </div>
@@ -232,69 +245,59 @@
 
 <!-- CTA -->
 <section class="cta-section">
-  <div class="cta-inner">
-    <h2 class="cta-title">Ready to boost your cloud gaming?</h2>
-    <p class="cta-sub">Join gamers who use ValCrown to get the most out of every session. Start free — no card needed.</p>
-    <div class="hero-cta">
-      <a href="download.html" class="btn-hero">Download Now</a>
-      <a href="auth.html" class="btn-ghost">Create Account</a>
+  <div class="cta-box">
+    <h2 class="cta-title">Ready to stop losing frames?</h2>
+    <p class="cta-sub">Download the free 3-day trial. No card needed. Works in 30 seconds.</p>
+    <div class="hero-btns">
+      <a href="download.html" class="btn-hero-primary">⬇ Download Free Trial</a>
+      <a href="auth.html" class="btn-hero-secondary">Create Account</a>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer class="footer">
-  <div class="footer-main">
-    <div class="footer-brand-col">
+  <div class="footer-top">
+    <div class="footer-brand">
       <div class="footer-logo">
-        <div class="logo-mark">V</div>
-        <span class="logo-text">ValCrown</span>
+        <div class="nav-logo-icon">V</div>
+        <span class="nav-logo-text">ValCrown</span>
       </div>
-      <p class="footer-desc">AI-powered gaming optimizer built specifically for cloud gaming. Auto-detect, auto-boost, auto-optimize.</p>
-      <div class="social-links">
-        <a href="https://www.instagram.com/xogamesspresence" target="_blank" class="social-btn" title="Instagram">📷</a>
-        <a href="https://www.youtube.com/channel/UCQYo32IcKfPmcn4bNBe0KbA" target="_blank" class="social-btn" title="YouTube">▶️</a>
-        <a href="mailto:support@valcrown.com" class="social-btn" title="Email">✉️</a>
+      <p class="footer-brand-desc">AI-powered gaming optimizer built specifically for cloud gaming. Auto-detect, auto-boost, auto-optimize.</p>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/xogamesspresence" target="_blank" class="social-link" title="Instagram">📷</a>
+        <a href="https://www.youtube.com/channel/UCQYo32IcKfPmcn4bNBe0KbA" target="_blank" class="social-link" title="YouTube">▶</a>
+        <a href="mailto:support@valcrown.com" class="social-link" title="Email">✉</a>
       </div>
     </div>
-    <div>
+    <div class="footer-col">
       <div class="footer-col-title">Product</div>
-      <div class="footer-links-list">
-        <a href="index.html">Home</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="download.html">Download</a>
-        <a href="status.html">Server Status</a>
-        <a href="contact.html">Support</a>
-      </div>
+      <a href="index.html">Home</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="download.html">Download</a>
+      <a href="status.html">Server Status</a>
+      <a href="contact.html">Support</a>
     </div>
-    <div>
+    <div class="footer-col">
       <div class="footer-col-title">Legal</div>
-      <div class="footer-links-list">
-        <a href="terms.html">Terms of Service</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="refund.html">Refund Policy</a>
-        <a href="eula.html">EULA</a>
-        <a href="delivery.html">Instant Delivery</a>
-      </div>
+      <a href="terms.html">Terms of Service</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="refund.html">Refund Policy</a>
+      <a href="eula.html">EULA</a>
+      <a href="delivery.html">Instant Delivery</a>
     </div>
-    <div>
-      <div class="footer-col-title">Company</div>
-      <div class="footer-links-list">
-        <a href="https://xogamess.com" target="_blank">XOGAMES Website</a>
-        <a href="https://www.instagram.com/xogamesspresence" target="_blank">Instagram</a>
-        <a href="https://www.youtube.com/channel/UCQYo32IcKfPmcn4bNBe0KbA" target="_blank">YouTube</a>
-        <a href="mailto:support@valcrown.com">Contact Us</a>
-      </div>
+    <div class="footer-col">
+      <div class="footer-col-title">XOGAMESLTD</div>
+      <a href="https://xogamess.com" target="_blank">Our Website</a>
+      <a href="https://www.instagram.com/xogamesspresence" target="_blank">Instagram</a>
+      <a href="https://www.youtube.com/channel/UCQYo32IcKfPmcn4bNBe0KbA" target="_blank">YouTube</a>
+      <a href="mailto:support@valcrown.com">Contact Us</a>
     </div>
   </div>
   <div class="footer-bottom">
     <div class="footer-copy">© 2026 ValCrown. All rights reserved.</div>
-    <div class="footer-xo">
-      Created by <a href="https://xogamess.com" target="_blank">XOGAMESLTD</a>
-      &nbsp;·&nbsp;
-      <a href="https://xogamess.com" target="_blank">View our other products →</a>
-    </div>
-    <div class="footer-legal">
+    <div class="footer-xo">A company of <a href="https://xogamess.com" target="_blank">XOGAMESLTD</a></div>
+    <div class="footer-legal-links">
       <a href="terms.html">Terms</a>
       <a href="privacy.html">Privacy</a>
       <a href="refund.html">Refund</a>
@@ -310,8 +313,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   initLanguage();
   const hp = document.getElementById('hero-price');
   if (hp) hp.textContent = formatPrice(PRICES.monthly);
-  const cb = document.getElementById('currency-bar');
-  if (cb) cb.textContent = `Prices auto-detected in ${currentCurrency} based on your location`;
+  const ci = document.getElementById('currency-info');
+  if (ci) ci.textContent = 'Prices auto-detected in ' + currentCurrency + ' based on your location · Change currency on the pricing page';
 });
 </script>
 </body>
