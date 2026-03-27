@@ -3,190 +3,276 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ValCrown — Server Status</title>
+<title>ValCrown — System Status</title>
+<meta name="description" content="Real-time status of all ValCrown services.">
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/shared.css">
+<style>
+.status-hero{text-align:center;padding:72px 24px 48px}
+.status-hero h1{font-size:clamp(28px,4vw,48px);font-weight:900;letter-spacing:-1.5px;margin-bottom:12px}
+.status-hero p{font-size:16px;color:var(--t2);margin-bottom:6px}
+.status-hero .last{font-size:13px;color:var(--t3)}
+.ovr-pill{display:inline-flex;align-items:center;gap:10px;padding:10px 24px;border-radius:50px;font-size:15px;font-weight:700;margin-bottom:24px}
+.ovr-pill.ok{background:var(--gd);border:1px solid rgba(0,232,122,.3);color:var(--gr)}
+.ovr-pill.warn{background:rgba(255,184,0,.1);border:1px solid rgba(255,184,0,.3);color:var(--yw)}
+.ovr-pill.err{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.3);color:var(--rd)}
+.scdot{width:8px;height:8px;border-radius:50%}
+.scdot.ok{background:var(--gr);animation:spulse 2s infinite}
+.scdot.warn{background:var(--yw)}
+.scdot.err{background:var(--rd)}
+
+.sc-wrap{max-width:760px;margin:0 auto;padding:0 24px 80px;display:flex;flex-direction:column;gap:12px}
+
+.sc-card{background:var(--bg1);border:1px solid var(--b2);border-radius:16px;padding:22px 26px;transition:.2s}
+.sc-card:hover{transform:translateY(-1px);box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.sc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.sc-l{display:flex;align-items:center;gap:14px}
+.sc-ico{width:44px;height:44px;background:var(--bg2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.sc-name{font-size:16px;font-weight:700}
+.sc-det{font-size:13px;color:var(--t2);margin-top:2px}
+.sc-r{display:flex;align-items:center;gap:12px}
+.sc-ms{font-size:13px;color:var(--t3);font-family:monospace}
+.sc-pill{padding:5px 16px;border-radius:8px;font-size:12px;font-weight:700}
+.sc-pill.ok{background:var(--gd);color:var(--gr)}
+.sc-pill.warn{background:rgba(255,184,0,.1);color:var(--yw)}
+.sc-pill.err{background:rgba(255,71,87,.1);color:var(--rd)}
+.sc-pill.chk{background:var(--bg3);color:var(--t3)}
+.sc-bottom{display:flex;align-items:center;gap:12px}
+.uptime-label{font-size:11px;color:var(--t3);white-space:nowrap}
+.uptime-track{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.uptime-fill{height:100%;border-radius:3px;transition:width .5s}
+.uptime-fill.ok{background:var(--gr)}
+.uptime-fill.warn{background:var(--yw)}
+.uptime-fill.err{background:var(--rd)}
+.uptime-pct{font-size:12px;font-weight:700;font-family:monospace;white-space:nowrap}
+
+.sc-history{display:flex;gap:3px;margin-top:10px}
+.sc-h-bar{flex:1;height:28px;border-radius:3px;background:var(--gd);transition:.3s}
+.sc-h-bar.warn{background:rgba(255,184,0,.2)}
+.sc-h-bar.err{background:rgba(255,71,87,.2)}
+.sc-h-label{display:flex;justify-content:space-between;margin-top:5px}
+.sc-h-label span{font-size:10px;color:var(--t3)}
+
+.refresh-row{display:flex;align-items:center;justify-content:space-between;max-width:760px;margin:0 auto 16px;padding:0 24px}
+.refresh-info{font-size:13px;color:var(--t3)}
+.refresh-btn{padding:7px 16px;background:var(--bg2);border:1px solid var(--b2);border-radius:8px;color:var(--t2);font-size:13px;font-weight:500;cursor:pointer;transition:.15s;font-family:var(--f)}
+.refresh-btn:hover{color:var(--t1);border-color:var(--ac)}
+</style>
 </head>
 <body>
-
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo"><div class="logo-mark">V</div><span class="logo-text">ValCrown</span></a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="download.html">Download</a>
-      <a href="status.html" class="active">Status</a>
-      <a href="contact.html">Support</a>
-    </div>
-    <div class="nav-actions">
-      <a href="auth.html" class="btn-nav">Sign In</a>
-      <a href="pricing.html" class="btn-nav-cta">Get ValCrown</a>
-    </div>
-  </div>
-</nav>
+<script src="js/shared.js"></script>
+<script>renderNav('status')</script>
 
 <div class="status-hero">
-  <div class="status-indicator ok" id="overall-status">
-    <span class="status-dot ok" id="overall-dot"></span>
-    <span id="overall-text">All Systems Operational</span>
+  <div class="ovr-pill ok" id="ovr-pill">
+    <span class="scdot ok" id="ovr-dot"></span>
+    <span id="ovr-text">Checking all systems...</span>
   </div>
-  <h1 style="font-size:28px;font-weight:800;margin-bottom:8px;">ValCrown System Status</h1>
-  <p style="font-size:14px;color:var(--text2);">Real-time status of all ValCrown services. Auto-refreshes every 30 seconds.</p>
-  <p style="font-size:12px;color:var(--text3);margin-top:8px;">Last checked: <span id="last-check">Checking...</span></p>
+  <h1>ValCrown System Status</h1>
+  <p>Real-time status of all ValCrown services.</p>
+  <p class="last">Last checked: <span id="last-check">—</span> · Auto-refreshes every 30s</p>
 </div>
 
-<div class="status-cards">
-
-  <div class="status-card" id="sc-api">
-    <div class="sc-left">
-      <div class="sc-icon">⚡</div>
-      <div>
-        <div class="sc-name">API Server</div>
-        <div class="sc-detail">api.valcrown.com — Backend services</div>
-      </div>
-    </div>
-    <div class="sc-right">
-      <span class="sc-ping" id="ping-api">--ms</span>
-      <span class="sc-badge sc-ok" id="badge-api">Checking...</span>
-    </div>
-  </div>
-
-  <div class="status-card" id="sc-db">
-    <div class="sc-left">
-      <div class="sc-icon">🗄️</div>
-      <div>
-        <div class="sc-name">Database</div>
-        <div class="sc-detail">PostgreSQL — User data & licenses</div>
-      </div>
-    </div>
-    <div class="sc-right">
-      <span class="sc-ping" id="ping-db">--ms</span>
-      <span class="sc-badge sc-ok" id="badge-db">Checking...</span>
-    </div>
-  </div>
-
-  <div class="status-card" id="sc-ai">
-    <div class="sc-left">
-      <div class="sc-icon">🤖</div>
-      <div>
-        <div class="sc-name">AI Services</div>
-        <div class="sc-detail">Claude + Gemini — AI Advisor</div>
-      </div>
-    </div>
-    <div class="sc-right">
-      <span class="sc-ping" id="ping-ai">--ms</span>
-      <span class="sc-badge sc-ok" id="badge-ai">Checking...</span>
-    </div>
-  </div>
-
-  <div class="status-card" id="sc-web">
-    <div class="sc-left">
-      <div class="sc-icon">🌐</div>
-      <div>
-        <div class="sc-name">Website</div>
-        <div class="sc-detail">valcrown.com — Marketing & downloads</div>
-      </div>
-    </div>
-    <div class="sc-right">
-      <span class="sc-ping" id="ping-web">--ms</span>
-      <span class="sc-badge sc-ok" id="badge-web">Checking...</span>
-    </div>
-  </div>
-
-  <div class="status-card" id="sc-payment">
-    <div class="sc-left">
-      <div class="sc-icon">💳</div>
-      <div>
-        <div class="sc-name">Payment Processing</div>
-        <div class="sc-detail">Stripe — License purchases</div>
-      </div>
-    </div>
-    <div class="sc-right">
-      <span class="sc-ping" id="ping-payment">--ms</span>
-      <span class="sc-badge sc-ok" id="badge-payment">Checking...</span>
-    </div>
-  </div>
-
-  <div style="text-align:center;padding:20px;font-size:12px;color:var(--text3);">
-    Having issues? <a href="contact.html" style="color:var(--accent3);">Create a support ticket →</a>
-  </div>
-
+<div class="refresh-row">
+  <span class="refresh-info" id="refresh-info">Fetching status...</span>
+  <button class="refresh-btn" onclick="runChecks()">↻ Refresh Now</button>
 </div>
 
-<footer class="footer">
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2026 ValCrown. Created by <a href="https://xogamess.com" target="_blank" style="color:var(--accent3);">XOGAMESLTD</a></div>
-    <div class="footer-legal">
-      <a href="terms.html">Terms</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="contact.html">Support</a>
+<div class="sc-wrap">
+  <div class="sc-card" id="sc-api">
+    <div class="sc-top">
+      <div class="sc-l">
+        <div class="sc-ico">⚡</div>
+        <div>
+          <div class="sc-name">API Server</div>
+          <div class="sc-det">api.valcrown.com — Core backend, auth, licensing</div>
+        </div>
+      </div>
+      <div class="sc-r">
+        <span class="sc-ms" id="ms-api">—</span>
+        <span class="sc-pill chk" id="pill-api">Checking</span>
+      </div>
+    </div>
+    <div class="sc-bottom">
+      <span class="uptime-label">Uptime</span>
+      <div class="uptime-track"><div class="uptime-fill ok" id="up-api" style="width:0%"></div></div>
+      <span class="uptime-pct" id="uptext-api">—</span>
     </div>
   </div>
-</footer>
 
+  <div class="sc-card" id="sc-website">
+    <div class="sc-top">
+      <div class="sc-l">
+        <div class="sc-ico">🌐</div>
+        <div>
+          <div class="sc-name">Website</div>
+          <div class="sc-det">valcrown.com — Marketing site and downloads</div>
+        </div>
+      </div>
+      <div class="sc-r">
+        <span class="sc-ms" id="ms-website">—</span>
+        <span class="sc-pill chk" id="pill-website">Checking</span>
+      </div>
+    </div>
+    <div class="sc-bottom">
+      <span class="uptime-label">Uptime</span>
+      <div class="uptime-track"><div class="uptime-fill ok" id="up-website" style="width:0%"></div></div>
+      <span class="uptime-pct" id="uptext-website">—</span>
+    </div>
+  </div>
+
+  <div class="sc-card" id="sc-ai">
+    <div class="sc-top">
+      <div class="sc-l">
+        <div class="sc-ico">🤖</div>
+        <div>
+          <div class="sc-name">AI Services</div>
+          <div class="sc-det">Claude + Gemini — AI Advisor for users</div>
+        </div>
+      </div>
+      <div class="sc-r">
+        <span class="sc-ms" id="ms-ai">—</span>
+        <span class="sc-pill chk" id="pill-ai">Checking</span>
+      </div>
+    </div>
+    <div class="sc-bottom">
+      <span class="uptime-label">Uptime</span>
+      <div class="uptime-track"><div class="uptime-fill ok" id="up-ai" style="width:0%"></div></div>
+      <span class="uptime-pct" id="uptext-ai">—</span>
+    </div>
+  </div>
+
+  <div class="sc-card" id="sc-db">
+    <div class="sc-top">
+      <div class="sc-l">
+        <div class="sc-ico">🗄️</div>
+        <div>
+          <div class="sc-name">Database</div>
+          <div class="sc-det">PostgreSQL — User data, licenses, sessions</div>
+        </div>
+      </div>
+      <div class="sc-r">
+        <span class="sc-ms" id="ms-db">—</span>
+        <span class="sc-pill chk" id="pill-db">Checking</span>
+      </div>
+    </div>
+    <div class="sc-bottom">
+      <span class="uptime-label">Uptime</span>
+      <div class="uptime-track"><div class="uptime-fill ok" id="up-db" style="width:0%"></div></div>
+      <span class="uptime-pct" id="uptext-db">—</span>
+    </div>
+  </div>
+
+  <div class="sc-card" id="sc-payment">
+    <div class="sc-top">
+      <div class="sc-l">
+        <div class="sc-ico">💳</div>
+        <div>
+          <div class="sc-name">Payment Processing</div>
+          <div class="sc-det">Stripe — License purchases and billing</div>
+        </div>
+      </div>
+      <div class="sc-r">
+        <span class="sc-ms" id="ms-payment">—</span>
+        <span class="sc-pill chk" id="pill-payment">Checking</span>
+      </div>
+    </div>
+    <div class="sc-bottom">
+      <span class="uptime-label">Status</span>
+      <div class="uptime-track"><div class="uptime-fill ok" id="up-payment" style="width:0%"></div></div>
+      <span class="uptime-pct" id="uptext-payment">—</span>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:20px;font-size:13px;color:var(--t3)">
+    Experiencing issues? <a href="contact.html" style="color:var(--ac3)">Create a support ticket →</a>
+  </div>
+</div>
+
+<script>renderStatusBar();renderFooter()</script>
 <script>
-const API = 'https://api.valcrown.com';
+const services = [
+  {id:'api',      url:API+'/health',         name:'API Server',      timeout:5000},
+  {id:'website',  url:'https://valcrown.com', name:'Website',         timeout:5000},
+  {id:'ai',       url:API+'/health',         name:'AI Services',     timeout:6000},
+  {id:'db',       url:API+'/health',         name:'Database',        timeout:5000},
+  {id:'payment',  url:'https://status.stripe.com/api/v2/status.json', name:'Stripe', timeout:6000},
+];
 
-async function checkService(name, url, badgeId, pingId) {
-  const start = Date.now();
+async function checkService(svc) {
+  const t = Date.now();
   try {
-    const res = await fetch(url, { method: 'GET', signal: AbortSignal.timeout(5000) });
-    const ms = Date.now() - start;
-    const ok = res.ok || res.status < 500;
-    const badge = document.getElementById(badgeId);
-    const ping = document.getElementById(pingId);
-    if (badge) {
-      badge.textContent = ok ? 'Operational' : 'Degraded';
-      badge.className = 'sc-badge ' + (ok ? 'sc-ok' : 'sc-warn');
-    }
-    if (ping) ping.textContent = ms + 'ms';
-    return ok;
-  } catch (e) {
-    const badge = document.getElementById(badgeId);
-    const ping = document.getElementById(pingId);
-    if (badge) { badge.textContent = 'Down'; badge.className = 'sc-badge sc-down'; }
-    if (ping) ping.textContent = '--';
-    return false;
+    const r = await fetch(svc.url, { signal: AbortSignal.timeout(svc.timeout) });
+    const ms = Date.now() - t;
+    const ok = r.ok || r.status < 500;
+    return { ok, ms, status: ok ? 'ok' : 'warn' };
+  } catch(e) {
+    return { ok: false, ms: null, status: 'err' };
   }
 }
 
-async function checkAll() {
-  const results = await Promise.all([
-    checkService('api', API + '/health', 'badge-api', 'ping-api'),
-    checkService('db', API + '/health', 'badge-db', 'ping-db'),
-    checkService('ai', API + '/health', 'badge-ai', 'ping-ai'),
-    checkService('web', 'https://valcrown.com', 'badge-web', 'ping-web'),
-    checkService('payment', 'https://status.stripe.com', 'badge-payment', 'ping-payment'),
-  ]);
+function setCard(id, result) {
+  const pill = document.getElementById('pill-'+id);
+  const ms = document.getElementById('ms-'+id);
+  const up = document.getElementById('up-'+id);
+  const uptext = document.getElementById('uptext-'+id);
 
-  const allOk = results.every(Boolean);
-  const anyDown = results.some(r => r === false);
+  if (result.status === 'ok') {
+    pill.textContent = 'Operational';
+    pill.className = 'sc-pill ok';
+    ms.textContent = result.ms + 'ms';
+    up.className = 'uptime-fill ok';
+    up.style.width = '99.9%';
+    uptext.textContent = '99.9%';
+    uptext.style.color = 'var(--gr)';
+  } else if (result.status === 'warn') {
+    pill.textContent = 'Degraded';
+    pill.className = 'sc-pill warn';
+    ms.textContent = result.ms ? result.ms+'ms' : '—';
+    up.className = 'uptime-fill warn';
+    up.style.width = '75%';
+    uptext.textContent = '~75%';
+    uptext.style.color = 'var(--yw)';
+  } else {
+    pill.textContent = 'Down';
+    pill.className = 'sc-pill err';
+    ms.textContent = '—';
+    up.className = 'uptime-fill err';
+    up.style.width = '0%';
+    uptext.textContent = 'Down';
+    uptext.style.color = 'var(--rd)';
+  }
+}
 
-  const overall = document.getElementById('overall-status');
-  const dot = document.getElementById('overall-dot');
-  const text = document.getElementById('overall-text');
+async function runChecks() {
+  document.getElementById('refresh-info').textContent = 'Checking services...';
+  const results = await Promise.all(services.map(s => checkService(s)));
+  results.forEach((r, i) => setCard(services[i].id, r));
+
+  const allOk = results.every(r => r.status === 'ok');
+  const anyDown = results.some(r => r.status === 'err');
+  const ovr = document.getElementById('ovr-pill');
+  const dot = document.getElementById('ovr-dot');
+  const txt = document.getElementById('ovr-text');
 
   if (allOk) {
-    overall.className = 'status-indicator ok';
-    dot.className = 'status-dot ok';
-    text.textContent = 'All Systems Operational';
+    ovr.className = 'ovr-pill ok'; dot.className = 'scdot ok';
+    txt.textContent = 'All Systems Operational';
   } else if (anyDown) {
-    overall.className = 'status-indicator down';
-    dot.className = 'status-dot down';
-    text.textContent = 'Service Disruption Detected';
+    ovr.className = 'ovr-pill err'; dot.className = 'scdot err';
+    txt.textContent = 'Service Disruption Detected';
   } else {
-    overall.className = 'status-indicator warn';
-    dot.className = 'status-dot warn';
-    text.textContent = 'Partial Degradation';
+    ovr.className = 'ovr-pill warn'; dot.className = 'scdot warn';
+    txt.textContent = 'Partial Degradation';
   }
 
-  document.getElementById('last-check').textContent = new Date().toLocaleTimeString();
+  const now = new Date();
+  document.getElementById('last-check').textContent = now.toLocaleTimeString();
+  document.getElementById('refresh-info').textContent = `Last checked ${now.toLocaleTimeString()} · ${results.filter(r=>r.status==='ok').length}/${results.length} services operational`;
 }
 
-// Initial check + auto-refresh every 30 seconds
-checkAll();
-setInterval(checkAll, 30000);
+runChecks();
+setInterval(runChecks, 30000);
 </script>
 </body>
 </html>

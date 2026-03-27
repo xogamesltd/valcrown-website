@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ValCrown — Download</title>
+<meta name="description" content="Download ValCrown for Windows. Free 3-day trial included. No credit card needed.">
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
-<link rel="stylesheet" href="css/style.css">
-<script src="js/i18n.js"></script>
+<link rel="stylesheet" href="css/shared.css">
 </head>
 <body>
-<nav class="nav"><div class="nav-inner"><a href="index.html" class="nav-logo"><div class="logo-mark">V</div><span class="logo-text">ValCrown</span></a><div class="nav-links"><a href="index.html">Home</a><a href="pricing.html">Pricing</a><a href="status.html">Status</a><a href="contact.html">Support</a></div><div class="nav-actions"><a href="auth.html" class="btn-nav">Sign In</a><a href="pricing.html" class="btn-nav-cta">Get ValCrown</a></div></div></nav>
-<div class="dl-section">
-  <div class="dl-box">
-    <div class="dl-icon">⬇️</div>
-    <div class="dl-title">Download ValCrown</div>
-    <div class="dl-sub">Free 3-day trial included. No credit card needed. Full version requires a license key.</div>
-    <a href="#" class="dl-btn" onclick="downloadApp();return false;">
-      <span>⊞</span> Download for Windows
-    </a>
-    <div class="dl-version">Version 1.0.0 · Windows 10/11 64-bit · ~80MB</div>
+<script src="js/shared.js"></script>
+<script>renderNav('download')</script>
+
+<div class="dl-wrap">
+  <div class="dl-card">
+    <div class="dl-ico">⬇️</div>
+    <div class="dl-h">Download ValCrown</div>
+    <div class="dl-sub">Free 3-day trial included — no credit card needed.<br>Full version requires a license key.</div>
+    <button class="dl-btn" onclick="downloadApp()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.8 20.2H6.2c-1.7 0-3.2-1.4-3.2-3.2v-1.2h2v1.2c0 .7.5 1.2 1.2 1.2h11.6c.7 0 1.2-.5 1.2-1.2V17h2v.2c0 1.6-1.4 3-3.2 3zM12 15.7l-5-5 1.4-1.4 2.6 2.6V3h2v8.9l2.6-2.6 1.4 1.4-5 5z"/></svg>
+      Download for Windows
+    </button>
+    <div class="dl-ver">Version 1.0.0 · Windows 10/11 64-bit · ~80MB</div>
     <div class="dl-reqs">
-      <div class="dl-req-title">System Requirements</div>
+      <div class="dl-req-h">System Requirements</div>
       <div class="dl-req-item">Windows 10 or Windows 11 (64-bit)</div>
       <div class="dl-req-item">4 GB RAM minimum (8 GB recommended)</div>
       <div class="dl-req-item">Administrator privileges for boost features</div>
@@ -27,17 +31,35 @@
       <div class="dl-req-item">Discord (optional — for Rich Presence)</div>
     </div>
   </div>
-  <div class="steps-wrap">
-    <h2 style="font-size:18px;font-weight:700;margin-bottom:16px;text-align:center;">How to get started</h2>
-    <div class="step-item"><div class="step-num accent-bg">1</div><div><div class="step-name">Download and install</div><div class="step-sub">Run the installer as Administrator — takes 30 seconds</div></div></div>
-    <div class="step-item"><div class="step-num accent-bg">2</div><div><div class="step-name">Create your account</div><div class="step-sub">Sign up inside the app or at valcrown.com/auth.html</div></div></div>
-    <div class="step-item"><div class="step-num accent-bg">3</div><div><div class="step-name">Enter your license key</div><div class="step-sub">Redeem your key to activate. Free trial needs no key.</div></div></div>
-    <div class="step-item"><div class="step-num green-bg">✓</div><div><div class="step-name">Start gaming</div><div class="step-sub">ValCrown auto-detects your games and boosts automatically</div></div></div>
+
+  <div class="dl-steps">
+    <h2 style="font-size:22px;font-weight:800;text-align:center;margin-bottom:20px;letter-spacing:-.5px">How to get started</h2>
+    <div class="dl-step">
+      <div class="dl-num ac">1</div>
+      <div><div class="dl-sn">Download and install</div><div class="dl-ss">Run the installer as Administrator — takes 30 seconds</div></div>
+    </div>
+    <div class="dl-step">
+      <div class="dl-num ac">2</div>
+      <div><div class="dl-sn">Create your account</div><div class="dl-ss">Sign up inside the app or at valcrown.com/auth.html</div></div>
+    </div>
+    <div class="dl-step">
+      <div class="dl-num ac">3</div>
+      <div><div class="dl-sn">Enter your license key</div><div class="dl-ss">Redeem your key to activate. Free trial needs no key.</div></div>
+    </div>
+    <div class="dl-step">
+      <div class="dl-num gr">✓</div>
+      <div><div class="dl-sn">Start gaming</div><div class="dl-ss">ValCrown auto-detects your games and boosts automatically</div></div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:36px;padding:24px;background:var(--bg1);border:1px solid var(--b1);border-radius:16px;max-width:600px;margin-left:auto;margin-right:auto">
+    <div style="font-size:14px;color:var(--t2);margin-bottom:8px">⚠️ Windows security warning is normal</div>
+    <div style="font-size:13px;color:var(--t3);line-height:1.6">ValCrown is a new app so Windows SmartScreen may show a warning. Click <strong style="color:var(--t2)">"More info"</strong> then <strong style="color:var(--t2)">"Run anyway"</strong> to install. The app is safe — you can verify on <a href="https://github.com/xogamesltd/valcrown-app" target="_blank" style="color:var(--ac3)">our GitHub</a>.</div>
   </div>
 </div>
-<footer class="footer"><div class="footer-bottom"><div class="footer-copy">© 2026 ValCrown. Created by <a href="https://xogamess.com" target="_blank" style="color:var(--accent3);">XOGAMESLTD</a></div><div class="footer-legal"><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="refund.html">Refund</a></div></div></footer>
+
+<script>renderStatusBar();renderFooter()</script>
 <script>
-document.addEventListener('DOMContentLoaded', initLanguage);
 function downloadApp() {
   window.location.href = 'https://github.com/xogamesltd/valcrown-app/releases/download/v1.0.0/ValCrown-Setup-1.0.0.exe';
 }
