@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ValCrown — Dashboard</title>
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="stylesheet" href="css/shared.css">
+<style>
+.dash{max-width:900px;margin:0 auto;padding:40px 24px 80px}
+.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:14px}
+.dash-welcome{font-size:26px;font-weight:800;letter-spacing:-.5px}
+.dash-sub{font-size:14px;color:var(--t2);margin-top:4px}
+.dash-actions{display:flex;gap:10px}
+.dbtn{padding:9px 20px;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--f);border:none;transition:.15s}
+.dbtn.primary{background:linear-gradient(135deg,#7c6aff,#a89fff);color:#fff}
+.dbtn.primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(124,106,255,.35)}
+.dbtn.ghost{background:var(--bg2);border:1px solid var(--b2);color:var(--t2)}
+.dbtn.ghost:hover{color:var(--t1);border-color:var(--ac)}
+.dbtn.danger{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.2);color:#ff4757}
+.dbtn.danger:hover{background:rgba(255,71,87,.2)}
+
+/* License card */
+.lic-card{background:var(--bg1);border:1px solid var(--b2);border-radius:18px;padding:28px;margin-bottom:20px;position:relative;overflow:hidden}
+.lic-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#7c6aff,#00e87a)}
+.lic-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.lic-plan{font-size:24px;font-weight:900;letter-spacing:-.5px}
+.lic-status{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700}
+.lic-dot{width:8px;height:8px;border-radius:50%}
+.lic-dot.active{background:#00e87a;animation:op 2s infinite}
+.lic-dot.expired{background:#ff4757}
+.lic-dot.trial{background:#ffb800;animation:op 2s infinite}
+@keyframes op{0%,100%{box-shadow:0 0 0 2px rgba(0,232,122,.2)}50%{box-shadow:0 0 0 6px rgba(0,232,122,0)}}
+.lic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.lic-item{background:var(--bg2);border-radius:10px;padding:14px}
+.lic-item-label{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.lic-item-val{font-size:14px;font-weight:600;word-break:break-all;font-family:monospace}
+.lic-item-val.key{color:var(--ac3);font-size:13px}
+
+/* Action cards */
+.action-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:20px}
+.acard{background:var(--bg1);border:1px solid var(--b2);border-radius:16px;padding:22px;transition:.2s;cursor:pointer;text-decoration:none;color:inherit;display:block}
+.acard:hover{border-color:var(--ac);transform:translateY(-2px)}
+.acard-ico{font-size:28px;margin-bottom:12px}
+.acard-title{font-size:15px;font-weight:700;margin-bottom:6px}
+.acard-desc{font-size:13px;color:var(--t2);line-height:1.55}
+
+/* No license state */
+.no-lic{background:var(--bg1);border:1px solid var(--b2);border-radius:18px;padding:48px;text-align:center;margin-bottom:20px}
+.no-lic-ico{font-size:52px;margin-bottom:16px}
+.no-lic-h{font-size:22px;font-weight:800;margin-bottom:10px}
+.no-lic-p{font-size:15px;color:var(--t2);margin-bottom:24px;line-height:1.65;max-width:400px;margin-left:auto;margin-right:auto}
+
+/* Loading */
+.loading{display:flex;align-items:center;justify-content:center;min-height:300px;font-size:16px;color:var(--t3)}
+.spin{width:24px;height:24px;border:2px solid var(--b2);border-top-color:var(--ac);border-radius:50%;animation:spin .7s linear infinite;margin-right:12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Alert */
+.alert{padding:12px 16px;border-radius:9px;font-size:13px;margin-bottom:16px;display:none;line-height:1.5}
+.alert.show{display:block}
+.alert.ok{background:rgba(0,232,122,.1);border:1px solid rgba(0,232,122,.3);color:#00e87a}
+.alert.err{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.3);color:#ff4757}
+
+@media(max-width:600px){.lic-grid{grid-template-columns:1fr}.action-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<script src="js/shared.js"></script>
+<script>
+const API = 'https://api.valcrown.com';
+
+// Redirect to login if not authenticated
+const token = localStorage.getItem('vc_token');
+if (!token) { window.location.href = 'auth.html'; }
+
+function getUser() {
+  try { return JSON.parse(localStorage.getItem('vc_user') || '{}'); } catch(e) { return {}; }
+}
+function getLicense() {
+  try { return JSON.parse(localStorage.getItem('vc_license') || 'null'); } catch(e) { return null; }
+}
+function signOut() {
+  localStorage.removeItem('vc_token');
+  localStorage.removeItem('vc_refresh');
+  localStorage.removeItem('vc_email');
+  localStorage.removeItem('vc_user');
+  localStorage.removeItem('vc_license');
+  window.location.href = 'auth.html';
+}
+
+function formatDate(d) {
+  if (!d) return 'Never';
+  const date = new Date(d);
+  return date.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+}
+
+function planLabel(plan) {
+  const map = { trial:'3-Day Trial', trial14:'14-Day Trial', pro:'Pro', monthly:'Monthly', yearly:'Yearly', lifetime:'Lifetime', admin:'Admin' };
+  return map[plan] || plan || 'Unknown';
+}
+</script>
+<script>renderNav()</script>
+
+<div class="dash" id="dash-content">
+  <div class="loading"><div class="spin"></div>Loading your account...</div>
+</div>
+
+<script>renderStatusBar(); renderFooter();</script>
+
+<script>
+async function loadDashboard() {
+  const user    = getUser();
+  const license = getLicense();
+  const email   = localStorage.getItem('vc_email') || user.email || '';
+  const name    = user.fullName || user.full_name || email.split('@')[0] || 'Gamer';
+
+  const content = document.getElementById('dash-content');
+
+  // Try to refresh license info from server
+  let lic = license;
+  try {
+    const res = await fetch(API + '/api/auth/validate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify({ deviceVid: 'WEB-' + Math.abs(Date.now()).toString(16).toUpperCase() })
+    });
+    if (res.ok) {
+      const d = await res.json();
+      if (d.plan) lic = { plan: d.plan, status: 'active', expiresAt: d.expiresAt };
+      if (d.role === 'admin') lic = { plan: 'admin', status: 'active' };
+    } else if (res.status === 401) {
+      // Token expired — sign out
+      signOut(); return;
+    }
+  } catch(e) { /* offline — use cached */ }
+
+  const isAdmin  = user.role === 'admin' || (lic && lic.plan === 'admin');
+  const hasLic   = lic && lic.status === 'active';
+  const isExpired = lic && lic.expiresAt && new Date(lic.expiresAt) < new Date();
+
+  content.innerHTML = `
+    <div class="dash-header">
+      <div>
+        <div class="dash-welcome">Welcome back, ${name} 👋</div>
+        <div class="dash-sub">${email}</div>
+      </div>
+      <div class="dash-actions">
+        ${isAdmin ? `<a href="https://admin.valcrown.com" class="dbtn primary" target="_blank">Admin Panel →</a>` : ''}
+        <a href="download.html" class="dbtn ghost">Download App</a>
+        <button class="dbtn danger" onclick="signOut()">Sign Out</button>
+      </div>
+    </div>
+
+    <div id="dash-alert" class="alert"></div>
+
+    ${hasLic && !isExpired ? `
+    <div class="lic-card">
+      <div class="lic-top">
+        <div>
+          <div class="lic-plan">${planLabel(lic.plan)} Plan</div>
+          <div style="font-size:13px;color:var(--t2);margin-top:4px">Your active ValCrown license</div>
+        </div>
+        <div class="lic-status">
+          <span class="lic-dot active"></span>
+          <span style="color:#00e87a">Active</span>
+        </div>
+      </div>
+      <div class="lic-grid">
+        <div class="lic-item">
+          <div class="lic-item-label">Plan</div>
+          <div class="lic-item-val">${planLabel(lic.plan)}</div>
+        </div>
+        <div class="lic-item">
+          <div class="lic-item-label">Status</div>
+          <div class="lic-item-val" style="color:#00e87a">Active ✓</div>
+        </div>
+        <div class="lic-item">
+          <div class="lic-item-label">Expires</div>
+          <div class="lic-item-val">${lic.expiresAt ? formatDate(lic.expiresAt) : 'Never (Lifetime)'}</div>
+        </div>
+      </div>
+    </div>` : isExpired ? `
+    <div class="lic-card" style="border-color:rgba(255,71,87,.3)">
+      <div class="lic-top">
+        <div>
+          <div class="lic-plan" style="color:#ff4757">License Expired</div>
+          <div style="font-size:13px;color:var(--t2);margin-top:4px">Your ${planLabel(lic.plan)} plan expired on ${formatDate(lic.expiresAt)}</div>
+        </div>
+        <div class="lic-status"><span class="lic-dot expired"></span><span style="color:#ff4757">Expired</span></div>
+      </div>
+      <a href="pricing.html" class="dbtn primary" style="display:inline-block;margin-top:4px">Renew License →</a>
+    </div>` : `
+    <div class="no-lic">
+      <div class="no-lic-ico">🔑</div>
+      <div class="no-lic-h">No active license</div>
+      <div class="no-lic-p">Get a ValCrown license to start boosting your cloud gaming sessions. Start with the free 3-day trial — no card needed.</div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <a href="download.html" class="dbtn ghost">Start Free Trial</a>
+        <a href="pricing.html" class="dbtn primary">View Plans →</a>
+      </div>
+    </div>`}
+
+    <div class="action-grid">
+      <a href="download.html" class="acard">
+        <div class="acard-ico">⬇️</div>
+        <div class="acard-title">Download ValCrown</div>
+        <div class="acard-desc">Get the latest version of ValCrown for Windows. Installs in 30 seconds.</div>
+      </a>
+      <a href="pricing.html" class="acard">
+        <div class="acard-ico">⚡</div>
+        <div class="acard-title">${hasLic ? 'Upgrade Plan' : 'Get a License'}</div>
+        <div class="acard-desc">${hasLic ? 'Upgrade to a higher tier for more AI calls and priority support.' : 'Choose from 5 plans starting from free. 7-day money back guarantee.'}</div>
+      </a>
+      <a href="status.html" class="acard">
+        <div class="acard-ico">🟢</div>
+        <div class="acard-title">Server Status</div>
+        <div class="acard-desc">Check real-time health of all ValCrown services and API uptime.</div>
+      </a>
+      <a href="contact.html" class="acard">
+        <div class="acard-ico">💬</div>
+        <div class="acard-title">Support</div>
+        <div class="acard-desc">Create a support ticket. We respond within 24 hours on business days.</div>
+      </a>
+    </div>
+
+    <div style="background:var(--bg1);border:1px solid var(--b2);border-radius:14px;padding:20px 24px;font-size:13px;color:var(--t2)">
+      Signed in as <strong style="color:var(--t1)">${email}</strong> · 
+      <a href="auth.html?mode=login" style="color:var(--ac3)" onclick="signOut();return false">Sign out</a> · 
+      <a href="contact.html" style="color:var(--ac3)">Need help?</a>
+    </div>
+  `;
+}
+
+loadDashboard();
+</script>
+</body>
+</html>
