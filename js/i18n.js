@@ -178,32 +178,41 @@ const TRANSLATIONS = {
 let currentLang = 'en';
 
 function initLanguage() {
-  // Detect browser language
-  const browserLang = navigator.language?.split('-')[0] || 'en';
+  const browserLang = (navigator.language || 'en').split('-')[0];
   const savedLang = localStorage.getItem('vc_lang');
   const lang = savedLang || (TRANSLATIONS[browserLang] ? browserLang : 'en');
-  setLanguage(lang, false);
+  // Apply immediately for already-rendered content
+  applyTranslations(lang);
+  // Also apply after a short delay to catch nav elements injected by shared.js
+  setTimeout(() => applyTranslations(lang), 100);
 }
 
 function setLanguage(lang, save = true) {
   if (!TRANSLATIONS[lang]) lang = 'en';
   currentLang = lang;
   if (save) localStorage.setItem('vc_lang', lang);
+  applyTranslations(lang);
+}
 
+function applyTranslations(lang) {
+  if (!TRANSLATIONS[lang]) lang = 'en';
   const t = TRANSLATIONS[lang];
 
-  // Apply translations to all elements with data-i18n
+  // Apply to all data-i18n elements
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (t[key]) el.textContent = t[key];
+    if (t[key] !== undefined) el.textContent = t[key];
   });
 
-  // Update language selector
+  // Update language selector (may not exist yet)
   const sel = document.getElementById('lang-select');
   if (sel) sel.value = lang;
 
   // RTL for Arabic
   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+  // Update html lang attribute
+  document.documentElement.lang = lang;
 }
 
 function t(key) {

@@ -471,16 +471,10 @@ if (params.get('email')) {
   $('f-email').value = params.get('email');
 }
 
-// Already logged in? Go to dashboard
+// Already logged in? Redirect to dashboard immediately
 const existingToken = localStorage.getItem('vc_token');
-if (existingToken && !params.get('reset_token')) {
-  // Quick check if token still valid
-  fetch(API + '/health').then(() => {
-    window.location.href = 'dashboard.html';
-  }).catch(() => {
-    // Offline — clear token and stay on auth
-    localStorage.removeItem('vc_token');
-  });
+if (existingToken && existingToken.length > 10 && !params.get('reset_token')) {
+  window.location.replace('dashboard.html');
 }
 </script>
 </body>

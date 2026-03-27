@@ -198,7 +198,7 @@ function showAlert(id, type, msg) {
   setTimeout(() => el.classList.remove('show'), 4000);
 }
 </script>
-<script>renderNav()</script>
+<script>renderNav('')</script>
 
 <div class="dash-wrap">
   <!-- Loading state -->
@@ -376,33 +376,48 @@ let licenseData = null;
 let deviceData = null;
 
 async function loadDashboard() {
-  try {
-    // Load from cache first
-    userData    = getUser();
-    licenseData = getLicense();
+  // Always load from cache first — never block on API
+  userData    = getUser();
+  licenseData = getLicense();
 
-    // Try to get fresh data from server
+  // Show dashboard immediately with cached data
+  renderDashboard();
+  document.getElementById('dash-loading').style.display = 'none';
+  document.getElementById('dash-main').style.display = 'block';
+
+  // Try to refresh from server in background (non-blocking)
+  try {
     const res = await apiFetch('/api/auth/validate', {
       method: 'POST',
       body: JSON.stringify({ deviceVid: 'WEB-DASHBOARD' })
     });
 
-    if (res.status === 401) { signOut(); return; }
+    // Only sign out if token is explicitly rejected (401) AND we get a clear auth error
+    if (res.status === 401) {
+      const d = await res.json().catch(() => ({}));
+      // Only sign out if it's definitely an auth error, not a server error
+      if (d.code === 'INVALID_TOKEN' || d.code === 'TOKEN_EXPIRED') {
+        signOut(); return;
+      }
+    }
 
     if (res.ok) {
-      const d = await res.json();
+      const d = await res.json().catch(() => ({}));
       if (d.plan) {
         licenseData = { plan: d.plan, status: 'active', expiresAt: d.expiresAt };
         localStorage.setItem('vc_license', JSON.stringify(licenseData));
+        // Re-render with fresh data
+        renderLicenseBlock('overview-lic');
+        renderLicenseBlock('sub-content');
+      }
+      if (d.user) {
+        userData = { ...userData, ...d.user };
+        localStorage.setItem('vc_user', JSON.stringify(userData));
       }
     }
-  } catch(e) { /* use cached */ }
+  } catch(e) { /* offline — cached data shown */ }
 
-  renderDashboard();
-  document.getElementById('dash-loading').style.display = 'none';
-  document.getElementById('dash-main').style.display = 'block';
-
-  // Load device info
+  // Load device info in background
   loadDeviceInfo();
 }
 
