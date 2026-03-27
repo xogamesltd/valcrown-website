@@ -1,14 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ValCrown — Sign In</title>
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <link rel="stylesheet" href="css/shared.css">
-<script src="js/shared.js"></script>
+<style>
+.auth-pg{min-height:calc(100vh - 64px);display:flex;align-items:center;justify-content:center;padding:28px}
+.auth-card{background:var(--bg1);border:1px solid var(--b2);border-radius:20px;padding:40px;width:100%;max-width:420px}
+.auth-logo{text-align:center;margin-bottom:28px}
+.auth-ico{width:56px;height:56px;background:linear-gradient(135deg,#7c6aff,#a89fff);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:#fff;margin:0 auto 12px;box-shadow:0 8px 28px rgba(124,106,255,.3)}
+.auth-title{font-size:22px;font-weight:800;letter-spacing:-.5px}
+.auth-subt{font-size:14px;color:var(--t2);margin-top:4px}
+.atabs{display:flex;background:var(--bg2);border-radius:10px;padding:4px;gap:3px;margin-bottom:22px}
+.atab{flex:1;height:36px;border:none;border-radius:7px;font-size:14px;font-weight:600;cursor:pointer;transition:.15s;background:none;color:var(--t2);font-family:var(--f)}
+.atab.active{background:var(--bg3);color:var(--t1)}
+.fgrp{margin-bottom:16px}
+.flbl{font-size:12px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px;display:block}
+.finp{width:100%;background:var(--bg2);border:1px solid var(--b2);border-radius:9px;padding:12px 14px;color:var(--t1);font-size:14px;outline:none;transition:border-color .15s;font-family:var(--f)}
+.finp:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,106,255,.12)}
+.finp::placeholder{color:var(--t3)}
+.abtn{width:100%;height:48px;background:linear-gradient(135deg,#7c6aff,#a89fff);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:.2s;font-family:var(--f)}
+.abtn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(124,106,255,.35)}
+.abtn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.aft{text-align:center;margin-top:16px;font-size:13px;color:var(--t3)}
+.aft a{color:var(--ac3);font-weight:500;cursor:pointer}
+.ferr{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.3);color:#ff4757;padding:12px 16px;border-radius:9px;font-size:13px;margin-bottom:16px;display:none;line-height:1.5}
+.ferr.show{display:block}
+.fok{background:rgba(0,232,122,.1);border:1px solid rgba(0,232,122,.3);color:#00e87a;padding:12px 16px;border-radius:9px;font-size:13px;margin-bottom:16px;display:none;line-height:1.5}
+.fok.show{display:block}
+</style>
 </head>
 <body>
-<script>renderNav()</script>
 <script src="js/shared.js"></script>
 <script>renderNav()</script>
 <div class="auth-pg">
@@ -24,43 +48,107 @@
     </div>
     <div class="ferr" id="auth-err"></div>
     <div class="fok" id="auth-ok"></div>
-    <div class="fgrp" id="name-grp" style="display:none"><label class="flbl">Full Name</label><input class="finp" type="text" id="fullName" placeholder="Your name"></div>
-    <div class="fgrp"><label class="flbl">Email</label><input class="finp" type="email" id="email" placeholder="your@email.com"></div>
-    <div class="fgrp"><label class="flbl">Password</label><input class="finp" type="password" id="password" placeholder="Minimum 8 characters"></div>
+    <div class="fgrp" id="name-grp" style="display:none">
+      <label class="flbl">Full Name</label>
+      <input class="finp" type="text" id="fullName" placeholder="Your full name" autocomplete="name">
+    </div>
+    <div class="fgrp">
+      <label class="flbl">Email Address</label>
+      <input class="finp" type="email" id="email" placeholder="your@email.com" autocomplete="email">
+    </div>
+    <div class="fgrp">
+      <label class="flbl">Password</label>
+      <input class="finp" type="password" id="password" placeholder="Minimum 8 characters" autocomplete="current-password">
+    </div>
+    <div id="forgot-row" style="text-align:right;margin:-8px 0 16px">
+      <a href="mailto:support@valcrown.com" style="font-size:12px;color:var(--t3)">Forgot password?</a>
+    </div>
     <button class="abtn" id="auth-btn" onclick="doAuth()">Sign In</button>
-    <div class="aft">No account? <a onclick="switchTab('register')" id="sw">Create one free →</a></div>
+    <div class="aft">
+      <span id="sw-text">No account?</span>
+      <a onclick="switchTab(mode==='login'?'register':'login')" id="sw-link">Create one free →</a>
+    </div>
   </div>
 </div>
+<script>renderStatusBar();renderFooter()</script>
 <script>
-const API='https://api.valcrown.com';let mode='login';
+const API='https://api.valcrown.com';
+let mode='login';
+
 function switchTab(m){
   mode=m;
   document.querySelectorAll('.atab').forEach((t,i)=>t.classList.toggle('active',(m==='login'&&i===0)||(m==='register'&&i===1)));
   document.getElementById('name-grp').style.display=m==='register'?'block':'none';
+  document.getElementById('forgot-row').style.display=m==='login'?'':'none';
   document.getElementById('auth-sub').textContent=m==='login'?'Sign in to your account':'Create your free account';
   document.getElementById('auth-btn').textContent=m==='login'?'Sign In':'Create Account';
-  document.getElementById('sw').textContent=m==='login'?'Create one free →':'Sign in →';
-  document.getElementById('sw').onclick=()=>switchTab(m==='login'?'register':'login');
+  document.getElementById('sw-text').textContent=m==='login'?'No account?':'Already have one?';
+  document.getElementById('sw-link').textContent=m==='login'?'Create one free →':'Sign in →';
+  document.getElementById('auth-err').classList.remove('show');
+  document.getElementById('auth-ok').classList.remove('show');
+  document.getElementById('password').placeholder=m==='login'?'Your password':'Choose a strong password (8+ chars)';
+  document.getElementById('password').autocomplete=m==='login'?'current-password':'new-password';
 }
+
+function deviceVid(){
+  const fp=[navigator.userAgent,navigator.language,screen.height,screen.width,new Date().getTimezoneOffset()].join('|');
+  let h=0;for(let i=0;i<fp.length;i++){h=((h<<5)-h)+fp.charCodeAt(i);h=h&h;}
+  return'WEB-'+Math.abs(h).toString(16).toUpperCase().padStart(8,'0');
+}
+
 async function doAuth(){
-  const email=document.getElementById('email').value.trim();
+  const email=document.getElementById('email').value.trim().toLowerCase();
   const password=document.getElementById('password').value;
-  const err=document.getElementById('auth-err');const ok=document.getElementById('auth-ok');
+  const err=document.getElementById('auth-err');
+  const ok=document.getElementById('auth-ok');
   err.classList.remove('show');ok.classList.remove('show');
-  if(!email||!password){err.textContent='Please fill in all fields.';err.classList.add('show');return;}
-  const btn=document.getElementById('auth-btn');btn.disabled=true;btn.textContent='Please wait...';
+  if(!email){err.textContent='Please enter your email address.';err.classList.add('show');return;}
+  if(!email.includes('@')){err.textContent='Please enter a valid email address.';err.classList.add('show');return;}
+  if(!password||password.length<8){err.textContent='Password must be at least 8 characters.';err.classList.add('show');return;}
+  const btn=document.getElementById('auth-btn');
+  btn.disabled=true;btn.textContent=mode==='login'?'Signing in...':'Creating account...';
   try{
-    const body={email,password,deviceVid:'WEB-'+Date.now()};
+    const body={email,password,deviceVid:deviceVid()};
     if(mode==='register'){const n=document.getElementById('fullName').value.trim();if(n)body.fullName=n;}
     const res=await fetch(API+(mode==='login'?'/api/auth/login':'/api/auth/register'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
     const data=await res.json();
-    if(res.ok&&mode==='register'){ok.textContent='Account created! You can now sign in.';ok.classList.add('show');switchTab('login');}
-    else if(res.ok&&data.accessToken){localStorage.setItem('vc_token',data.accessToken);localStorage.setItem('vc_user_email',email);window.location.href='index.html';}
-    else{err.textContent=data.error||'Authentication failed.';err.classList.add('show');}
-  }catch(e){err.textContent='Cannot connect. Please try again.';err.classList.add('show');}
+    if(mode==='register'){
+      if(res.ok){
+        ok.textContent='Account created! Signing you in...';ok.classList.add('show');
+        setTimeout(async()=>{
+          const r2=await fetch(API+'/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password,deviceVid:deviceVid()})});
+          const d2=await r2.json();
+          if(r2.ok&&d2.accessToken){localStorage.setItem('vc_token',d2.accessToken);localStorage.setItem('vc_user_email',email);localStorage.setItem('vc_user',JSON.stringify(d2.user||{}));window.location.href='index.html';}
+          else{switchTab('login');}
+        },1000);
+      }else if(res.status===409){
+        err.textContent='An account with this email already exists. Sign in instead.';err.classList.add('show');switchTab('login');document.getElementById('email').value=email;
+      }else{err.textContent=data.error||'Registration failed. Please try again.';err.classList.add('show');}
+    }else{
+      if(res.ok&&data.accessToken){
+        localStorage.setItem('vc_token',data.accessToken);localStorage.setItem('vc_refresh',data.refreshToken||'');localStorage.setItem('vc_user_email',email);localStorage.setItem('vc_user',JSON.stringify(data.user||{}));
+        ok.textContent='Signed in! Redirecting...';ok.classList.add('show');
+        setTimeout(()=>{window.location.href='index.html';},700);
+      }else if(res.status===403&&data.code==='NO_LICENSE'){
+        localStorage.setItem('vc_token',data.accessToken||'');localStorage.setItem('vc_user_email',email);
+        ok.textContent='Signed in! No active license found — get a plan to continue.';ok.classList.add('show');
+        setTimeout(()=>{window.location.href='pricing.html';},1200);
+      }else if(res.status===401){
+        err.textContent='Incorrect email or password. Please check and try again.';err.classList.add('show');document.getElementById('password').value='';document.getElementById('password').focus();
+      }else{err.textContent=data.error||'Sign in failed. Please try again.';err.classList.add('show');}
+    }
+  }catch(e){
+    err.textContent='Cannot connect to server. Please check your internet connection.';err.classList.add('show');
+  }
   btn.disabled=false;btn.textContent=mode==='login'?'Sign In':'Create Account';
 }
-document.addEventListener('keydown',e=>{if(e.key==='Enter')doAuth()});
+
+document.addEventListener('keydown',e=>{if(e.key==='Enter')doAuth();});
+
+// Handle URL params
+const p=new URLSearchParams(window.location.search);
+if(p.get('mode')==='register')switchTab('register');
+if(p.get('email'))document.getElementById('email').value=p.get('email');
 </script>
-<script>renderStatusBar();renderFooter()</script>
-</body></html>
+</body>
+</html>

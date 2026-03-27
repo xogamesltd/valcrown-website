@@ -5,6 +5,7 @@
 const API = 'https://api.valcrown.com';
 
 function renderNav(activePage) {
+  if (document.querySelector(".nav")) return;
   const pages = ['home','pricing','download','status','support'];
   const links = {
     home: ['index.html','Home'],
@@ -38,6 +39,7 @@ function renderNav(activePage) {
 }
 
 function renderStatusBar() {
+  if (document.getElementById("global-sbar")) return;
   const html = `
   <div class="sbar" id="global-sbar">
     <div class="sbar-in">
@@ -83,6 +85,7 @@ async function liveStatus() {
 }
 
 function renderFooter() {
+  if (document.querySelector(".ft")) return;
   const html = `
   <footer class="ft">
     <div class="ftm">

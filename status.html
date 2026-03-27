@@ -62,6 +62,8 @@
 .hd.warn{background:rgba(255,184,0,.25)}.hd.err{background:rgba(255,71,87,.25)}
 .hlbl{display:flex;justify-content:space-between;margin-top:4px}
 .hlbl span{font-size:10px;color:var(--t3)}
+.ext-note{font-size:12px;color:var(--t3);margin-top:8px;display:flex;align-items:center;gap:6px}
+.ext-note a{color:var(--ac3)}
 </style>
 </head>
 <body>
@@ -80,16 +82,12 @@
     <div class="sc2"><div class="sc2-n" style="color:var(--ac3)" id="sum-ms">—</div><div class="sc2-l">Avg Response</div></div>
     <div class="sc2"><div class="sc2-n" style="color:#00e87a" id="sum-up">—</div><div class="sc2-l">30-day Uptime</div></div>
   </div>
-
-  <div class="inc" id="inc"><div class="inc-h">⚠ Active Incident</div><div class="inc-b">One or more services are degraded. Our team is investigating.</div></div>
-
+  <div class="inc" id="inc"><div class="inc-h">⚠ Active Incident</div><div class="inc-b" id="inc-body">One or more services are experiencing issues. Our team is investigating.</div></div>
   <div class="smeta">
-    <div class="smeta-l">Last checked: <b id="lc">—</b></div>
+    <div class="smeta-l">Last checked: <b id="lc">—</b> · Auto-refreshes every 30s</div>
     <button class="rbtn" onclick="runAll()">↻ Refresh Now</button>
   </div>
-
   <div id="svc-list"></div>
-
   <div style="text-align:center;padding:20px 0;font-size:13px;color:var(--t3)">
     Experiencing issues? <a href="contact.html" style="color:var(--ac3);font-weight:500">Create a support ticket →</a>
   </div>
@@ -97,18 +95,26 @@
 
 <script>renderStatusBar();renderFooter()</script>
 <script>
+// Services we can actually check from browser (no CORS issues)
+// Stripe is not directly checkable from browser due to CORS — show as "External" with link
 const SVCS=[
-  {id:'website',name:'Website',          url:'https://valcrown.com',    icon:'🌐',desc:'valcrown.com — Marketing & downloads'},
-  {id:'auth',   name:'Auth & Licensing', url:API+'/health',             icon:'🔐',desc:'api.valcrown.com — Login, licensing, users'},
-  {id:'db',     name:'Database',         url:API+'/health',             icon:'🗄️',desc:'PostgreSQL — User accounts & session data'},
-  {id:'ai',     name:'AI Advisor',       url:API+'/health',             icon:'🤖',desc:'Claude + Gemini — Real-time optimization advice'},
-  {id:'payment',name:'Payments',         url:'https://status.stripe.com',icon:'💳',desc:'Stripe — License purchases & subscriptions'},
+  {id:'backend', name:'Backend API',    url:API+'/health',     icon:'⚡', desc:'Core server — auth, licensing, user management', checkable:true},
+  {id:'website', name:'Website',        url:'https://valcrown.com', icon:'🌐', desc:'valcrown.com — Marketing, downloads, pricing', checkable:true},
+  {id:'auth',    name:'Auth Service',   url:API+'/health',     icon:'🔐', desc:'Login, registration, session management', checkable:true},
+  {id:'ai',      name:'AI Advisor',     url:API+'/health',     icon:'🤖', desc:'Claude + Gemini — real-time optimization advice', checkable:true},
 ];
+
+// External services shown separately (not checkable via CORS)
+const EXT=[
+  {name:'Stripe (Payments)', url:'https://status.stripe.com', icon:'💳', desc:'Payment processing — check Stripe status directly'},
+];
+
 const hist={};
 SVCS.forEach(s=>{hist[s.id]=Array(24).fill('ok')});
 
 function buildCards(){
-  document.getElementById('svc-list').innerHTML=SVCS.map(s=>`
+  const list=document.getElementById('svc-list');
+  list.innerHTML=SVCS.map(s=>`
   <div class="sc" id="card-${s.id}">
     <div class="sc-top">
       <div class="sc-l">
@@ -127,6 +133,21 @@ function buildCards(){
     </div>
     <div class="hist" id="hist-${s.id}"></div>
     <div class="hlbl"><span>24 checks ago</span><span>Now</span></div>
+  </div>`).join('')
+  + EXT.map(s=>`
+  <div class="sc">
+    <div class="sc-top">
+      <div class="sc-l">
+        <div class="sc-ico">${s.icon}</div>
+        <div><div class="sc-name">${s.name}</div><div class="sc-url">${s.desc}</div></div>
+      </div>
+      <div class="sc-r">
+        <span class="sbadge ok">External</span>
+      </div>
+    </div>
+    <div class="ext-note">
+      Status managed by third party · <a href="${s.url}" target="_blank" rel="noopener">View ${s.name} status →</a>
+    </div>
   </div>`).join('');
 }
 
@@ -163,9 +184,10 @@ async function runAll(){
   const msList=res.filter(r=>r.ms);
   const avgMs=msList.length?Math.round(msList.reduce((a,r)=>a+r.ms,0)/msList.length):0;
   const ovr=document.getElementById('ovr');const od=document.getElementById('od');const ot=document.getElementById('ot');
-  if(!anyBad){ovr.className='ovr ok';od.className='od ok';ot.textContent='All Systems Operational';}
-  else if(anyErr){ovr.className='ovr err';od.className='od err';ot.textContent='Service Disruption Detected';document.getElementById('inc').classList.add('show');}
-  else{ovr.className='ovr warn';od.className='od warn';ot.textContent='Partial Degradation';document.getElementById('inc').classList.add('show');}
+  const inc=document.getElementById('inc');
+  if(!anyBad){ovr.className='ovr ok';od.className='od ok';ot.textContent='All Systems Operational';inc.classList.remove('show');}
+  else if(anyErr){ovr.className='ovr err';od.className='od err';ot.textContent='Service Disruption Detected';inc.classList.add('show');}
+  else{ovr.className='ovr warn';od.className='od warn';ot.textContent='Partial Degradation';inc.classList.add('show');}
   document.getElementById('sum-ok').textContent=ok+'/'+SVCS.length;
   document.getElementById('sum-ms').textContent=avgMs?avgMs+'ms':'—';
   document.getElementById('sum-up').textContent=anyErr?'~99%':'99.9%';
