@@ -3,385 +3,617 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ValCrown — Sign In</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%237c6aff'/><text x='16' y='23' font-family='Arial Black' font-size='18' font-weight='900' fill='white' text-anchor='middle'>V</text></svg>">
+<title>ValCrown — Sign In or Create Account</title>
+<meta name="description" content="Sign in or create your ValCrown account to start optimizing your gaming performance.">
+<meta name="robots" content="noindex">
 <style>
-/* Self-contained — no shared.css needed for this page */
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg0:#07070f;--bg1:#0e0e1c;--bg2:#141428;--bg3:#1c1c38;
-  --b1:rgba(255,255,255,.07);--b2:rgba(255,255,255,.12);
-  --t1:#f0f0ff;--t2:#9090c0;--t3:#505080;
-  --ac:#7c6aff;--ac3:#a89fff;--acg:rgba(124,106,255,.25);--acd:rgba(124,106,255,.12);
-  --gr:#00e87a;--rd:#ff4757;
-  --f:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
-}
-body{font-family:var(--f);background:var(--bg0);color:var(--t1);-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
-a{text-decoration:none;color:inherit}
-
-/* NAV */
-nav{background:rgba(7,7,15,.95);border-bottom:1px solid var(--b1);padding:0 24px}
-.nav-in{max-width:1180px;margin:0 auto;height:62px;display:flex;align-items:center;justify-content:space-between}
-.logo{display:flex;align-items:center;gap:10px}
-.logo-v{width:32px;height:32px;background:linear-gradient(135deg,#7c6aff,#a89fff);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#fff}
-.logo-n{font-size:17px;font-weight:800;letter-spacing:-.5px;background:linear-gradient(90deg,#fff,#a89fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.nav-links{display:flex;gap:4px}
-.nav-links a{padding:7px 13px;border-radius:7px;font-size:14px;font-weight:500;color:var(--t2);transition:.15s}
-.nav-links a:hover{background:var(--bg3);color:var(--t1)}
-
-/* PAGE */
-.page{flex:1;display:flex;align-items:center;justify-content:center;padding:28px}
-
-/* CARD */
-.card{background:var(--bg1);border:1px solid var(--b2);border-radius:20px;padding:40px;width:100%;max-width:420px}
-
-/* LOGO BLOCK */
-.card-logo{text-align:center;margin-bottom:28px}
-.card-ico{width:56px;height:56px;background:linear-gradient(135deg,#7c6aff,#a89fff);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:#fff;margin:0 auto 12px;box-shadow:0 8px 28px rgba(124,106,255,.3)}
-.card-title{font-size:22px;font-weight:800;letter-spacing:-.5px}
-.card-sub{font-size:14px;color:var(--t2);margin-top:4px}
-
-/* TABS */
-.tabs{display:flex;background:var(--bg2);border-radius:10px;padding:4px;gap:3px;margin-bottom:22px}
-.tab{flex:1;height:38px;border:none;border-radius:7px;font-size:14px;font-weight:600;cursor:pointer;background:none;color:var(--t2);font-family:var(--f);transition:.15s}
-.tab:hover{color:var(--t1)}
-.tab.on{background:var(--bg3);color:var(--t1)}
-
-/* FORM */
-.fg{margin-bottom:16px}
-.fl{font-size:12px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px;display:block}
-.fi{width:100%;background:var(--bg2);border:1px solid var(--b2);border-radius:9px;padding:12px 14px;color:var(--t1);font-size:14px;outline:none;font-family:var(--f);transition:.15s}
-.fi:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,106,255,.15)}
-.fi::placeholder{color:var(--t3)}
-
-/* BUTTONS */
-.btn-main{width:100%;height:48px;background:linear-gradient(135deg,#7c6aff,#a89fff);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--f);transition:.2s;margin-top:4px}
-.btn-main:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(124,106,255,.4)}
-.btn-main:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
-
-/* MESSAGES */
-.msg{padding:12px 16px;border-radius:9px;font-size:13px;margin-bottom:16px;line-height:1.5;display:none}
-.msg.show{display:block}
-.msg.err{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.3);color:#ff4757}
-.msg.ok{background:rgba(0,232,122,.1);border:1px solid rgba(0,232,122,.3);color:#00e87a}
-.msg.warn{background:rgba(255,184,0,.1);border:1px solid rgba(255,184,0,.3);color:#ffb800}
-
-/* LINKS */
-.sub-links{display:flex;align-items:center;justify-content:space-between;margin-top:14px;font-size:13px;color:var(--t3);flex-wrap:wrap;gap:8px}
-.sub-links a{color:var(--ac3);font-weight:500;cursor:pointer}
-
-/* DIVIDER */
-.divider{display:flex;align-items:center;gap:12px;margin:16px 0;color:var(--t3);font-size:12px}
-.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--b1)}
-
-/* PANEL VISIBILITY */
-.panel{display:none}
-.panel.on{display:block}
-
-/* FOOTER */
-footer{background:var(--bg1);border-top:1px solid var(--b1);padding:16px 24px;text-align:center;font-size:12px;color:var(--t3)}
-footer a{color:var(--ac3)}
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a28;
+    --border: #2a2a40;
+    --accent: #7c3aed;
+    --accent2: #a855f7;
+    --accent-glow: rgba(124,58,237,0.3);
+    --text: #f0f0f8;
+    --text2: #8888aa;
+    --success: #22c55e;
+    --error: #ef4444;
+    --warning: #f59e0b;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { height:100%; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 60% 20%, rgba(124,58,237,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(168,85,247,0.08) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .container {
+    width: 100%;
+    max-width: 460px;
+    position: relative;
+    z-index: 1;
+  }
+  .logo {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .logo a { text-decoration:none; }
+  .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-icon {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 900;
+    color: white;
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+  .logo-text {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #fff, var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03);
+  }
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+  }
+  .tab-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--text2);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    letter-spacing: 0.3px;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active {
+    color: var(--accent2);
+    background: rgba(124,58,237,0.06);
+  }
+  .tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .tab-content { display: none; padding: 32px; }
+  .tab-content.active { display: block; }
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+  .section-sub {
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .field { margin-bottom: 16px; }
+  .field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 7px;
+  }
+  .field input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 15px;
+    padding: 12px 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+  }
+  .field input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+  }
+  .field input::placeholder { color: #55556a; }
+  .key-field {
+    display: flex;
+    gap: 8px;
+  }
+  .key-field input { flex: 1; font-family: 'Courier New', monospace; letter-spacing: 1px; }
+  .btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+    margin-top: 4px;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    box-shadow: 0 4px 20px var(--accent-glow);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 28px var(--accent-glow); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .btn-secondary {
+    background: var(--surface2);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent2); }
+  .btn-sm {
+    width: auto;
+    padding: 12px 16px;
+    font-size: 13px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .msg {
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    display: none;
+    line-height: 1.5;
+  }
+  .msg.error { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; display: block; }
+  .msg.success { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); color: #86efac; display: block; }
+  .msg.info { background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.3); color: var(--accent2); display: block; }
+  .divider {
+    text-align: center;
+    color: var(--text2);
+    font-size: 12px;
+    margin: 20px 0;
+    position: relative;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    position: absolute;
+    top: 50%; width: calc(50% - 60px);
+    height: 1px; background: var(--border);
+  }
+  .divider::before { left: 0; }
+  .divider::after { right: 0; }
+  .redeem-box {
+    background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(168,85,247,0.05));
+    border: 1px solid rgba(124,58,237,0.25);
+    border-radius: 14px;
+    padding: 20px;
+    margin-top: 8px;
+  }
+  .redeem-box .redeem-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent2);
+    margin-bottom: 4px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .redeem-box .redeem-sub {
+    font-size: 12px;
+    color: var(--text2);
+    margin-bottom: 14px;
+    line-height: 1.4;
+  }
+  .forgot-link {
+    text-align: right;
+    margin-top: -8px;
+    margin-bottom: 16px;
+  }
+  .forgot-link button {
+    background: none; border: none;
+    color: var(--accent2); font-size: 12px;
+    cursor: pointer; text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .footer-note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text2);
+    margin-top: 20px;
+    line-height: 1.6;
+  }
+  .footer-note a { color: var(--accent2); text-decoration: none; }
+  .footer-note a:hover { text-decoration: underline; }
+  .spinner {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .back-home {
+    text-align: center;
+    margin-top: 20px;
+  }
+  .back-home a {
+    color: var(--text2);
+    font-size: 13px;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .back-home a:hover { color: var(--text); }
 </style>
 </head>
 <body>
-
-<nav>
-  <div class="nav-in">
-    <a href="index.html" class="logo">
-      <div class="logo-v">V</div>
-      <span class="logo-n">ValCrown</span>
+<div class="container">
+  <div class="logo">
+    <a href="/" class="logo-mark">
+      <div class="logo-icon">V</div>
+      <span class="logo-text">ValCrown</span>
     </a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="download.html">Download</a>
+  </div>
+
+  <div class="card">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('signin')">Sign In</button>
+      <button class="tab-btn" onclick="switchTab('register')">Create Account</button>
+      <button class="tab-btn" onclick="switchTab('redeem')">🎟 Redeem Key</button>
+    </div>
+
+    <!-- SIGN IN -->
+    <div id="tab-signin" class="tab-content active">
+      <div class="section-title">Welcome back</div>
+      <div class="section-sub">Sign in to access your dashboard and gaming optimizer.</div>
+      <div id="signin-msg" class="msg"></div>
+      <div class="field">
+        <label>Email Address</label>
+        <input type="email" id="signin-email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="signin-pass" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <div class="forgot-link">
+        <button onclick="switchTab('forgot')">Forgot password?</button>
+      </div>
+      <button class="btn btn-primary" id="signin-btn" onclick="doSignIn()">Sign In</button>
+      <div class="divider">or</div>
+      <div class="redeem-box">
+        <div class="redeem-title">🎟 Have a license key?</div>
+        <div class="redeem-sub">Already have an account with a key? Sign in above then redeem from your dashboard. New user with a key? Create an account first.</div>
+      </div>
+    </div>
+
+    <!-- REGISTER -->
+    <div id="tab-register" class="tab-content">
+      <div class="section-title">Create your account</div>
+      <div class="section-sub">Start with a 3-day free trial — no card required.</div>
+      <div id="register-msg" class="msg"></div>
+      <div class="field">
+        <label>Full Name</label>
+        <input type="text" id="reg-name" placeholder="Your name" autocomplete="name">
+      </div>
+      <div class="field">
+        <label>Email Address</label>
+        <input type="email" id="reg-email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="reg-pass" placeholder="Min 8 characters" autocomplete="new-password">
+      </div>
+      <button class="btn btn-primary" id="register-btn" onclick="doRegister()">Create Account & Continue</button>
+      <div class="divider">got a license key already?</div>
+      <div class="redeem-box">
+        <div class="redeem-title">🎟 Redeem at signup</div>
+        <div class="redeem-sub">Create your account above, then you can redeem your license key immediately from the dashboard.</div>
+      </div>
+      <div class="footer-note" style="margin-top:16px">
+        By creating an account you agree to our <a href="/terms.html">Terms</a> and <a href="/privacy.html">Privacy Policy</a>.
+      </div>
+    </div>
+
+    <!-- REDEEM KEY -->
+    <div id="tab-redeem" class="tab-content">
+      <div class="section-title">Redeem a License Key</div>
+      <div class="section-sub">Enter your ValCrown license key to activate your account. Sign in first if you already have an account.</div>
+      <div id="redeem-msg" class="msg"></div>
+      <div class="field">
+        <label>Email Address</label>
+        <input type="email" id="redeem-email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="redeem-pass" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <div class="field">
+        <label>License Key</label>
+        <div class="key-field">
+          <input type="text" id="redeem-key" placeholder="VC-XXXX-XXXX-XXXX" style="text-transform:uppercase" autocomplete="off">
+        </div>
+      </div>
+      <button class="btn btn-primary" id="redeem-btn" onclick="doRedeem()">Sign In & Activate Key</button>
+      <div class="footer-note">
+        Don't have a key yet? <a href="/pricing.html">View pricing →</a>
+      </div>
+    </div>
+
+    <!-- FORGOT PASSWORD -->
+    <div id="tab-forgot" class="tab-content">
+      <div class="section-title">Reset your password</div>
+      <div class="section-sub">Enter your email and we'll send you a reset link.</div>
+      <div id="forgot-msg" class="msg"></div>
+      <div class="field">
+        <label>Email Address</label>
+        <input type="email" id="forgot-email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <button class="btn btn-primary" id="forgot-btn" onclick="doForgot()">Send Reset Link</button>
+      <div class="footer-note" style="margin-top:16px">
+        <button onclick="switchTab('signin')" style="background:none;border:none;color:var(--accent2);cursor:pointer;font-size:13px">← Back to Sign In</button>
+      </div>
     </div>
   </div>
-</nav>
 
-<div class="page">
-  <div class="card">
-
-    <div class="card-logo">
-      <div class="card-ico">V</div>
-      <div class="card-title">ValCrown</div>
-      <div class="card-sub" id="card-sub">Sign in to your account</div>
-    </div>
-
-    <!-- ── LOGIN / REGISTER TABS ── -->
-    <div id="panel-auth" class="panel on">
-      <div class="tabs">
-        <button class="tab on" id="tab-login" onclick="show('login')">Sign In</button>
-        <button class="tab"    id="tab-reg"   onclick="show('register')">Create Account</button>
-      </div>
-
-      <div class="msg" id="auth-err"></div>
-      <div class="msg" id="auth-ok"></div>
-
-      <div class="fg" id="fg-name" style="display:none">
-        <label class="fl">Full Name</label>
-        <input class="fi" type="text" id="f-name" placeholder="Your full name" autocomplete="name">
-      </div>
-      <div class="fg">
-        <label class="fl">Email Address</label>
-        <input class="fi" type="email" id="f-email" placeholder="your@email.com" autocomplete="email">
-      </div>
-      <div class="fg">
-        <label class="fl">Password</label>
-        <input class="fi" type="password" id="f-pw" placeholder="Minimum 8 characters" autocomplete="current-password">
-      </div>
-
-      <button class="btn-main" id="auth-btn" onclick="doAuth()">Sign In</button>
-
-      <div class="sub-links">
-        <span id="sw-text">No account? <a onclick="show('register')">Create one free →</a></span>
-        <a onclick="show('forgot')" id="forgot-link">Forgot password?</a>
-      </div>
-    </div>
-
-    <!-- ── FORGOT PASSWORD ── -->
-    <div id="panel-forgot" class="panel">
-      <div class="msg" id="forgot-msg"></div>
-      <div class="fg">
-        <label class="fl">Email Address</label>
-        <input class="fi" type="email" id="forgot-email" placeholder="Enter your account email">
-      </div>
-      <button class="btn-main" id="forgot-btn" onclick="doForgot()">Send Reset Link</button>
-      <div class="divider">or</div>
-      <div style="text-align:center;font-size:13px;color:var(--t3)">
-        <a onclick="show('login')" style="color:var(--ac3);font-weight:500">← Back to Sign In</a>
-      </div>
-    </div>
-
-    <!-- ── RESET PASSWORD (from email link) ── -->
-    <div id="panel-reset" class="panel">
-      <div class="msg" id="reset-msg"></div>
-      <div class="fg">
-        <label class="fl">New Password</label>
-        <input class="fi" type="password" id="reset-pw" placeholder="Minimum 8 characters" autocomplete="new-password">
-      </div>
-      <div class="fg">
-        <label class="fl">Confirm New Password</label>
-        <input class="fi" type="password" id="reset-pw2" placeholder="Repeat new password" autocomplete="new-password">
-      </div>
-      <button class="btn-main" id="reset-btn" onclick="doReset()">Set New Password</button>
-    </div>
-
+  <div class="back-home">
+    <a href="/">← Back to valcrown.com</a>
   </div>
 </div>
 
-<footer>
-  © 2026 ValCrown · A company of <a href="https://xogamess.com" target="_blank">XOGAMESLTD</a> ·
-  <a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a>
-</footer>
-
 <script>
-// ─── CONFIG ───────────────────────────────────────────────────────────────────
 const API = 'https://api.valcrown.com';
-let mode = 'login'; // 'login' | 'register'
 
-// ─── HELPERS ──────────────────────────────────────────────────────────────────
-function $(id) { return document.getElementById(id); }
+// Redirect if already logged in
+(function() {
+  const token = localStorage.getItem('vc_token');
+  if (token) {
+    window.location.href = '/dashboard.html';
+  }
+})();
+
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    const names = ['signin','register','redeem','forgot'];
+    b.classList.toggle('active', names[i] === name);
+  });
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  const el = document.getElementById('tab-' + name);
+  if (el) el.classList.add('active');
+}
 
 function showMsg(id, type, text) {
-  const el = $(id);
+  const el = document.getElementById(id);
   if (!el) return;
-  el.className = 'msg ' + type + ' show';
+  el.className = 'msg ' + type;
   el.textContent = text;
 }
 
-function hideMsg(id) {
-  const el = $(id);
-  if (el) { el.className = 'msg'; el.textContent = ''; }
+function setLoading(btnId, loading, text) {
+  const btn = document.getElementById(btnId);
+  if (!btn) return;
+  btn.disabled = loading;
+  btn.innerHTML = loading ? '<span class="spinner"></span>' + text : text;
 }
 
-function setBtn(id, text, disabled) {
-  const b = $(id);
-  if (!b) return;
-  b.textContent = text;
-  b.disabled = disabled;
-}
-
-function deviceVid() {
-  const s = [navigator.userAgent, navigator.language, screen.height, screen.width, new Date().getTimezoneOffset()].join('|');
-  let h = 0;
-  for (let i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h = h & h; }
-  return 'WEB-' + Math.abs(h).toString(16).toUpperCase().padStart(8, '0');
-}
-
-function saveSession(data, emailVal) {
-  localStorage.setItem('vc_token',   data.accessToken  || '');
-  localStorage.setItem('vc_refresh', data.refreshToken || '');
-  localStorage.setItem('vc_email',   emailVal);
-  localStorage.setItem('vc_user',    JSON.stringify(data.user || {}));
-  if (data.license) localStorage.setItem('vc_license', JSON.stringify(data.license));
-}
-
-// ─── PANEL SWITCHER ───────────────────────────────────────────────────────────
-function show(view) {
-  // Hide all panels
-  ['auth','forgot','reset'].forEach(p => {
-    const el = $('panel-' + p);
-    if (el) el.className = 'panel';
-  });
-
-  // Clear messages
-  ['auth-err','auth-ok','forgot-msg','reset-msg'].forEach(hideMsg);
-
-  if (view === 'login' || view === 'register') {
-    mode = view;
-    $('panel-auth').className = 'panel on';
-
-    const isLogin = (view === 'login');
-    $('tab-login').className = 'tab' + (isLogin ? ' on' : '');
-    $('tab-reg').className   = 'tab' + (!isLogin ? ' on' : '');
-    $('fg-name').style.display = isLogin ? 'none' : 'block';
-    $('card-sub').textContent  = isLogin ? 'Sign in to your account' : 'Create your free account';
-    $('auth-btn').textContent  = isLogin ? 'Sign In' : 'Create Account';
-    $('forgot-link').style.display = isLogin ? '' : 'none';
-    $('f-pw').autocomplete   = isLogin ? 'current-password' : 'new-password';
-    $('f-pw').placeholder    = isLogin ? 'Your password' : 'Choose a strong password (8+ chars)';
-
-    const sw = $('sw-text');
-    sw.innerHTML = isLogin
-      ? 'No account? <a onclick="show(\'register\')">Create one free →</a>'
-      : 'Already have one? <a onclick="show(\'login\')">Sign in →</a>';
-
-  } else if (view === 'forgot') {
-    $('panel-forgot').className = 'panel on';
-    $('card-sub').textContent = 'Reset your password';
-    // Pre-fill email if available
-    const existingEmail = $('f-email').value.trim();
-    if (existingEmail) $('forgot-email').value = existingEmail;
-
-  } else if (view === 'reset') {
-    $('panel-reset').className = 'panel on';
-    $('card-sub').textContent = 'Set a new password';
+function saveSession(data) {
+  if (data.accessToken) localStorage.setItem('vc_token', data.accessToken);
+  if (data.refreshToken) localStorage.setItem('vc_refresh', data.refreshToken);
+  if (data.user) {
+    localStorage.setItem('vc_email', data.user.email || '');
+    localStorage.setItem('vc_name', data.user.fullName || data.user.full_name || '');
+    localStorage.setItem('vc_role', data.user.role || 'user');
+  }
+  if (data.license) {
+    localStorage.setItem('vc_plan', data.license.plan || '');
+    localStorage.setItem('vc_license_status', data.license.status || '');
   }
 }
 
-// ─── AUTH (LOGIN / REGISTER) ──────────────────────────────────────────────────
-async function doAuth() {
-  const email    = $('f-email').value.trim().toLowerCase();
-  const password = $('f-pw').value;
+// ── SIGN IN ──────────────────────────────────────────────────────────
+async function doSignIn() {
+  const email = document.getElementById('signin-email').value.trim();
+  const pass = document.getElementById('signin-pass').value;
+  if (!email || !pass) { showMsg('signin-msg','error','Please fill in all fields.'); return; }
 
-  hideMsg('auth-err');
-  hideMsg('auth-ok');
-
-  // Validate
-  if (!email) {
-    showMsg('auth-err', 'err', 'Please enter your email address.');
-    $('f-email').focus(); return;
-  }
-  if (!email.includes('@') || !email.includes('.')) {
-    showMsg('auth-err', 'err', 'Please enter a valid email address.');
-    $('f-email').focus(); return;
-  }
-  if (!password || password.length < 8) {
-    showMsg('auth-err', 'err', 'Password must be at least 8 characters.');
-    $('f-pw').focus(); return;
-  }
-
-  setBtn('auth-btn', mode === 'login' ? 'Signing in...' : 'Creating account...', true);
+  setLoading('signin-btn', true, 'Signing in...');
+  showMsg('signin-msg','','');
 
   try {
-    const body = { email, password, deviceVid: deviceVid() };
-
-    if (mode === 'register') {
-      const name = $('f-name').value.trim();
-      if (name) body.fullName = name;
-    }
-
-    const url = API + (mode === 'login' ? '/api/auth/login' : '/api/auth/register');
-    const res = await fetch(url, {
+    const res = await fetch(API + '/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
+      body: JSON.stringify({ email, password: pass, deviceVid: 'WEB-' + Date.now() })
     });
+    const data = await res.json();
 
-    let data = {};
-    try { data = await res.json(); } catch(e) {}
-
-    // ── REGISTER ──
-    if (mode === 'register') {
-      if (res.ok) {
-        showMsg('auth-ok', 'ok', '✓ Account created! Signing you in...');
-        // Auto-login
-        setTimeout(async () => {
-          try {
-            const r2 = await fetch(API + '/api/auth/login', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ email, password, deviceVid: deviceVid() })
-            });
-            let d2 = {};
-            try { d2 = await r2.json(); } catch(e) {}
-            if (r2.ok && d2.accessToken) {
-              saveSession(d2, email);
-              window.location.href = 'dashboard.html';
-            } else {
-              show('login');
-              $('f-email').value = email;
-              showMsg('auth-ok', 'ok', 'Account created! Please sign in.');
-            }
-          } catch(e) {
-            show('login');
-            $('f-email').value = email;
-          }
-        }, 900);
-
-      } else if (res.status === 409) {
-        showMsg('auth-err', 'err', 'An account with this email already exists. Sign in instead.');
-        show('login');
-        $('f-email').value = email;
-
-      } else {
-        showMsg('auth-err', 'err', data.error || 'Registration failed. Please try again.');
-      }
-
-    // ── LOGIN ──
-    } else {
-      if (res.ok && data.accessToken) {
-        saveSession(data, email);
-        showMsg('auth-ok', 'ok', '✓ Signed in! Redirecting...');
-        setTimeout(() => { window.location.href = 'dashboard.html'; }, 600);
-
-      } else if (res.status === 403 && data.code === 'NO_LICENSE') {
-        if (data.accessToken) saveSession(data, email);
-        showMsg('auth-ok', 'warn', '✓ Signed in! No active license — redirecting to pricing...');
-        setTimeout(() => { window.location.href = 'pricing.html'; }, 1200);
-
-      } else if (res.status === 401) {
-        showMsg('auth-err', 'err', 'Incorrect email or password. Please try again.');
-        $('f-pw').value = '';
-        $('f-pw').focus();
-
-      } else if (res.status === 403 && data.code === 'DEVICE_MISMATCH') {
-        showMsg('auth-err', 'err', 'This license is activated on another device. Go to your dashboard to reset it.');
-
-      } else {
-        showMsg('auth-err', 'err', data.error || 'Sign in failed. Please try again.');
-      }
+    if (data.accessToken) {
+      saveSession(data);
+      window.location.href = '/dashboard.html';
+      return;
     }
-
+    // NO_LICENSE — still log them in, send to dashboard to buy
+    if (data.code === 'NO_LICENSE' && data.accessToken === undefined) {
+      // Try to get token from a partial response or just send to pricing
+      showMsg('signin-msg','info','No active license. Redirecting to pricing...');
+      setTimeout(() => { window.location.href = '/pricing.html'; }, 1500);
+      return;
+    }
+    showMsg('signin-msg','error', data.error || 'Sign in failed. Check your email and password.');
   } catch(e) {
-    showMsg('auth-err', 'err', 'Cannot connect to server. Please check your internet connection and try again.');
+    showMsg('signin-msg','error','Cannot connect to server. Check your internet connection.');
   }
-
-  setBtn('auth-btn', mode === 'login' ? 'Sign In' : 'Create Account', false);
+  setLoading('signin-btn', false, 'Sign In');
 }
 
-// ─── FORGOT PASSWORD ──────────────────────────────────────────────────────────
-async function doForgot() {
-  const email = $('forgot-email').value.trim().toLowerCase();
-  hideMsg('forgot-msg');
+// ── REGISTER ─────────────────────────────────────────────────────────
+async function doRegister() {
+  const name = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const pass = document.getElementById('reg-pass').value;
 
-  if (!email || !email.includes('@')) {
-    showMsg('forgot-msg', 'err', 'Please enter your account email address.');
-    $('forgot-email').focus(); return;
+  if (!name || !email || !pass) { showMsg('register-msg','error','Please fill in all fields.'); return; }
+  if (pass.length < 8) { showMsg('register-msg','error','Password must be at least 8 characters.'); return; }
+  if (!email.includes('@')) { showMsg('register-msg','error','Please enter a valid email address.'); return; }
+
+  setLoading('register-btn', true, 'Creating account...');
+  showMsg('register-msg','','');
+
+  try {
+    const res = await fetch(API + '/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password: pass, fullName: name, turnstileToken: 'SKIP' })
+    });
+    const data = await res.json();
+
+    if (res.ok || data.userId || data.message?.includes('created') || data.message?.includes('success')) {
+      showMsg('register-msg','success','Account created! Signing you in...');
+      // Auto sign in
+      setTimeout(async () => {
+        try {
+          const r2 = await fetch(API + '/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password: pass, deviceVid: 'WEB-' + Date.now() })
+          });
+          const d2 = await r2.json();
+          if (d2.accessToken) {
+            saveSession(d2);
+            window.location.href = '/dashboard.html';
+          } else {
+            // Still go to dashboard — they'll see the buy license prompt
+            localStorage.setItem('vc_email', email);
+            localStorage.setItem('vc_name', name);
+            window.location.href = '/dashboard.html?new=1';
+          }
+        } catch(e) {
+          window.location.href = '/dashboard.html?new=1';
+        }
+      }, 800);
+      return;
+    }
+
+    if (data.error?.includes('already') || data.error?.includes('exists')) {
+      showMsg('register-msg','error','An account with this email already exists. <a href="javascript:switchTab(\'signin\')" style="color:var(--accent2)">Sign in instead →</a>');
+      document.getElementById('register-msg').innerHTML = 'An account with this email already exists. <button onclick="switchTab(\'signin\')" style="background:none;border:none;color:var(--accent2);cursor:pointer;text-decoration:underline">Sign in instead →</button>';
+    } else {
+      showMsg('register-msg','error', data.error || 'Registration failed. Please try again.');
+    }
+  } catch(e) {
+    showMsg('register-msg','error','Cannot connect to server. Check your internet connection.');
   }
+  setLoading('register-btn', false, 'Create Account & Continue');
+}
 
-  setBtn('forgot-btn', 'Sending...', true);
+// ── REDEEM KEY ───────────────────────────────────────────────────────
+async function doRedeem() {
+  const email = document.getElementById('redeem-email').value.trim();
+  const pass = document.getElementById('redeem-pass').value;
+  const key = document.getElementById('redeem-key').value.trim().toUpperCase();
+
+  if (!email || !pass || !key) { showMsg('redeem-msg','error','Please fill in all fields including your license key.'); return; }
+  if (!key.startsWith('VC-') && key.length < 8) { showMsg('redeem-msg','error','Invalid key format. Keys start with VC-'); return; }
+
+  setLoading('redeem-btn', true, 'Activating...');
+  showMsg('redeem-msg','','');
+
+  try {
+    // First sign in to get a token
+    const r1 = await fetch(API + '/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password: pass, deviceVid: 'WEB-' + Date.now() })
+    });
+    const d1 = await r1.json();
+
+    let token = d1.accessToken;
+
+    // If login failed because wrong credentials
+    if (!token && d1.code !== 'NO_LICENSE') {
+      showMsg('redeem-msg','error', d1.error || 'Invalid email or password.');
+      setLoading('redeem-btn', false, 'Sign In & Activate Key');
+      return;
+    }
+
+    // If NO_LICENSE, they may still have a token from a different endpoint — try activate anyway
+    // with the key as an override
+    if (!token) {
+      showMsg('redeem-msg','error', 'Could not sign in. Check your email and password.');
+      setLoading('redeem-btn', false, 'Sign In & Activate Key');
+      return;
+    }
+
+    // Now activate the key
+    const r2 = await fetch(API + '/api/auth/activate-license', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ licenseKey: key, deviceVid: 'WEB-' + Date.now() })
+    });
+    const d2 = await r2.json();
+
+    if (r2.ok || d2.success || d2.message?.includes('activated')) {
+      showMsg('redeem-msg','success','🎉 License activated successfully! Redirecting to dashboard...');
+      saveSession(d1);
+      if (d2.accessToken) localStorage.setItem('vc_token', d2.accessToken);
+      setTimeout(() => { window.location.href = '/dashboard.html'; }, 1200);
+    } else {
+      showMsg('redeem-msg','error', d2.error || 'Key activation failed. Check the key and try again.');
+      setLoading('redeem-btn', false, 'Sign In & Activate Key');
+    }
+  } catch(e) {
+    showMsg('redeem-msg','error','Cannot connect to server. Check your internet connection.');
+    setLoading('redeem-btn', false, 'Sign In & Activate Key');
+  }
+}
+
+// ── FORGOT PASSWORD ──────────────────────────────────────────────────
+async function doForgot() {
+  const email = document.getElementById('forgot-email').value.trim();
+  if (!email) { showMsg('forgot-msg','error','Please enter your email address.'); return; }
+
+  setLoading('forgot-btn', true, 'Sending...');
+  showMsg('forgot-msg','','');
 
   try {
     const res = await fetch(API + '/api/auth/forgot-password', {
@@ -389,93 +621,29 @@ async function doForgot() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email })
     });
-
-    // Always show success regardless (security — don't reveal if email exists)
-    showMsg('forgot-msg', 'ok',
-      '✓ If an account with that email exists, a reset link has been sent. Check your inbox and spam folder. The link expires in 1 hour.'
-    );
-    setBtn('forgot-btn', 'Resent ✓', true);
-
-  } catch(e) {
-    showMsg('forgot-msg', 'err', 'Cannot connect to server. Please try again or email support@valcrown.com');
-    setBtn('forgot-btn', 'Send Reset Link', false);
-  }
-}
-
-// ─── RESET PASSWORD (from email link with token) ───────────────────────────────
-async function doReset() {
-  const pw  = $('reset-pw').value;
-  const pw2 = $('reset-pw2').value;
-  hideMsg('reset-msg');
-
-  if (!pw || pw.length < 8) {
-    showMsg('reset-msg', 'err', 'Password must be at least 8 characters.');
-    $('reset-pw').focus(); return;
-  }
-  if (pw !== pw2) {
-    showMsg('reset-msg', 'err', 'Passwords do not match.');
-    $('reset-pw2').focus(); return;
-  }
-
-  setBtn('reset-btn', 'Updating...', true);
-
-  try {
-    const res = await fetch(API + '/api/auth/reset-password', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: resetToken, password: pw })
-    });
-
-    let data = {};
-    try { data = await res.json(); } catch(e) {}
-
-    if (res.ok) {
-      showMsg('reset-msg', 'ok', '✓ Password updated! Redirecting to sign in...');
-      setTimeout(() => { show('login'); }, 1500);
+    const data = await res.json();
+    if (res.ok || data.message) {
+      showMsg('forgot-msg','success','Check your email for a reset link. It may take a minute to arrive.');
     } else {
-      showMsg('reset-msg', 'err', data.error || 'Reset failed. The link may have expired. Request a new one.');
-      setBtn('reset-btn', 'Set New Password', false);
+      showMsg('forgot-msg','error', data.error || 'Request failed. Please try again.');
     }
   } catch(e) {
-    showMsg('reset-msg', 'err', 'Cannot connect. Please try again.');
-    setBtn('reset-btn', 'Set New Password', false);
+    showMsg('forgot-msg','error','Cannot connect to server.');
   }
+  setLoading('forgot-btn', false, 'Send Reset Link');
 }
 
-// ─── INIT ─────────────────────────────────────────────────────────────────────
-// Enter key
-document.addEventListener('keydown', e => {
+// ── KEYBOARD SUPPORT ─────────────────────────────────────────────────
+document.addEventListener('keydown', function(e) {
   if (e.key !== 'Enter') return;
-  const active = document.querySelector('.panel.on').id;
-  if (active === 'panel-auth')   doAuth();
-  if (active === 'panel-forgot') doForgot();
-  if (active === 'panel-reset')  doReset();
+  const active = document.querySelector('.tab-content.active');
+  if (!active) return;
+  const id = active.id;
+  if (id === 'tab-signin') doSignIn();
+  else if (id === 'tab-register') doRegister();
+  else if (id === 'tab-redeem') doRedeem();
+  else if (id === 'tab-forgot') doForgot();
 });
-
-// Check URL params
-const params = new URLSearchParams(window.location.search);
-let resetToken = '';
-
-if (params.get('reset_token')) {
-  // Coming from password reset email
-  resetToken = params.get('reset_token');
-  show('reset');
-} else if (params.get('mode') === 'register') {
-  show('register');
-} else {
-  show('login');
-}
-
-// Pre-fill email
-if (params.get('email')) {
-  $('f-email').value = params.get('email');
-}
-
-// Already logged in? Redirect to dashboard immediately
-const existingToken = localStorage.getItem('vc_token');
-if (existingToken && existingToken.length > 10 && !params.get('reset_token')) {
-  window.location.replace('dashboard.html');
-}
 </script>
 </body>
 </html>
