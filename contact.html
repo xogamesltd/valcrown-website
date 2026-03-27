@@ -5,8 +5,10 @@
 <title>ValCrown — Support</title>
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <link rel="stylesheet" href="css/shared.css">
+<script src="js/shared.js"></script>
 </head>
 <body>
+<script>renderNav()</script>
 <script src="js/shared.js"></script>
 <script>renderNav('support')</script>
 <div class="ph"><h1>Support Center</h1><p>Create a ticket and we'll reply within 24 hours.</p></div>
@@ -47,4 +49,5 @@ async function submitTicket(){
   btn.disabled=false;btn.textContent='Submit Ticket';
 }
 </script>
+<script>renderStatusBar();renderFooter()</script>
 </body></html>

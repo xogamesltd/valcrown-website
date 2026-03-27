@@ -1,0 +1,30 @@
+/* ── PATCH FILE: paste these sections into your shared.css ── */
+
+/* 1. NAV - active page indicator */
+.nm a.active {
+  background: var(--acd);
+  color: var(--ac3);
+  font-weight: 600;
+}
+.nm a.active::after {
+  content: '';
+  display: block;
+  height: 2px;
+  background: var(--ac);
+  border-radius: 1px;
+  margin-top: 2px;
+}
+
+/* 2. FOOTER STATUS - live pulsing */
+.sbar { background: var(--bg0); border-top: 1px solid var(--b1); border-bottom: 1px solid var(--b1); }
+.sbar-in { max-width:1180px; margin:0 auto; padding:10px 24px; display:flex; align-items:center; justify-content:space-between; }
+.sind { display:flex; align-items:center; gap:10px; font-size:13px; }
+.sdot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.sdot.ok { background:var(--gr); box-shadow:0 0 0 3px rgba(0,232,122,.2); animation:spulse 2s infinite; }
+.sdot.warn { background:var(--yw); }
+.sdot.err { background:var(--rd); animation:spulse-err 1s infinite; }
+@keyframes spulse { 0%,100%{box-shadow:0 0 0 3px rgba(0,232,122,.2)} 50%{box-shadow:0 0 0 7px rgba(0,232,122,0)} }
+@keyframes spulse-err { 0%,100%{opacity:1} 50%{opacity:.4} }
+.status-live-text { display:flex; flex-direction:column; gap:1px; }
+.status-live-text .s-main { font-weight:600; font-size:13px; }
+.status-live-text .s-sub { font-size:11px; color:var(--t3); }

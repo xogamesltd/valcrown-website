@@ -39,17 +39,47 @@ function renderNav(activePage) {
 
 function renderStatusBar() {
   const html = `
-  <div class="sbar">
+  <div class="sbar" id="global-sbar">
     <div class="sbar-in">
       <div class="sind">
         <span class="sdot ok" id="sdot"></span>
-        <span>All systems: <span class="sok" id="stxt">Checking...</span></span>
+        <div style="display:flex;flex-direction:column;gap:1px">
+          <span style="font-weight:600;font-size:13px"><span class="sok" id="stxt">Checking...</span></span>
+          <span style="font-size:11px;color:var(--t3)" id="ssub">Connecting...</span>
+        </div>
       </div>
       <a href="status.html" class="slink">View detailed status →</a>
     </div>
   </div>`;
   document.body.insertAdjacentHTML('beforeend', html);
-  checkStatus();
+  liveStatus();
+  setInterval(liveStatus, 15000);
+}
+
+async function liveStatus() {
+  try {
+    const t = Date.now();
+    const r = await fetch(API + '/health', { signal: AbortSignal.timeout(4000) });
+    const ms = Date.now() - t;
+    const d = document.getElementById('sdot');
+    const s = document.getElementById('stxt');
+    const sub = document.getElementById('ssub');
+    if (!d) return;
+    if (r.ok) {
+      d.className = 'sdot ok'; s.className = 'sok'; s.textContent = 'Operational';
+      sub.textContent = ms + 'ms response · ' + new Date().toLocaleTimeString();
+    } else {
+      d.className = 'sdot warn'; s.className = 'swarn'; s.textContent = 'Degraded';
+      sub.textContent = 'Issues detected · ' + new Date().toLocaleTimeString();
+    }
+  } catch(e) {
+    const d = document.getElementById('sdot');
+    const s = document.getElementById('stxt');
+    const sub = document.getElementById('ssub');
+    if (!d) return;
+    d.className = 'sdot err'; s.className = 'serr'; s.textContent = 'Service disruption';
+    sub.textContent = 'Cannot reach servers · ' + new Date().toLocaleTimeString();
+  }
 }
 
 function renderFooter() {
@@ -114,18 +144,3 @@ function renderFooter() {
   document.body.insertAdjacentHTML('beforeend', html);
 }
 
-async function checkStatus() {
-  try {
-    const t = Date.now();
-    const r = await fetch(API + '/health', { signal: AbortSignal.timeout(4000) });
-    const ms = Date.now() - t;
-    const d = document.getElementById('sdot');
-    const s = document.getElementById('stxt');
-    if (!d) return;
-    if (r.ok) { d.className='sdot ok'; s.className='sok'; s.textContent='Operational ('+ms+'ms)'; }
-    else { d.className='sdot warn'; s.className='swarn'; s.textContent='Degraded'; }
-  } catch(e) {
-    const d=document.getElementById('sdot'); const s=document.getElementById('stxt');
-    if (d) { d.className='sdot err'; s.className='serr'; s.textContent='Service disruption'; }
-  }
-}

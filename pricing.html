@@ -4,237 +4,324 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ValCrown — Pricing</title>
-<meta name="description" content="ValCrown pricing plans. Start free with a 3-day trial. Monthly, yearly, and lifetime plans available.">
+<meta name="description" content="Start free. 5 plans from free trial to lifetime. No credit card for the 3-day trial.">
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <link rel="stylesheet" href="css/shared.css">
 <style>
-.pricing-hero{text-align:center;padding:80px 24px 56px}
-.pricing-hero h1{font-size:clamp(34px,5vw,58px);font-weight:900;letter-spacing:-1.5px;margin-bottom:12px}
-.pricing-hero p{font-size:17px;color:var(--t2);max-width:520px;margin:0 auto;line-height:1.7}
-.currency-bar{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:32px;flex-wrap:wrap}
-.currency-bar span{font-size:13px;color:var(--t2)}
-.currency-select{background:var(--bg2);border:1px solid var(--b2);border-radius:8px;padding:7px 12px;color:var(--t1);font-size:13px;cursor:pointer;outline:none;font-family:var(--f)}
-.currency-detected{color:var(--ac3);font-size:12px;font-weight:600}
-/* Full compare table */
-.compare-wrap{overflow-x:auto;margin-top:48px}
+/* PRICING PAGE SPECIFIC */
+.price-hero{text-align:center;padding:72px 24px 48px;position:relative}
+.price-hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:700px;height:400px;background:radial-gradient(ellipse at 50% 30%,rgba(124,106,255,.07),transparent 65%);pointer-events:none}
+.price-hero h1{font-size:clamp(36px,5vw,60px);font-weight:900;letter-spacing:-2px;margin-bottom:14px}
+.price-hero p{font-size:17px;color:var(--t2);max-width:520px;margin:0 auto;line-height:1.7}
+.price-trust{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.ptrust-item{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--t2)}
+.ptrust-ico{color:#00e87a;font-size:14px}
+
+/* CURRENCY BAR */
+.cur-bar{max-width:1180px;margin:0 auto;padding:0 24px 32px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.cur-bar label{font-size:13px;color:var(--t3)}
+.cur-sel{background:var(--bg2);border:1px solid var(--b2);border-radius:8px;padding:7px 12px;color:var(--t1);font-size:13px;cursor:pointer;outline:none;font-family:var(--f)}
+.cur-info{font-size:12px;color:var(--ac3);font-weight:600}
+
+/* PLANS */
+.plans-wrap{max-width:1180px;margin:0 auto;padding:0 24px 64px}
+.plans-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:56px}
+.plan-c{background:var(--bg1);border:1px solid var(--b2);border-radius:18px;padding:24px 18px;display:flex;flex-direction:column;position:relative;transition:.2s}
+.plan-c:hover{transform:translateY(-2px)}
+.plan-c.featured{background:linear-gradient(160deg,rgba(124,106,255,.12),var(--bg1));border-color:var(--ac);box-shadow:0 24px 64px rgba(124,106,255,.2);transform:translateY(-6px)}
+.plan-c.featured:hover{transform:translateY(-8px)}
+.plan-c.free-c{border-color:rgba(0,232,122,.25)}
+.plan-pop{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#7c6aff,#a89fff);color:#fff;font-size:10px;font-weight:700;padding:4px 14px;border-radius:40px;white-space:nowrap;letter-spacing:.3px}
+.plan-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:700;padding:4px 14px;border-radius:40px;white-space:nowrap;letter-spacing:.3px}
+.plan-badge.free-badge{background:rgba(0,232,122,.15);border:1px solid rgba(0,232,122,.3);color:#00e87a}
+.plan-badge.deal-badge{background:rgba(255,184,0,.15);border:1px solid rgba(255,184,0,.3);color:#ffb800}
+.p-name{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px}
+.p-price{font-size:32px;font-weight:900;line-height:1;margin-bottom:4px;font-family:monospace}
+.p-price.is-free{color:#00e87a}
+.p-period{font-size:12px;color:var(--t3);line-height:1.5;margin-bottom:6px;min-height:34px}
+.p-save{display:inline-block;background:rgba(0,232,122,.12);color:#00e87a;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px}
+.p-div{height:1px;background:var(--b1);margin:14px 0}
+.p-features{list-style:none;flex:1;margin-bottom:18px}
+.p-features li{font-size:12px;color:var(--t2);padding:5px 0;display:flex;align-items:flex-start;gap:7px;border-bottom:1px solid var(--b1);line-height:1.4}
+.p-features li:last-child{border:none}
+.pck{color:#00e87a;font-size:11px;flex-shrink:0;margin-top:1px}
+.pcx{color:var(--t3);font-size:11px;flex-shrink:0;margin-top:1px}
+.plm{color:#ffb800;font-size:10px;font-weight:700;flex-shrink:0}
+.p-btn{display:block;text-align:center;padding:12px;border-radius:10px;font-size:13px;font-weight:700;transition:.15s;cursor:pointer;border:none;font-family:var(--f);letter-spacing:.2px}
+.p-btn.featured-btn{background:linear-gradient(135deg,#7c6aff,#a89fff);color:#fff}
+.p-btn.featured-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(124,106,255,.35)}
+.p-btn.ghost-btn{background:var(--bg3);border:1px solid var(--b2);color:var(--t1)}
+.p-btn.ghost-btn:hover{background:var(--bg4);border-color:var(--ac)}
+.p-btn.green-btn{background:#00e87a;color:#000}
+.p-btn.green-btn:hover{opacity:.85}
+
+/* COMPARISON TABLE */
+.comp-section{background:var(--bg1);border-top:1px solid var(--b1);border-bottom:1px solid var(--b1);padding:64px 0}
+.comp-wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.comp-title{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-1px;margin-bottom:8px}
+.comp-sub{font-size:16px;color:var(--t2);margin-bottom:40px}
 .ctbl2{width:100%;border-collapse:collapse}
-.ctbl2 th{padding:14px 16px;text-align:center;font-size:11px;font-weight:700;color:var(--t2);border-bottom:2px solid var(--b2);background:var(--bg1);text-transform:uppercase;letter-spacing:.8px}
-.ctbl2 th:first-child{text-align:left;width:280px}
-.ctbl2 th.vc{background:linear-gradient(160deg,rgba(124,106,255,.12),var(--bg1));color:var(--ac3);border-bottom-color:var(--ac)}
-.ctbl2 td{padding:13px 16px;border-bottom:1px solid var(--b1);font-size:14px;text-align:center;color:var(--t1)}
-.ctbl2 td:first-child{text-align:left;font-weight:500;color:var(--t2);font-size:13px}
-.ctbl2 td.vc{background:rgba(124,106,255,.04)}
-.ctbl2 tr:last-child td{border:none}
-.ctbl2 tr:hover td{background:rgba(255,255,255,.02)}
-.ctbl2 tr:hover td.vc{background:rgba(124,106,255,.06)}
-.ck{color:var(--gr);font-size:16px}
-.cx{color:var(--t3);font-size:16px}
-.lim{color:var(--yw);font-size:12px;font-weight:700}
-.cat-row td{background:var(--bg2) !important;font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;padding:10px 16px}
+.ctbl2 thead th{padding:12px 16px;text-align:center;font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;border-bottom:2px solid var(--b2)}
+.ctbl2 thead th:first-child{text-align:left}
+.ctbl2 thead th.vc-th{color:var(--ac3);background:rgba(124,106,255,.06);border-bottom-color:var(--ac)}
+.ctbl2 .cat-row td{background:var(--bg2);padding:10px 16px;font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid var(--b1)}
+.ctbl2 tbody td{padding:12px 16px;border-bottom:1px solid var(--b1);font-size:13px;text-align:center;vertical-align:middle}
+.ctbl2 tbody td:first-child{text-align:left;font-weight:500;color:var(--t2)}
+.ctbl2 tbody tr:last-child td{border:none}
+.ctbl2 tbody tr:hover td{background:rgba(255,255,255,.02)}
+.ctbl2 .vc-td{background:rgba(124,106,255,.04)}
+.t-ck{color:#00e87a;font-size:16px}.t-cx{color:var(--t3);font-size:14px}.t-lm{color:#ffb800;font-size:12px;font-weight:700}
+
 /* FAQ */
-.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:44px}
-.faq-item{background:var(--bg1);border:1px solid var(--b1);border-radius:12px;padding:20px}
+.faq-section{max-width:900px;margin:0 auto;padding:64px 24px}
+.faq-title{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-1px;margin-bottom:32px;text-align:center}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.faq-item{background:var(--bg1);border:1px solid var(--b2);border-radius:14px;padding:20px 22px}
 .faq-q{font-size:14px;font-weight:700;margin-bottom:8px}
-.faq-a{font-size:13px;color:var(--t2);line-height:1.65}
-@media(max-width:768px){.faq-grid{grid-template-columns:1fr}}
+.faq-a{font-size:13px;color:var(--t2);line-height:1.7}
+
+/* GUARANTEE BANNER */
+.guar{background:linear-gradient(135deg,rgba(0,232,122,.08),rgba(124,106,255,.06));border:1px solid rgba(0,232,122,.2);border-radius:20px;padding:40px 48px;margin:0 24px 64px;max-width:1132px;margin-left:auto;margin-right:auto;display:flex;align-items:center;gap:32px}
+.guar-ico{font-size:52px;flex-shrink:0}
+.guar-h{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:8px}
+.guar-p{font-size:15px;color:var(--t2);line-height:1.65}
+
+@media(max-width:1024px){.plans-grid{grid-template-columns:1fr 1fr 1fr}.plan-c.featured{transform:none}}
+@media(max-width:768px){.plans-grid{grid-template-columns:1fr 1fr}.faq-grid{grid-template-columns:1fr}.guar{flex-direction:column;padding:28px 24px;margin:0 0 48px}}
+@media(max-width:500px){.plans-grid{grid-template-columns:1fr}.plan-c.featured{transform:none}}
 </style>
 </head>
 <body>
 <script src="js/shared.js"></script>
 <script>renderNav('pricing')</script>
 
-<div class="pricing-hero">
-  <h1>Simple, honest pricing</h1>
-  <p>Start free. No credit card needed. Upgrade when you're ready.</p>
+<!-- HERO -->
+<div class="price-hero">
+  <h1>Simple, honest pricing.</h1>
+  <p>Start free — no credit card needed. Upgrade when you're ready. Cancel anytime. 7-day refund on all paid plans.</p>
+  <div class="price-trust">
+    <span class="ptrust-item"><span class="ptrust-ico">✓</span>3-day free trial, no card</span>
+    <span class="ptrust-item"><span class="ptrust-ico">✓</span>7-day money-back guarantee</span>
+    <span class="ptrust-item"><span class="ptrust-ico">✓</span>Cancel anytime</span>
+    <span class="ptrust-item"><span class="ptrust-ico">✓</span>Instant delivery</span>
+  </div>
 </div>
 
-<div class="sw" style="padding-top:0">
-  <!-- Currency selector -->
-  <div class="currency-bar">
-    <span>Showing prices in:</span>
-    <select class="currency-select" id="manual-currency" onchange="setCurrency(this.value)">
-      <option value="INR">🇮🇳 INR — Indian Rupee</option>
-      <option value="USD">🇺🇸 USD — US Dollar</option>
-      <option value="EUR">🇪🇺 EUR — Euro</option>
-      <option value="GBP">🇬🇧 GBP — British Pound</option>
-      <option value="AED">🇦🇪 AED — UAE Dirham</option>
-      <option value="SGD">🇸🇬 SGD — Singapore Dollar</option>
-      <option value="AUD">🇦🇺 AUD — Australian Dollar</option>
-      <option value="CAD">🇨🇦 CAD — Canadian Dollar</option>
-      <option value="BRL">🇧🇷 BRL — Brazilian Real</option>
-      <option value="JPY">🇯🇵 JPY — Japanese Yen</option>
-      <option value="KRW">🇰🇷 KRW — Korean Won</option>
-      <option value="MYR">🇲🇾 MYR — Malaysian Ringgit</option>
-      <option value="NGN">🇳🇬 NGN — Nigerian Naira</option>
-      <option value="PKR">🇵🇰 PKR — Pakistani Rupee</option>
-      <option value="BDT">🇧🇩 BDT — Bangladeshi Taka</option>
-      <option value="TRY">🇹🇷 TRY — Turkish Lira</option>
-      <option value="ZAR">🇿🇦 ZAR — South African Rand</option>
-    </select>
-    <span class="currency-detected" id="currency-label"></span>
-  </div>
+<!-- CURRENCY -->
+<div class="cur-bar">
+  <label>Currency:</label>
+  <select class="cur-sel" id="cur-sel" onchange="setCurrency&&setCurrency(this.value)">
+    <option value="INR">🇮🇳 INR — Indian Rupee</option>
+    <option value="USD">🇺🇸 USD — US Dollar</option>
+    <option value="EUR">🇪🇺 EUR — Euro</option>
+    <option value="GBP">🇬🇧 GBP — British Pound</option>
+    <option value="AED">🇦🇪 AED — UAE Dirham</option>
+    <option value="SGD">🇸🇬 SGD — Singapore Dollar</option>
+    <option value="AUD">🇦🇺 AUD — Australian Dollar</option>
+    <option value="CAD">🇨🇦 CAD — Canadian Dollar</option>
+    <option value="BRL">🇧🇷 BRL — Brazilian Real</option>
+    <option value="JPY">🇯🇵 JPY — Japanese Yen</option>
+    <option value="MYR">🇲🇾 MYR — Malaysian Ringgit</option>
+    <option value="NGN">🇳🇬 NGN — Nigerian Naira</option>
+    <option value="PKR">🇵🇰 PKR — Pakistani Rupee</option>
+    <option value="BDT">🇧🇩 BDT — Bangladeshi Taka</option>
+  </select>
+  <span class="cur-info" id="cur-info"></span>
+</div>
 
-  <!-- 5 Plan Cards -->
-  <div class="plans">
-    <div class="plan fr">
-      <div class="pname">3-Day Trial</div>
-      <div class="pprice free">Free</div>
-      <div class="pper">3 days · No card needed<br>Full feature access</div>
-      <div class="pdiv"></div>
-      <ul class="plist">
+<!-- PLANS -->
+<div class="plans-wrap">
+  <div class="plans-grid">
+
+    <!-- Free trial -->
+    <div class="plan-c free-c">
+      <div class="plan-badge free-badge">No Card Needed</div>
+      <div class="p-name">3-Day Trial</div>
+      <div class="p-price is-free">Free</div>
+      <div class="p-period">3 days full access<br>Zero risk, zero cost</div>
+      <div class="p-div"></div>
+      <ul class="p-features">
         <li><span class="pck">✓</span>Full Boost Engine</li>
-        <li><span class="pck">✓</span>Auto Game Detection</li>
-        <li><span class="plm">5/day</span>AI Advisor calls</li>
+        <li><span class="pck">✓</span>200+ Game Detection</li>
         <li><span class="pck">✓</span>Network Optimizer</li>
-        <li><span class="pck">✓</span>Discord Presence</li>
+        <li><span class="plm">5/day</span>AI Advisor</li>
         <li><span class="pcx">✗</span>Session History</li>
+        <li><span class="pcx">✗</span>Discord Presence</li>
+        <li><span class="pcx">✗</span>Cloud Mode</li>
       </ul>
-      <a href="download.html" class="pbtn pbgr">Start Free Trial →</a>
+      <button class="p-btn green-btn" onclick="go('trial_3day')">Start Free Trial →</button>
     </div>
-    <div class="plan">
-      <div class="pname">14-Day Trial</div>
-      <div class="pprice" id="p-trial14">₹99</div>
-      <div class="pper">14 days full access<br>One-time charge</div>
-      <div class="pdiv"></div>
-      <ul class="plist">
+
+    <!-- 14-day trial -->
+    <div class="plan-c">
+      <div class="p-name">14-Day Trial</div>
+      <div class="p-price" id="pp-trial14">₹99</div>
+      <div class="p-period">14 days · One-time charge<br>Full refund if not happy</div>
+      <div class="p-div"></div>
+      <ul class="p-features">
         <li><span class="pck">✓</span>Full Boost Engine</li>
-        <li><span class="pck">✓</span>Auto Game Detection</li>
-        <li><span class="plm">20/day</span>AI Advisor calls</li>
+        <li><span class="pck">✓</span>200+ Game Detection</li>
         <li><span class="pck">✓</span>Network Optimizer</li>
-        <li><span class="pck">✓</span>Discord Presence</li>
+        <li><span class="plm">20/day</span>AI Advisor</li>
         <li><span class="pck">✓</span>Session History</li>
-      </ul>
-      <a href="#" onclick="startCheckout('trial_14day')" class="pbtn pbgh">Get 14-Day Trial →</a>
-    </div>
-    <div class="plan">
-      <div class="pname">Monthly</div>
-      <div class="pprice" id="p-monthly">₹349</div>
-      <div class="pper">Per month<br>Cancel anytime</div>
-      <div class="pdiv"></div>
-      <ul class="plist">
-        <li><span class="pck">✓</span>Everything in Trial+</li>
-        <li><span class="plm">50/day</span>AI Advisor calls</li>
+        <li><span class="pck">✓</span>Discord Presence</li>
         <li><span class="pck">✓</span>Cloud Mode</li>
-        <li><span class="pck">✓</span>Thermal Management</li>
-        <li><span class="pck">✓</span>Email Support</li>
-        <li><span class="pck">✓</span>Auto Updates</li>
       </ul>
-      <a href="#" onclick="startCheckout('monthly')" class="pbtn pbgh">Get Monthly →</a>
+      <button class="p-btn ghost-btn" onclick="go('trial_14day')">Get 14-Day Trial →</button>
     </div>
-    <div class="plan pop">
-      <div class="ptag">Most Popular</div>
-      <div class="pname">Yearly</div>
-      <div class="pprice" id="p-yearly">₹2,499</div>
-      <div class="pper">Per year · billed once<br><span class="psave">Save 40% vs monthly</span></div>
-      <div class="pdiv"></div>
-      <ul class="plist">
+
+    <!-- Monthly -->
+    <div class="plan-c">
+      <div class="p-name">Monthly</div>
+      <div class="p-price" id="pp-monthly">₹349</div>
+      <div class="p-period">Per month<br>Cancel anytime</div>
+      <div class="p-div"></div>
+      <ul class="p-features">
+        <li><span class="pck">✓</span>Full Boost Engine</li>
+        <li><span class="pck">✓</span>200+ Game Detection</li>
+        <li><span class="pck">✓</span>Thermal Management</li>
+        <li><span class="plm">50/day</span>AI Advisor</li>
+        <li><span class="pck">✓</span>Session History</li>
+        <li><span class="pck">✓</span>Discord Presence</li>
+        <li><span class="pck">✓</span>All Cloud Modes</li>
+      </ul>
+      <button class="p-btn ghost-btn" onclick="go('monthly')">Get Monthly →</button>
+    </div>
+
+    <!-- Yearly — featured -->
+    <div class="plan-c featured">
+      <div class="plan-pop">Most Popular</div>
+      <div class="p-name">Yearly</div>
+      <div class="p-price" id="pp-yearly">₹2,499</div>
+      <div class="p-period">Per year · billed once<br><span class="p-save">Save 40% vs monthly</span></div>
+      <div class="p-div"></div>
+      <ul class="p-features">
         <li><span class="pck">✓</span>Everything in Monthly</li>
-        <li><span class="plm">50/day</span>AI Advisor calls</li>
+        <li><span class="pck">✓</span>Thermal Management</li>
+        <li><span class="plm">50/day</span>AI Advisor</li>
         <li><span class="pck">✓</span>Priority Support</li>
         <li><span class="pck">✓</span>Early Access Features</li>
         <li><span class="pck">✓</span>All Cloud Modes</li>
         <li><span class="pck">✓</span>Auto Updates</li>
       </ul>
-      <a href="#" onclick="startCheckout('yearly')" class="pbtn pbg">Get Yearly — Best Value →</a>
+      <button class="p-btn featured-btn" onclick="go('yearly')">Get Yearly — Best Value →</button>
     </div>
-    <div class="plan">
-      <div class="pname">Lifetime</div>
-      <div class="pprice" id="p-lifetime">₹5,999</div>
-      <div class="pper">One-time payment<br>Never pay again</div>
-      <div class="pdiv"></div>
-      <ul class="plist">
+
+    <!-- Lifetime -->
+    <div class="plan-c">
+      <div class="plan-badge deal-badge">Best Deal</div>
+      <div class="p-name">Lifetime</div>
+      <div class="p-price" id="pp-lifetime">₹5,999</div>
+      <div class="p-period">One-time · Never pay again<br>All future updates included</div>
+      <div class="p-div"></div>
+      <ul class="p-features">
         <li><span class="pck">✓</span>Everything in Yearly</li>
         <li><span class="pck">✓</span>All Future Updates</li>
         <li><span class="pck">✓</span>Lifetime License</li>
         <li><span class="pck">✓</span>Priority Support</li>
         <li><span class="pck">✓</span>1 Device Forever</li>
         <li><span class="pck">✓</span>Never Expires</li>
+        <li><span class="pck">✓</span>Locked-in pricing</li>
       </ul>
-      <a href="#" onclick="startCheckout('lifetime')" class="pbtn pbgh">Get Lifetime →</a>
+      <button class="p-btn ghost-btn" onclick="go('lifetime')">Get Lifetime →</button>
     </div>
+
   </div>
 
-  <!-- Full Feature Comparison -->
-  <div style="margin-top:72px">
-    <h2 style="font-size:28px;font-weight:800;letter-spacing:-.5px;text-align:center;margin-bottom:8px">Full Feature Comparison</h2>
-    <p style="text-align:center;font-size:15px;color:var(--t2);margin-bottom:0">Every feature, every plan — no hidden limits.</p>
-    <div class="compare-wrap">
+  <!-- 7-day guarantee banner -->
+  <div class="guar">
+    <div class="guar-ico">🛡️</div>
+    <div>
+      <div class="guar-h">7-day money-back guarantee on all paid plans.</div>
+      <div class="guar-p">Not happy? Email <a href="mailto:support@valcrown.com" style="color:var(--ac3)">support@valcrown.com</a> within 7 days of purchase with your order email. We process refunds within 24 hours — no questions asked, no hassle.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURE COMPARISON TABLE -->
+<div class="comp-section">
+  <div class="comp-wrap">
+    <div class="comp-title">Full feature comparison</div>
+    <div class="comp-sub">See exactly what's included in each plan.</div>
+    <div style="overflow-x:auto">
       <table class="ctbl2">
         <thead>
           <tr>
-            <th>Feature</th>
+            <th style="text-align:left;width:36%">Feature</th>
             <th>3-Day Free</th>
-            <th>14-Day Trial</th>
+            <th>14-Day</th>
             <th>Monthly</th>
-            <th class="vc">Yearly ⭐</th>
+            <th class="vc-th">Yearly ⭐</th>
             <th>Lifetime</th>
           </tr>
         </thead>
         <tbody>
-          <!-- CORE -->
-          <tr class="cat-row"><td colspan="6">Core Optimization</td></tr>
-          <tr><td>Boost Engine (CPU priority, power plan)</td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>Auto Game Detection (200+ games)</td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>Background App Suspension</td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>Auto Restore After Gaming</td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>System Tray (runs silently)</td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
+          <tr class="cat-row"><td colspan="6">Core Boost Features</td></tr>
+          <tr><td>Boost Engine (CPU + RAM + Power)</td><td><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td><td class="vc-td"><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td></tr>
+          <tr><td>Auto Game Detection (200+ games)</td><td><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td><td class="vc-td"><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td></tr>
+          <tr><td>Network Optimizer + DNS flush</td><td><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td><td class="vc-td"><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td></tr>
+          <tr><td>System Tray + Background mode</td><td><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td><td class="vc-td"><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td></tr>
+          <tr><td>Cloud Mode (video decoder priority)</td><td><span class="t-cx">✗</span></td><td><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td><td class="vc-td"><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td></tr>
+          <tr><td>Thermal Management alerts</td><td><span class="t-cx">✗</span></td><td><span class="t-cx">✗</span></td><td><span class="t-ck">✓</span></td><td class="vc-td"><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td></tr>
 
-          <!-- CLOUD GAMING -->
-          <tr class="cat-row"><td colspan="6">Cloud Gaming Specific</td></tr>
-          <tr><td>Cloud Mode (decoder pipeline priority)</td><td><span class="cx">✗</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>GeForce NOW Optimization</td><td><span class="cx">✗</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>Xbox Cloud Gaming Mode</td><td><span class="cx">✗</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>Boosteroid / Shadow PC Mode</td><td><span class="cx">✗</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>Thermal Throttle Warning</td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
+          <tr class="cat-row"><td colspan="6">AI & Intelligence</td></tr>
+          <tr><td>AI Advisor (Claude + Gemini)</td><td><span class="t-lm">5/day</span></td><td><span class="t-lm">20/day</span></td><td><span class="t-lm">50/day</span></td><td class="vc-td"><span class="t-lm">50/day</span></td><td><span class="t-lm">50/day</span></td></tr>
+          <tr><td>Real-time network diagnosis</td><td><span class="t-cx">✗</span></td><td><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td><td class="vc-td"><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td></tr>
+          <tr><td>Predictive boost recommendations</td><td><span class="t-cx">✗</span></td><td><span class="t-cx">✗</span></td><td><span class="t-ck">✓</span></td><td class="vc-td"><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td></tr>
 
-          <!-- NETWORK -->
-          <tr class="cat-row"><td colspan="6">Network Optimization</td></tr>
-          <tr><td>DNS Flush & Optimization</td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>TCP Stack Optimization</td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>Real-Time Ping Monitor</td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>Traffic Prioritization (game over background)</td><td><span class="cx">✗</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>Edge Server Routing</td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
+          <tr class="cat-row"><td colspan="6">Data & History</td></tr>
+          <tr><td>Session History & tracking</td><td><span class="t-cx">✗</span></td><td><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td><td class="vc-td"><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td></tr>
+          <tr><td>Discord Rich Presence</td><td><span class="t-cx">✗</span></td><td><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td><td class="vc-td"><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td></tr>
+          <tr><td>Performance stats & reports</td><td><span class="t-cx">✗</span></td><td><span class="t-cx">✗</span></td><td><span class="t-ck">✓</span></td><td class="vc-td"><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td></tr>
 
-          <!-- AI -->
-          <tr class="cat-row"><td colspan="6">AI Features</td></tr>
-          <tr><td>AI Advisor (Claude + Gemini)</td><td><span class="lim">5/day</span></td><td><span class="lim">20/day</span></td><td><span class="lim">50/day</span></td><td class="vc"><span class="lim">50/day</span></td><td><span class="lim">50/day</span></td></tr>
-          <tr><td>Real-Time System Analysis</td><td><span class="cx">✗</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>Network Issue Diagnosis</td><td><span class="cx">✗</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>Predictive Boost Suggestions</td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-
-          <!-- SOCIAL -->
-          <tr class="cat-row"><td colspan="6">Social & Tracking</td></tr>
-          <tr><td>Discord Rich Presence</td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>Session History & Stats</td><td><span class="cx">✗</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>Performance Trend Tracking</td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-
-          <!-- ACCOUNT -->
-          <tr class="cat-row"><td colspan="6">Account & Support</td></tr>
-          <tr><td>Self-Service Device Reset</td><td><span class="cx">✗</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>Email Support</td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>Priority Support</td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>Early Access Features</td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>Auto Updates</td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td class="vc"><span class="ck">✓</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>All Future Updates (lifetime)</td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td class="vc"><span class="cx">✗</span></td><td><span class="ck">✓</span></td></tr>
-          <tr><td>Credit Card Required</td><td style="color:var(--gr);font-weight:600">No ✓</td><td style="color:var(--t2)">Yes</td><td style="color:var(--t2)">Yes</td><td class="vc" style="color:var(--t2)">Yes</td><td style="color:var(--t2)">Yes</td></tr>
+          <tr class="cat-row"><td colspan="6">Support & Access</td></tr>
+          <tr><td>Email Support</td><td><span class="t-cx">✗</span></td><td><span class="t-cx">✗</span></td><td><span class="t-ck">✓</span></td><td class="vc-td"><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td></tr>
+          <tr><td>Priority Support</td><td><span class="t-cx">✗</span></td><td><span class="t-cx">✗</span></td><td><span class="t-cx">✗</span></td><td class="vc-td"><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td></tr>
+          <tr><td>Early Access to new features</td><td><span class="t-cx">✗</span></td><td><span class="t-cx">✗</span></td><td><span class="t-cx">✗</span></td><td class="vc-td"><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td></tr>
+          <tr><td>All Future Updates</td><td><span class="t-cx">✗</span></td><td><span class="t-cx">✗</span></td><td><span class="t-cx">✗</span></td><td class="vc-td"><span class="t-cx">✗</span></td><td><span class="t-ck">✓</span></td></tr>
+          <tr><td>Self-service device reset</td><td><span class="t-cx">✗</span></td><td><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td><td class="vc-td"><span class="t-ck">✓</span></td><td><span class="t-ck">✓</span></td></tr>
+          <tr><td>Credit card required</td><td><span style="color:#00e87a;font-weight:700">No</span></td><td><span style="color:var(--t2)">Yes</span></td><td><span style="color:var(--t2)">Yes</span></td><td class="vc-td"><span style="color:var(--t2)">Yes</span></td><td><span style="color:var(--t2)">Yes</span></td></tr>
         </tbody>
       </table>
     </div>
   </div>
+</div>
 
-  <!-- FAQ -->
-  <div style="margin-top:72px">
-    <h2 style="font-size:28px;font-weight:800;letter-spacing:-.5px;text-align:center;margin-bottom:8px">Frequently Asked Questions</h2>
-    <p style="text-align:center;font-size:15px;color:var(--t2);margin-bottom:0">Everything you need to know.</p>
-    <div class="faq-grid">
-      <div class="faq-item"><div class="faq-q">How does the 3-day free trial work?</div><div class="faq-a">Download ValCrown, create a free account, and you get 3 days of full access. No credit card needed. After 3 days, upgrade to continue using it.</div></div>
-      <div class="faq-item"><div class="faq-q">What's the difference between 3-day and 14-day trials?</div><div class="faq-a">The 3-day trial is completely free — no card needed. The 14-day trial costs a small one-time fee but gives you 14 full days to test every feature thoroughly.</div></div>
-      <div class="faq-item"><div class="faq-q">How do I activate my license after purchase?</div><div class="faq-a">After payment, your license key is shown on the success page. Download ValCrown, open the app, sign in, and enter the key to activate on your device.</div></div>
-      <div class="faq-item"><div class="faq-q">Can I use ValCrown on multiple PCs?</div><div class="faq-a">Each license activates on 1 device. Need to transfer to a new PC? Use the self-service device reset in app settings (once every 30 days) or contact support@valcrown.com.</div></div>
-      <div class="faq-item"><div class="faq-q">Does it work with cloud gaming platforms?</div><div class="faq-a">Yes — ValCrown has specialized Cloud Mode for GeForce NOW, Xbox Cloud Gaming, Boosteroid, Shadow PC, and Amazon Luna. It prioritizes the video decoder pipeline specifically.</div></div>
-      <div class="faq-item"><div class="faq-q">What is the refund policy?</div><div class="faq-a">7-day refund on all paid plans, no questions asked. Email support@valcrown.com with your order email and we process it within 24 hours.</div></div>
-      <div class="faq-item"><div class="faq-q">What Windows versions are supported?</div><div class="faq-a">Windows 10 and Windows 11 (64-bit only). Administrator privileges required for the boost engine and network features.</div></div>
-      <div class="faq-item"><div class="faq-q">Is the Lifetime plan really lifetime?</div><div class="faq-a">Yes — one payment, never pay again. Includes all updates for the life of the product. This is the best value if you game regularly.</div></div>
+<!-- FAQ -->
+<div class="faq-section">
+  <div class="faq-title">Frequently asked questions</div>
+  <div class="faq-grid">
+    <div class="faq-item">
+      <div class="faq-q">How does the 3-day free trial work?</div>
+      <div class="faq-a">Download ValCrown, create a free account, and you get 3 days of full access — no credit card needed. After 3 days, upgrade to continue. No automatic charges.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What's the difference between free and 14-day trials?</div>
+      <div class="faq-a">The 3-day trial is completely free — no card. The 14-day trial costs a small one-time fee and gives you 14 full days plus session history and Discord presence.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How do I get my license key after purchase?</div>
+      <div class="faq-a">Your key appears instantly on the success page after payment. It's also emailed to you and visible in your account dashboard at any time.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I use ValCrown on multiple PCs?</div>
+      <div class="faq-a">Each license activates on 1 device. You can reset to a new device yourself from app settings — once every 30 days. No support ticket needed.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is the Lifetime plan really lifetime?</div>
+      <div class="faq-a">Yes — one payment, never pay again. You get all future updates for the life of the product. This is the best value if you game regularly.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What's your refund policy?</div>
+      <div class="faq-a">7-day full refund on all paid plans, no questions asked. Email support@valcrown.com with your order email and we process it within 24 hours.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Does it work with cloud gaming specifically?</div>
+      <div class="faq-a">Yes — ValCrown is built specifically for GeForce NOW, Xbox Cloud Gaming, Boosteroid, Shadow PC, Amazon Luna, and all major cloud platforms.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What Windows versions are supported?</div>
+      <div class="faq-a">Windows 10 and Windows 11 (64-bit only). Administrator privileges are required for the boost engine and network optimization features.</div>
     </div>
   </div>
 </div>
@@ -243,30 +330,35 @@
 <script src="js/i18n.js"></script>
 <script src="js/currency.js"></script>
 <script>
-const APIURL = 'https://api.valcrown.com';
-
+const API_URL = 'https://api.valcrown.com';
 document.addEventListener('DOMContentLoaded', async () => {
-  await initCurrency();
-  initLanguage();
-  updatePriceElements();
-  const sel = document.getElementById('manual-currency');
-  if (sel) {
-    const opt = Array.from(sel.options).find(o => o.value === currentCurrency);
-    if (opt) sel.value = currentCurrency;
+  if (typeof initCurrency === 'function') {
+    await initCurrency();
+    const map = {trial14:'pp-trial14', monthly:'pp-monthly', yearly:'pp-yearly', lifetime:'pp-lifetime'};
+    Object.entries(map).forEach(([k,id]) => {
+      const el = document.getElementById(id);
+      if (el && PRICES[k]) el.textContent = formatPrice(PRICES[k]);
+    });
+    const sel = document.getElementById('cur-sel');
+    if (sel) {
+      const opt = Array.from(sel.options).find(o => o.value === currentCurrency);
+      if (opt) sel.value = currentCurrency;
+    }
+    const ci = document.getElementById('cur-info');
+    if (ci) ci.textContent = 'Auto-detected: ' + currentCurrency;
   }
-  const cl = document.getElementById('currency-label');
-  if (cl) cl.textContent = `Auto-detected: ${currentCurrency}`;
+  if (typeof initLanguage === 'function') initLanguage();
 });
 
-async function startCheckout(planId) {
+async function go(planId) {
   if (planId === 'trial_3day') { window.location.href = 'download.html'; return; }
   try {
-    const res = await fetch(`${APIURL}/api/stripe/create-checkout`, {
+    const res = await fetch(API_URL + '/api/stripe/create-checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         planId,
-        currency: currentCurrency,
+        currency: typeof currentCurrency !== 'undefined' ? currentCurrency : 'USD',
         successUrl: window.location.origin + '/success.html?session_id={CHECKOUT_SESSION_ID}',
         cancelUrl: window.location.href,
       }),
@@ -274,7 +366,7 @@ async function startCheckout(planId) {
     const data = await res.json();
     if (data.url) window.location.href = data.url;
     else alert('Payment setup failed. Please try again or contact support@valcrown.com');
-  } catch (err) {
+  } catch(e) {
     alert('Cannot connect to payment server. Please try again.');
   }
 }

@@ -5,8 +5,10 @@
 <title>ValCrown — Payment Successful</title>
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <link rel="stylesheet" href="css/shared.css">
+<script src="js/shared.js"></script>
 </head>
 <body>
+<script>renderNav()</script>
 <script src="js/shared.js"></script>
 <script>renderNav()</script>
 <div style="text-align:center;padding:80px 24px;max-width:600px;margin:0 auto">
@@ -39,4 +41,5 @@ function copyKey(){
   navigator.clipboard.writeText(t).then(()=>{document.getElementById('license-key').textContent='Copied!';setTimeout(()=>location.reload(),1500);});
 }
 </script>
+<script>renderStatusBar();renderFooter()</script>
 </body></html>

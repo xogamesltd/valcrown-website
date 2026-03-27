@@ -5,8 +5,10 @@
 <title>ValCrown — Sign In</title>
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <link rel="stylesheet" href="css/shared.css">
+<script src="js/shared.js"></script>
 </head>
 <body>
+<script>renderNav()</script>
 <script src="js/shared.js"></script>
 <script>renderNav()</script>
 <div class="auth-pg">
@@ -60,4 +62,5 @@ async function doAuth(){
 }
 document.addEventListener('keydown',e=>{if(e.key==='Enter')doAuth()});
 </script>
+<script>renderStatusBar();renderFooter()</script>
 </body></html>
