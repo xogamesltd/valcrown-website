@@ -1,71 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ValCrown — Payment Successful</title>
-<link rel="stylesheet" href="css/shared.css">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <link rel="stylesheet" href="css/shared.css">
 </head>
 <body>
-<nav class="nav">
-  <div class="nav-inner">
-    <div class="nav-logo"><div class="logo-ico">V</div><span class="logo-name">ValCrown</span></div>
+<script src="js/shared.js"></script>
+<script>renderNav()</script>
+<div style="text-align:center;padding:80px 24px;max-width:600px;margin:0 auto">
+  <div style="font-size:72px;margin-bottom:24px">🎉</div>
+  <h1 style="font-size:36px;font-weight:900;letter-spacing:-1px;margin-bottom:12px">Payment Successful!</h1>
+  <p style="font-size:16px;color:var(--t2);margin-bottom:32px;line-height:1.7">Your ValCrown license is ready. Your key will also be sent to your email.</p>
+  <div style="background:var(--bg1);border:1px solid var(--b2);border-radius:16px;padding:28px;margin-bottom:32px">
+    <div style="font-size:12px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Your License Key</div>
+    <div id="license-key" style="font-family:monospace;font-size:18px;font-weight:700;color:var(--ac3);letter-spacing:2px;padding:14px;background:var(--bg2);border-radius:10px;cursor:pointer" onclick="copyKey()">Loading...</div>
+    <div style="font-size:12px;color:var(--t3);margin-top:8px">Click to copy · Also sent to your email</div>
   </div>
-</nav>
-
-<div class="form-page">
-  <div class="form-box" style="text-align:center;max-width:440px;">
-    <div style="font-size:56px;margin-bottom:16px;">🎉</div>
-    <div style="font-size:22px;font-weight:800;margin-bottom:8px;">Payment Successful!</div>
-    <div style="font-size:14px;color:var(--text2);margin-bottom:24px;line-height:1.6;">
-      Your ValCrown license is ready. Download the app and enter your key to activate.
-    </div>
-
-    <div id="key-display" style="display:none;background:var(--bg0);border:1px solid rgba(124,106,255,0.3);border-radius:10px;padding:16px;margin-bottom:20px;">
-      <div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">Your License Key</div>
-      <div id="license-key" style="font-family:monospace;font-size:15px;color:var(--accent);letter-spacing:1px;margin-bottom:10px;word-break:break-all;">Loading...</div>
-      <button onclick="copyKey()" style="background:var(--accent-dim);border:none;color:var(--accent);padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;" id="copy-btn">Copy Key</button>
-    </div>
-
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <a href="download.html" style="background:var(--accent);color:#fff;padding:12px;border-radius:9px;font-size:14px;font-weight:700;text-decoration:none;">Download ValCrown</a>
-      <a href="index.html" style="background:var(--bg2);border:1px solid var(--border2);color:var(--text1);padding:12px;border-radius:9px;font-size:13px;font-weight:600;text-decoration:none;">Back to Home</a>
-    </div>
-
-    <div style="margin-top:16px;font-size:12px;color:var(--text3);">
-      Need help? <a href="mailto:support@valcrown.com" style="color:var(--accent);">support@valcrown.com</a>
-    </div>
-  </div>
+  <a href="download.html" class="bh" style="display:inline-block">⬇ Download ValCrown Now</a>
 </div>
-
+<script>renderStatusBar();renderFooter()</script>
 <script>
-// Get session ID from URL
-const params = new URLSearchParams(window.location.search);
-const sessionId = params.get('session_id');
-
-if (sessionId) {
-  // Fetch license key from backend
-  fetch(`https://api.valcrown.com/api/stripe/session-key?session_id=${sessionId}`)
-    .then(r => r.json())
-    .then(data => {
-      if (data.licenseKey) {
-        document.getElementById('license-key').textContent = data.licenseKey;
-        document.getElementById('key-display').style.display = 'block';
-      }
-    })
-    .catch(() => {
-      // Key will be shown in admin panel regardless
-    });
+const params=new URLSearchParams(window.location.search);
+const sid=params.get('session_id');
+if(sid&&!sid.startsWith('free-')){
+  fetch('https://api.valcrown.com/api/stripe/session-key?session_id='+sid)
+    .then(r=>r.json()).then(d=>{
+      const el=document.getElementById('license-key');
+      if(d.licenseKey){el.textContent=d.licenseKey;}
+      else{el.textContent='Check your email for your license key';el.style.fontSize='14px';}
+    }).catch(()=>{document.getElementById('license-key').textContent='Check your email for your license key';});
+}else if(sid&&sid.startsWith('free-')){
+  document.getElementById('license-key').textContent=sid.replace('free-','');
 }
-
-function copyKey() {
-  const key = document.getElementById('license-key').textContent;
-  navigator.clipboard.writeText(key);
-  const btn = document.getElementById('copy-btn');
-  btn.textContent = 'Copied!';
-  setTimeout(() => btn.textContent = 'Copy Key', 2000);
+function copyKey(){
+  const t=document.getElementById('license-key').textContent;
+  navigator.clipboard.writeText(t).then(()=>{document.getElementById('license-key').textContent='Copied!';setTimeout(()=>location.reload(),1500);});
 }
 </script>
-</body>
-</html>
+</body></html>
