@@ -4,111 +4,309 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ValCrown — Sign In</title>
-<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
-<link rel="stylesheet" href="css/shared.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%237c6aff'/><text x='16' y='23' font-family='Arial Black' font-size='18' font-weight='900' fill='white' text-anchor='middle'>V</text></svg>">
 <style>
-.auth-pg{min-height:calc(100vh - 64px);display:flex;align-items:center;justify-content:center;padding:28px}
-.auth-card{background:var(--bg1);border:1px solid var(--b2);border-radius:20px;padding:40px;width:100%;max-width:420px}
-.auth-logo{text-align:center;margin-bottom:28px}
-.auth-ico{width:56px;height:56px;background:linear-gradient(135deg,#7c6aff,#a89fff);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:#fff;margin:0 auto 12px;box-shadow:0 8px 28px rgba(124,106,255,.3)}
-.auth-title-text{font-size:22px;font-weight:800;letter-spacing:-.5px}
-.auth-subt{font-size:14px;color:var(--t2);margin-top:4px}
-.atabs{display:flex;background:var(--bg2);border-radius:10px;padding:4px;gap:3px;margin-bottom:22px}
-.atab{flex:1;height:38px;border:none;border-radius:7px;font-size:14px;font-weight:600;cursor:pointer;transition:.15s;background:none;color:var(--t2);font-family:var(--f)}
-.atab.active{background:var(--bg3);color:var(--t1)}
-.fgrp{margin-bottom:16px}
-.flbl{font-size:12px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px;display:block}
-.finp{width:100%;background:var(--bg2);border:1px solid var(--b2);border-radius:9px;padding:12px 14px;color:var(--t1);font-size:14px;outline:none;transition:border-color .15s;font-family:var(--f)}
-.finp:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,106,255,.12)}
-.finp::placeholder{color:var(--t3)}
-.abtn{width:100%;height:48px;background:linear-gradient(135deg,#7c6aff,#a89fff);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:.2s;font-family:var(--f);margin-top:4px}
-.abtn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(124,106,255,.35)}
-.abtn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
-.aft{text-align:center;margin-top:16px;font-size:13px;color:var(--t3)}
-.aft a{color:var(--ac3);font-weight:500;cursor:pointer}
-.ferr{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.3);color:#ff4757;padding:12px 16px;border-radius:9px;font-size:13px;margin-bottom:16px;display:none;line-height:1.5}
-.ferr.show{display:block}
-.fok{background:rgba(0,232,122,.1);border:1px solid rgba(0,232,122,.3);color:#00e87a;padding:12px 16px;border-radius:9px;font-size:13px;margin-bottom:16px;display:none;line-height:1.5}
-.fok.show{display:block}
+/* Self-contained — no shared.css needed for this page */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg0:#07070f;--bg1:#0e0e1c;--bg2:#141428;--bg3:#1c1c38;
+  --b1:rgba(255,255,255,.07);--b2:rgba(255,255,255,.12);
+  --t1:#f0f0ff;--t2:#9090c0;--t3:#505080;
+  --ac:#7c6aff;--ac3:#a89fff;--acg:rgba(124,106,255,.25);--acd:rgba(124,106,255,.12);
+  --gr:#00e87a;--rd:#ff4757;
+  --f:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+}
+body{font-family:var(--f);background:var(--bg0);color:var(--t1);-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+a{text-decoration:none;color:inherit}
+
+/* NAV */
+nav{background:rgba(7,7,15,.95);border-bottom:1px solid var(--b1);padding:0 24px}
+.nav-in{max-width:1180px;margin:0 auto;height:62px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-v{width:32px;height:32px;background:linear-gradient(135deg,#7c6aff,#a89fff);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#fff}
+.logo-n{font-size:17px;font-weight:800;letter-spacing:-.5px;background:linear-gradient(90deg,#fff,#a89fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:4px}
+.nav-links a{padding:7px 13px;border-radius:7px;font-size:14px;font-weight:500;color:var(--t2);transition:.15s}
+.nav-links a:hover{background:var(--bg3);color:var(--t1)}
+
+/* PAGE */
+.page{flex:1;display:flex;align-items:center;justify-content:center;padding:28px}
+
+/* CARD */
+.card{background:var(--bg1);border:1px solid var(--b2);border-radius:20px;padding:40px;width:100%;max-width:420px}
+
+/* LOGO BLOCK */
+.card-logo{text-align:center;margin-bottom:28px}
+.card-ico{width:56px;height:56px;background:linear-gradient(135deg,#7c6aff,#a89fff);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:#fff;margin:0 auto 12px;box-shadow:0 8px 28px rgba(124,106,255,.3)}
+.card-title{font-size:22px;font-weight:800;letter-spacing:-.5px}
+.card-sub{font-size:14px;color:var(--t2);margin-top:4px}
+
+/* TABS */
+.tabs{display:flex;background:var(--bg2);border-radius:10px;padding:4px;gap:3px;margin-bottom:22px}
+.tab{flex:1;height:38px;border:none;border-radius:7px;font-size:14px;font-weight:600;cursor:pointer;background:none;color:var(--t2);font-family:var(--f);transition:.15s}
+.tab:hover{color:var(--t1)}
+.tab.on{background:var(--bg3);color:var(--t1)}
+
+/* FORM */
+.fg{margin-bottom:16px}
+.fl{font-size:12px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px;display:block}
+.fi{width:100%;background:var(--bg2);border:1px solid var(--b2);border-radius:9px;padding:12px 14px;color:var(--t1);font-size:14px;outline:none;font-family:var(--f);transition:.15s}
+.fi:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,106,255,.15)}
+.fi::placeholder{color:var(--t3)}
+
+/* BUTTONS */
+.btn-main{width:100%;height:48px;background:linear-gradient(135deg,#7c6aff,#a89fff);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--f);transition:.2s;margin-top:4px}
+.btn-main:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(124,106,255,.4)}
+.btn-main:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* MESSAGES */
+.msg{padding:12px 16px;border-radius:9px;font-size:13px;margin-bottom:16px;line-height:1.5;display:none}
+.msg.show{display:block}
+.msg.err{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.3);color:#ff4757}
+.msg.ok{background:rgba(0,232,122,.1);border:1px solid rgba(0,232,122,.3);color:#00e87a}
+.msg.warn{background:rgba(255,184,0,.1);border:1px solid rgba(255,184,0,.3);color:#ffb800}
+
+/* LINKS */
+.sub-links{display:flex;align-items:center;justify-content:space-between;margin-top:14px;font-size:13px;color:var(--t3);flex-wrap:wrap;gap:8px}
+.sub-links a{color:var(--ac3);font-weight:500;cursor:pointer}
+
+/* DIVIDER */
+.divider{display:flex;align-items:center;gap:12px;margin:16px 0;color:var(--t3);font-size:12px}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--b1)}
+
+/* PANEL VISIBILITY */
+.panel{display:none}
+.panel.on{display:block}
+
+/* FOOTER */
+footer{background:var(--bg1);border-top:1px solid var(--b1);padding:16px 24px;text-align:center;font-size:12px;color:var(--t3)}
+footer a{color:var(--ac3)}
 </style>
 </head>
 <body>
 
-<!-- ALL JS DEFINED FIRST before any HTML that calls it -->
-<script src="js/shared.js"></script>
-<script>
-const API = 'https://api.valcrown.com';
-let mode = 'login';
+<nav>
+  <div class="nav-in">
+    <a href="index.html" class="logo">
+      <div class="logo-v">V</div>
+      <span class="logo-n">ValCrown</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="download.html">Download</a>
+    </div>
+  </div>
+</nav>
 
-function switchTab(m) {
-  mode = m;
-  document.querySelectorAll('.atab').forEach((t,i) => {
-    t.classList.toggle('active', (m==='login' && i===0) || (m==='register' && i===1));
-  });
-  document.getElementById('name-grp').style.display = m === 'register' ? 'block' : 'none';
-  document.getElementById('forgot-row').style.display = m === 'login' ? 'block' : 'none';
-  document.getElementById('auth-sub').textContent = m === 'login' ? 'Sign in to your account' : 'Create your free account';
-  document.getElementById('auth-btn').textContent = m === 'login' ? 'Sign In' : 'Create Account';
-  document.getElementById('sw-text').textContent = m === 'login' ? 'No account?' : 'Already have one?';
-  document.getElementById('sw-link').textContent = m === 'login' ? 'Create one free →' : 'Sign in →';
-  document.getElementById('auth-err').classList.remove('show');
-  document.getElementById('auth-ok').classList.remove('show');
+<div class="page">
+  <div class="card">
+
+    <div class="card-logo">
+      <div class="card-ico">V</div>
+      <div class="card-title">ValCrown</div>
+      <div class="card-sub" id="card-sub">Sign in to your account</div>
+    </div>
+
+    <!-- ── LOGIN / REGISTER TABS ── -->
+    <div id="panel-auth" class="panel on">
+      <div class="tabs">
+        <button class="tab on" id="tab-login" onclick="show('login')">Sign In</button>
+        <button class="tab"    id="tab-reg"   onclick="show('register')">Create Account</button>
+      </div>
+
+      <div class="msg" id="auth-err"></div>
+      <div class="msg" id="auth-ok"></div>
+
+      <div class="fg" id="fg-name" style="display:none">
+        <label class="fl">Full Name</label>
+        <input class="fi" type="text" id="f-name" placeholder="Your full name" autocomplete="name">
+      </div>
+      <div class="fg">
+        <label class="fl">Email Address</label>
+        <input class="fi" type="email" id="f-email" placeholder="your@email.com" autocomplete="email">
+      </div>
+      <div class="fg">
+        <label class="fl">Password</label>
+        <input class="fi" type="password" id="f-pw" placeholder="Minimum 8 characters" autocomplete="current-password">
+      </div>
+
+      <button class="btn-main" id="auth-btn" onclick="doAuth()">Sign In</button>
+
+      <div class="sub-links">
+        <span id="sw-text">No account? <a onclick="show('register')">Create one free →</a></span>
+        <a onclick="show('forgot')" id="forgot-link">Forgot password?</a>
+      </div>
+    </div>
+
+    <!-- ── FORGOT PASSWORD ── -->
+    <div id="panel-forgot" class="panel">
+      <div class="msg" id="forgot-msg"></div>
+      <div class="fg">
+        <label class="fl">Email Address</label>
+        <input class="fi" type="email" id="forgot-email" placeholder="Enter your account email">
+      </div>
+      <button class="btn-main" id="forgot-btn" onclick="doForgot()">Send Reset Link</button>
+      <div class="divider">or</div>
+      <div style="text-align:center;font-size:13px;color:var(--t3)">
+        <a onclick="show('login')" style="color:var(--ac3);font-weight:500">← Back to Sign In</a>
+      </div>
+    </div>
+
+    <!-- ── RESET PASSWORD (from email link) ── -->
+    <div id="panel-reset" class="panel">
+      <div class="msg" id="reset-msg"></div>
+      <div class="fg">
+        <label class="fl">New Password</label>
+        <input class="fi" type="password" id="reset-pw" placeholder="Minimum 8 characters" autocomplete="new-password">
+      </div>
+      <div class="fg">
+        <label class="fl">Confirm New Password</label>
+        <input class="fi" type="password" id="reset-pw2" placeholder="Repeat new password" autocomplete="new-password">
+      </div>
+      <button class="btn-main" id="reset-btn" onclick="doReset()">Set New Password</button>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  © 2026 ValCrown · A company of <a href="https://xogamess.com" target="_blank">XOGAMESLTD</a> ·
+  <a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a>
+</footer>
+
+<script>
+// ─── CONFIG ───────────────────────────────────────────────────────────────────
+const API = 'https://api.valcrown.com';
+let mode = 'login'; // 'login' | 'register'
+
+// ─── HELPERS ──────────────────────────────────────────────────────────────────
+function $(id) { return document.getElementById(id); }
+
+function showMsg(id, type, text) {
+  const el = $(id);
+  if (!el) return;
+  el.className = 'msg ' + type + ' show';
+  el.textContent = text;
+}
+
+function hideMsg(id) {
+  const el = $(id);
+  if (el) { el.className = 'msg'; el.textContent = ''; }
+}
+
+function setBtn(id, text, disabled) {
+  const b = $(id);
+  if (!b) return;
+  b.textContent = text;
+  b.disabled = disabled;
 }
 
 function deviceVid() {
-  const fp = [navigator.userAgent, navigator.language, screen.height, screen.width, new Date().getTimezoneOffset()].join('|');
+  const s = [navigator.userAgent, navigator.language, screen.height, screen.width, new Date().getTimezoneOffset()].join('|');
   let h = 0;
-  for (let i = 0; i < fp.length; i++) { h = ((h << 5) - h) + fp.charCodeAt(i); h = h & h; }
+  for (let i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h = h & h; }
   return 'WEB-' + Math.abs(h).toString(16).toUpperCase().padStart(8, '0');
 }
 
-async function doAuth() {
-  const email    = document.getElementById('email').value.trim().toLowerCase();
-  const password = document.getElementById('password').value;
-  const errEl    = document.getElementById('auth-err');
-  const okEl     = document.getElementById('auth-ok');
+function saveSession(data, emailVal) {
+  localStorage.setItem('vc_token',   data.accessToken  || '');
+  localStorage.setItem('vc_refresh', data.refreshToken || '');
+  localStorage.setItem('vc_email',   emailVal);
+  localStorage.setItem('vc_user',    JSON.stringify(data.user || {}));
+  if (data.license) localStorage.setItem('vc_license', JSON.stringify(data.license));
+}
 
-  errEl.classList.remove('show');
-  okEl.classList.remove('show');
+// ─── PANEL SWITCHER ───────────────────────────────────────────────────────────
+function show(view) {
+  // Hide all panels
+  ['auth','forgot','reset'].forEach(p => {
+    const el = $('panel-' + p);
+    if (el) el.className = 'panel';
+  });
+
+  // Clear messages
+  ['auth-err','auth-ok','forgot-msg','reset-msg'].forEach(hideMsg);
+
+  if (view === 'login' || view === 'register') {
+    mode = view;
+    $('panel-auth').className = 'panel on';
+
+    const isLogin = (view === 'login');
+    $('tab-login').className = 'tab' + (isLogin ? ' on' : '');
+    $('tab-reg').className   = 'tab' + (!isLogin ? ' on' : '');
+    $('fg-name').style.display = isLogin ? 'none' : 'block';
+    $('card-sub').textContent  = isLogin ? 'Sign in to your account' : 'Create your free account';
+    $('auth-btn').textContent  = isLogin ? 'Sign In' : 'Create Account';
+    $('forgot-link').style.display = isLogin ? '' : 'none';
+    $('f-pw').autocomplete   = isLogin ? 'current-password' : 'new-password';
+    $('f-pw').placeholder    = isLogin ? 'Your password' : 'Choose a strong password (8+ chars)';
+
+    const sw = $('sw-text');
+    sw.innerHTML = isLogin
+      ? 'No account? <a onclick="show(\'register\')">Create one free →</a>'
+      : 'Already have one? <a onclick="show(\'login\')">Sign in →</a>';
+
+  } else if (view === 'forgot') {
+    $('panel-forgot').className = 'panel on';
+    $('card-sub').textContent = 'Reset your password';
+    // Pre-fill email if available
+    const existingEmail = $('f-email').value.trim();
+    if (existingEmail) $('forgot-email').value = existingEmail;
+
+  } else if (view === 'reset') {
+    $('panel-reset').className = 'panel on';
+    $('card-sub').textContent = 'Set a new password';
+  }
+}
+
+// ─── AUTH (LOGIN / REGISTER) ──────────────────────────────────────────────────
+async function doAuth() {
+  const email    = $('f-email').value.trim().toLowerCase();
+  const password = $('f-pw').value;
+
+  hideMsg('auth-err');
+  hideMsg('auth-ok');
 
   // Validate
-  if (!email || !email.includes('@')) {
-    errEl.textContent = 'Please enter a valid email address.';
-    errEl.classList.add('show');
-    document.getElementById('email').focus();
-    return;
+  if (!email) {
+    showMsg('auth-err', 'err', 'Please enter your email address.');
+    $('f-email').focus(); return;
+  }
+  if (!email.includes('@') || !email.includes('.')) {
+    showMsg('auth-err', 'err', 'Please enter a valid email address.');
+    $('f-email').focus(); return;
   }
   if (!password || password.length < 8) {
-    errEl.textContent = 'Password must be at least 8 characters.';
-    errEl.classList.add('show');
-    document.getElementById('password').focus();
-    return;
+    showMsg('auth-err', 'err', 'Password must be at least 8 characters.');
+    $('f-pw').focus(); return;
   }
 
-  const btn = document.getElementById('auth-btn');
-  btn.disabled = true;
-  btn.textContent = mode === 'login' ? 'Signing in...' : 'Creating account...';
+  setBtn('auth-btn', mode === 'login' ? 'Signing in...' : 'Creating account...', true);
 
   try {
     const body = { email, password, deviceVid: deviceVid() };
+
     if (mode === 'register') {
-      const name = document.getElementById('fullName').value.trim();
+      const name = $('f-name').value.trim();
       if (name) body.fullName = name;
     }
 
     const url = API + (mode === 'login' ? '/api/auth/login' : '/api/auth/register');
-    const res  = await fetch(url, {
+    const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body)
     });
-    const data = await res.json();
 
+    let data = {};
+    try { data = await res.json(); } catch(e) {}
+
+    // ── REGISTER ──
     if (mode === 'register') {
       if (res.ok) {
-        okEl.textContent = '✓ Account created! Signing you in...';
-        okEl.classList.add('show');
-        // Auto login after register
+        showMsg('auth-ok', 'ok', '✓ Account created! Signing you in...');
+        // Auto-login
         setTimeout(async () => {
           try {
             const r2 = await fetch(API + '/api/auth/login', {
@@ -116,133 +314,174 @@ async function doAuth() {
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ email, password, deviceVid: deviceVid() })
             });
-            const d2 = await r2.json();
+            let d2 = {};
+            try { d2 = await r2.json(); } catch(e) {}
             if (r2.ok && d2.accessToken) {
               saveSession(d2, email);
               window.location.href = 'dashboard.html';
             } else {
-              switchTab('login');
-              document.getElementById('email').value = email;
+              show('login');
+              $('f-email').value = email;
+              showMsg('auth-ok', 'ok', 'Account created! Please sign in.');
             }
           } catch(e) {
-            switchTab('login');
-            document.getElementById('email').value = email;
+            show('login');
+            $('f-email').value = email;
           }
-        }, 1000);
+        }, 900);
+
       } else if (res.status === 409) {
-        errEl.textContent = 'An account with this email already exists. Sign in instead.';
-        errEl.classList.add('show');
-        switchTab('login');
-        document.getElementById('email').value = email;
+        showMsg('auth-err', 'err', 'An account with this email already exists. Sign in instead.');
+        show('login');
+        $('f-email').value = email;
+
       } else {
-        errEl.textContent = data.error || 'Registration failed. Please try again.';
-        errEl.classList.add('show');
+        showMsg('auth-err', 'err', data.error || 'Registration failed. Please try again.');
       }
 
-    } else { // login
+    // ── LOGIN ──
+    } else {
       if (res.ok && data.accessToken) {
         saveSession(data, email);
-        okEl.textContent = '✓ Signed in! Redirecting...';
-        okEl.classList.add('show');
-        setTimeout(() => { window.location.href = 'dashboard.html'; }, 700);
+        showMsg('auth-ok', 'ok', '✓ Signed in! Redirecting...');
+        setTimeout(() => { window.location.href = 'dashboard.html'; }, 600);
 
       } else if (res.status === 403 && data.code === 'NO_LICENSE') {
-        // Signed in but no license — send to pricing
         if (data.accessToken) saveSession(data, email);
-        okEl.textContent = '✓ Signed in! You need a license to continue.';
-        okEl.classList.add('show');
+        showMsg('auth-ok', 'warn', '✓ Signed in! No active license — redirecting to pricing...');
         setTimeout(() => { window.location.href = 'pricing.html'; }, 1200);
 
       } else if (res.status === 401) {
-        errEl.textContent = 'Incorrect email or password. Please try again.';
-        errEl.classList.add('show');
-        document.getElementById('password').value = '';
-        document.getElementById('password').focus();
+        showMsg('auth-err', 'err', 'Incorrect email or password. Please try again.');
+        $('f-pw').value = '';
+        $('f-pw').focus();
+
+      } else if (res.status === 403 && data.code === 'DEVICE_MISMATCH') {
+        showMsg('auth-err', 'err', 'This license is activated on another device. Go to your dashboard to reset it.');
 
       } else {
-        errEl.textContent = data.error || 'Sign in failed. Please try again.';
-        errEl.classList.add('show');
+        showMsg('auth-err', 'err', data.error || 'Sign in failed. Please try again.');
       }
     }
 
   } catch(e) {
-    errEl.textContent = 'Cannot connect to server. Check your internet and try again.';
-    errEl.classList.add('show');
+    showMsg('auth-err', 'err', 'Cannot connect to server. Please check your internet connection and try again.');
   }
 
-  btn.disabled = false;
-  btn.textContent = mode === 'login' ? 'Sign In' : 'Create Account';
+  setBtn('auth-btn', mode === 'login' ? 'Sign In' : 'Create Account', false);
 }
 
-function saveSession(data, email) {
-  localStorage.setItem('vc_token',   data.accessToken || '');
-  localStorage.setItem('vc_refresh', data.refreshToken || '');
-  localStorage.setItem('vc_email',   email);
-  localStorage.setItem('vc_user',    JSON.stringify(data.user || {}));
-  if (data.license) localStorage.setItem('vc_license', JSON.stringify(data.license));
+// ─── FORGOT PASSWORD ──────────────────────────────────────────────────────────
+async function doForgot() {
+  const email = $('forgot-email').value.trim().toLowerCase();
+  hideMsg('forgot-msg');
+
+  if (!email || !email.includes('@')) {
+    showMsg('forgot-msg', 'err', 'Please enter your account email address.');
+    $('forgot-email').focus(); return;
+  }
+
+  setBtn('forgot-btn', 'Sending...', true);
+
+  try {
+    const res = await fetch(API + '/api/auth/forgot-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+
+    // Always show success regardless (security — don't reveal if email exists)
+    showMsg('forgot-msg', 'ok',
+      '✓ If an account with that email exists, a reset link has been sent. Check your inbox and spam folder. The link expires in 1 hour.'
+    );
+    setBtn('forgot-btn', 'Resent ✓', true);
+
+  } catch(e) {
+    showMsg('forgot-msg', 'err', 'Cannot connect to server. Please try again or email support@valcrown.com');
+    setBtn('forgot-btn', 'Send Reset Link', false);
+  }
 }
 
-document.addEventListener('keydown', e => { if (e.key === 'Enter') doAuth(); });
+// ─── RESET PASSWORD (from email link with token) ───────────────────────────────
+async function doReset() {
+  const pw  = $('reset-pw').value;
+  const pw2 = $('reset-pw2').value;
+  hideMsg('reset-msg');
+
+  if (!pw || pw.length < 8) {
+    showMsg('reset-msg', 'err', 'Password must be at least 8 characters.');
+    $('reset-pw').focus(); return;
+  }
+  if (pw !== pw2) {
+    showMsg('reset-msg', 'err', 'Passwords do not match.');
+    $('reset-pw2').focus(); return;
+  }
+
+  setBtn('reset-btn', 'Updating...', true);
+
+  try {
+    const res = await fetch(API + '/api/auth/reset-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: resetToken, password: pw })
+    });
+
+    let data = {};
+    try { data = await res.json(); } catch(e) {}
+
+    if (res.ok) {
+      showMsg('reset-msg', 'ok', '✓ Password updated! Redirecting to sign in...');
+      setTimeout(() => { show('login'); }, 1500);
+    } else {
+      showMsg('reset-msg', 'err', data.error || 'Reset failed. The link may have expired. Request a new one.');
+      setBtn('reset-btn', 'Set New Password', false);
+    }
+  } catch(e) {
+    showMsg('reset-msg', 'err', 'Cannot connect. Please try again.');
+    setBtn('reset-btn', 'Set New Password', false);
+  }
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+// Enter key
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  const active = document.querySelector('.panel.on').id;
+  if (active === 'panel-auth')   doAuth();
+  if (active === 'panel-forgot') doForgot();
+  if (active === 'panel-reset')  doReset();
+});
+
+// Check URL params
+const params = new URLSearchParams(window.location.search);
+let resetToken = '';
+
+if (params.get('reset_token')) {
+  // Coming from password reset email
+  resetToken = params.get('reset_token');
+  show('reset');
+} else if (params.get('mode') === 'register') {
+  show('register');
+} else {
+  show('login');
+}
+
+// Pre-fill email
+if (params.get('email')) {
+  $('f-email').value = params.get('email');
+}
+
+// Already logged in? Go to dashboard
+const existingToken = localStorage.getItem('vc_token');
+if (existingToken && !params.get('reset_token')) {
+  // Quick check if token still valid
+  fetch(API + '/health').then(() => {
+    window.location.href = 'dashboard.html';
+  }).catch(() => {
+    // Offline — clear token and stay on auth
+    localStorage.removeItem('vc_token');
+  });
+}
 </script>
-
-<!-- NAV -->
-<script>renderNav()</script>
-
-<!-- AUTH FORM -->
-<div class="auth-pg">
-  <div class="auth-card">
-    <div class="auth-logo">
-      <div class="auth-ico">V</div>
-      <div class="auth-title-text">ValCrown</div>
-      <div class="auth-subt" id="auth-sub">Sign in to your account</div>
-    </div>
-
-    <div class="atabs">
-      <button class="atab active" onclick="switchTab('login')">Sign In</button>
-      <button class="atab" onclick="switchTab('register')">Create Account</button>
-    </div>
-
-    <div class="ferr" id="auth-err"></div>
-    <div class="fok"  id="auth-ok"></div>
-
-    <div class="fgrp" id="name-grp" style="display:none">
-      <label class="flbl">Full Name</label>
-      <input class="finp" type="text" id="fullName" placeholder="Your full name" autocomplete="name">
-    </div>
-
-    <div class="fgrp">
-      <label class="flbl">Email Address</label>
-      <input class="finp" type="email" id="email" placeholder="your@email.com" autocomplete="email">
-    </div>
-
-    <div class="fgrp">
-      <label class="flbl">Password</label>
-      <input class="finp" type="password" id="password" placeholder="Minimum 8 characters" autocomplete="current-password">
-    </div>
-
-    <div id="forgot-row" style="text-align:right;margin:-8px 0 16px">
-      <a href="mailto:support@valcrown.com?subject=Password Reset Request" style="font-size:12px;color:var(--t3)">Forgot password?</a>
-    </div>
-
-    <button class="abtn" id="auth-btn" onclick="doAuth()">Sign In</button>
-
-    <div class="aft">
-      <span id="sw-text">No account?</span>
-      <a onclick="switchTab(mode==='login'?'register':'login')" id="sw-link">Create one free →</a>
-    </div>
-  </div>
-</div>
-
-<script>renderStatusBar(); renderFooter();</script>
-
-<!-- Handle URL params after DOM exists -->
-<script>
-(function(){
-  const p = new URLSearchParams(window.location.search);
-  if (p.get('mode') === 'register') switchTab('register');
-  if (p.get('email')) document.getElementById('email').value = p.get('email');
-})();
-</script>
-
 </body>
 </html>
