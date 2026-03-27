@@ -7,235 +7,644 @@
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <link rel="stylesheet" href="css/shared.css">
 <style>
-.dash{max-width:900px;margin:0 auto;padding:40px 24px 80px}
-.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:14px}
-.dash-welcome{font-size:26px;font-weight:800;letter-spacing:-.5px}
-.dash-sub{font-size:14px;color:var(--t2);margin-top:4px}
-.dash-actions{display:flex;gap:10px}
-.dbtn{padding:9px 20px;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--f);border:none;transition:.15s}
-.dbtn.primary{background:linear-gradient(135deg,#7c6aff,#a89fff);color:#fff}
-.dbtn.primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(124,106,255,.35)}
-.dbtn.ghost{background:var(--bg2);border:1px solid var(--b2);color:var(--t2)}
-.dbtn.ghost:hover{color:var(--t1);border-color:var(--ac)}
-.dbtn.danger{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.2);color:#ff4757}
-.dbtn.danger:hover{background:rgba(255,71,87,.2)}
+/* ── LAYOUT ── */
+.dash-wrap{max-width:1060px;margin:0 auto;padding:36px 24px 80px}
+.dash-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:12px}
+.dash-greet{font-size:26px;font-weight:900;letter-spacing:-.5px}
+.dash-email{font-size:13px;color:var(--t2);margin-top:3px}
+.dash-top-btns{display:flex;gap:8px;flex-wrap:wrap}
 
-/* License card */
-.lic-card{background:var(--bg1);border:1px solid var(--b2);border-radius:18px;padding:28px;margin-bottom:20px;position:relative;overflow:hidden}
-.lic-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#7c6aff,#00e87a)}
-.lic-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
-.lic-plan{font-size:24px;font-weight:900;letter-spacing:-.5px}
-.lic-status{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700}
-.lic-dot{width:8px;height:8px;border-radius:50%}
-.lic-dot.active{background:#00e87a;animation:op 2s infinite}
-.lic-dot.expired{background:#ff4757}
-.lic-dot.trial{background:#ffb800;animation:op 2s infinite}
+/* ── TABS ── */
+.dtabs{display:flex;gap:3px;margin-bottom:28px;background:var(--bg1);border:1px solid var(--b1);border-radius:12px;padding:5px}
+.dtab{padding:9px 18px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;color:var(--t2);border:none;background:none;font-family:var(--f);transition:.15s;white-space:nowrap}
+.dtab.active{background:var(--bg3);color:var(--t1)}
+.dtab:hover:not(.active){color:var(--t1)}
+.dpanel{display:none}
+.dpanel.active{display:block}
+
+/* ── CARDS ── */
+.dcard{background:var(--bg1);border:1px solid var(--b2);border-radius:16px;padding:24px;margin-bottom:16px}
+.dcard-title{font-size:13px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.dcard-title span{font-size:16px}
+
+/* ── LICENSE / SUBSCRIPTION ── */
+.sub-banner{position:relative;overflow:hidden;border-radius:16px;padding:28px;margin-bottom:16px;background:linear-gradient(135deg,rgba(124,106,255,.1),rgba(0,232,122,.05));border:1px solid rgba(124,106,255,.25)}
+.sub-banner::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#7c6aff,#00e87a)}
+.sub-row{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:20px}
+.sub-plan{font-size:28px;font-weight:900;letter-spacing:-.5px}
+.sub-status{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:40px;font-size:12px;font-weight:700;margin-top:6px}
+.sub-status.active{background:rgba(0,232,122,.1);color:#00e87a;border:1px solid rgba(0,232,122,.25)}
+.sub-status.expired{background:rgba(255,71,87,.1);color:#ff4757;border:1px solid rgba(255,71,87,.25)}
+.sub-status.trial{background:rgba(255,184,0,.1);color:#ffb800;border:1px solid rgba(255,184,0,.25)}
+.sdot{width:6px;height:6px;border-radius:50%}
+.sdot.active{background:#00e87a;animation:op 2s infinite}
+.sdot.trial{background:#ffb800;animation:op 2s infinite}
+.sdot.expired{background:#ff4757}
 @keyframes op{0%,100%{box-shadow:0 0 0 2px rgba(0,232,122,.2)}50%{box-shadow:0 0 0 6px rgba(0,232,122,0)}}
-.lic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.lic-item{background:var(--bg2);border-radius:10px;padding:14px}
-.lic-item-label{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
-.lic-item-val{font-size:14px;font-weight:600;word-break:break-all;font-family:monospace}
-.lic-item-val.key{color:var(--ac3);font-size:13px}
 
-/* Action cards */
-.action-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:20px}
-.acard{background:var(--bg1);border:1px solid var(--b2);border-radius:16px;padding:22px;transition:.2s;cursor:pointer;text-decoration:none;color:inherit;display:block}
-.acard:hover{border-color:var(--ac);transform:translateY(-2px)}
-.acard-ico{font-size:28px;margin-bottom:12px}
-.acard-title{font-size:15px;font-weight:700;margin-bottom:6px}
-.acard-desc{font-size:13px;color:var(--t2);line-height:1.55}
+/* Time left bar */
+.time-left-wrap{margin-bottom:20px}
+.time-left-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px}
+.time-left-label span:first-child{color:var(--t2)}
+.time-left-label span:last-child{font-weight:700;color:var(--t1)}
+.time-left-track{height:8px;background:var(--bg3);border-radius:4px;overflow:hidden}
+.time-left-fill{height:100%;border-radius:4px;transition:width .5s}
+.time-left-fill.high{background:linear-gradient(90deg,#7c6aff,#00e87a)}
+.time-left-fill.medium{background:#ffb800}
+.time-left-fill.low{background:#ff4757}
 
-/* No license state */
-.no-lic{background:var(--bg1);border:1px solid var(--b2);border-radius:18px;padding:48px;text-align:center;margin-bottom:20px}
-.no-lic-ico{font-size:52px;margin-bottom:16px}
-.no-lic-h{font-size:22px;font-weight:800;margin-bottom:10px}
-.no-lic-p{font-size:15px;color:var(--t2);margin-bottom:24px;line-height:1.65;max-width:400px;margin-left:auto;margin-right:auto}
+.sub-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.smi{background:var(--bg2);border-radius:10px;padding:14px}
+.smi-lbl{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.smi-val{font-size:14px;font-weight:600}
 
-/* Loading */
-.loading{display:flex;align-items:center;justify-content:center;min-height:300px;font-size:16px;color:var(--t3)}
-.spin{width:24px;height:24px;border:2px solid var(--b2);border-top-color:var(--ac);border-radius:50%;animation:spin .7s linear infinite;margin-right:12px}
-@keyframes spin{to{transform:rotate(360deg)}}
+/* ── DEVICE CARD ── */
+.device-card{background:var(--bg2);border-radius:12px;padding:18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:10px}
+.device-left{display:flex;align-items:center;gap:14px}
+.device-ico{width:44px;height:44px;background:var(--bg3);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.device-name{font-size:15px;font-weight:700}
+.device-vid{font-size:11px;color:var(--t3);font-family:monospace;margin-top:3px;word-break:break-all}
+.device-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(0,232,122,.1);color:#00e87a;font-size:11px;font-weight:700;padding:3px 10px;border-radius:40px;margin-top:4px}
+.device-badge.none{background:var(--bg3);color:var(--t3)}
+.reset-btn{padding:8px 16px;background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.2);color:#ff4757;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--f);transition:.15s;white-space:nowrap}
+.reset-btn:hover{background:rgba(255,71,87,.15)}
+.reset-btn:disabled{opacity:.4;cursor:not-allowed}
 
-/* Alert */
+/* Cooldown info */
+.cooldown-info{font-size:12px;color:var(--t3);margin-top:8px}
+.cooldown-info.warn{color:#ffb800}
+.cooldown-info.ok{color:#00e87a}
+
+/* ── PROFILE FORM ── */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fgrp{margin-bottom:16px}
+.flbl{font-size:12px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px;display:block}
+.finp{width:100%;background:var(--bg2);border:1px solid var(--b2);border-radius:9px;padding:12px 14px;color:var(--t1);font-size:14px;outline:none;transition:border-color .15s;font-family:var(--f)}
+.finp:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,106,255,.12)}
+.finp::placeholder{color:var(--t3)}
+.finp:disabled{opacity:.5;cursor:not-allowed}
+.save-btn{padding:11px 28px;background:linear-gradient(135deg,#7c6aff,#a89fff);color:#fff;border:none;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--f);transition:.2s}
+.save-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(124,106,255,.35)}
+.save-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* ── ALERTS ── */
 .alert{padding:12px 16px;border-radius:9px;font-size:13px;margin-bottom:16px;display:none;line-height:1.5}
 .alert.show{display:block}
 .alert.ok{background:rgba(0,232,122,.1);border:1px solid rgba(0,232,122,.3);color:#00e87a}
 .alert.err{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.3);color:#ff4757}
+.alert.warn{background:rgba(255,184,0,.1);border:1px solid rgba(255,184,0,.3);color:#ffb800}
 
-@media(max-width:600px){.lic-grid{grid-template-columns:1fr}.action-grid{grid-template-columns:1fr}}
+/* ── RELEASES ── */
+.release-item{border-left:3px solid var(--b2);padding:0 0 24px 20px;position:relative;margin-left:8px}
+.release-item:last-child{padding-bottom:0;border-left-color:transparent}
+.release-dot{width:12px;height:12px;border-radius:50%;position:absolute;left:-7.5px;top:2px}
+.release-dot.latest{background:var(--ac3)}
+.release-dot.old{background:var(--bg4);border:2px solid var(--b2)}
+.release-ver{font-size:14px;font-weight:700;margin-bottom:3px}
+.release-date{font-size:12px;color:var(--t3);margin-bottom:8px}
+.release-tag{display:inline-block;background:var(--acd);color:var(--ac3);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:8px}
+.release-tag.bug{background:rgba(255,71,87,.1);color:#ff4757}
+.release-tag.new{background:rgba(0,232,122,.1);color:#00e87a}
+.release-notes{font-size:13px;color:var(--t2);line-height:1.65}
+.release-notes ul{padding-left:18px;margin-top:6px}
+.release-notes li{margin-bottom:4px}
+
+/* ── QUICK ACTIONS ── */
+.qa-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.qa-card{background:var(--bg2);border-radius:12px;padding:18px;text-align:center;cursor:pointer;transition:.2s;border:1px solid transparent;text-decoration:none;color:inherit;display:block}
+.qa-card:hover{background:var(--bg3);border-color:var(--ac);transform:translateY(-2px)}
+.qa-ico{font-size:26px;margin-bottom:8px}
+.qa-lbl{font-size:13px;font-weight:600}
+.qa-sub{font-size:11px;color:var(--t3);margin-top:3px}
+
+/* ── NO LICENSE ── */
+.no-lic{text-align:center;padding:56px 32px;background:var(--bg1);border:1px solid var(--b2);border-radius:18px;margin-bottom:16px}
+.no-lic-ico{font-size:52px;margin-bottom:16px}
+.no-lic-h{font-size:22px;font-weight:800;margin-bottom:10px}
+.no-lic-p{font-size:15px;color:var(--t2);margin-bottom:24px;line-height:1.65;max-width:400px;margin-left:auto;margin-right:auto}
+
+/* ── MODAL ── */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;display:none;align-items:center;justify-content:center;padding:24px}
+.modal-bg.show{display:flex}
+.modal{background:var(--bg1);border:1px solid var(--b2);border-radius:20px;padding:32px;max-width:440px;width:100%}
+.modal-title{font-size:18px;font-weight:800;margin-bottom:8px}
+.modal-body{font-size:14px;color:var(--t2);line-height:1.65;margin-bottom:24px}
+.modal-btns{display:flex;gap:10px;justify-content:flex-end}
+.mbtn{padding:10px 22px;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--f);border:none;transition:.15s}
+.mbtn.cancel{background:var(--bg3);color:var(--t2)}
+.mbtn.cancel:hover{color:var(--t1)}
+.mbtn.confirm{background:#ff4757;color:#fff}
+.mbtn.confirm:hover{opacity:.85}
+
+/* ── SPINNER ── */
+.loading{display:flex;align-items:center;justify-content:center;min-height:300px;font-size:16px;color:var(--t3)}
+.spin{width:24px;height:24px;border:2px solid var(--b2);border-top-color:var(--ac);border-radius:50%;animation:spin .7s linear infinite;margin-right:12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:768px){.sub-meta{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr}.qa-grid{grid-template-columns:1fr 1fr}.dtabs{overflow-x:auto}}
+@media(max-width:500px){.sub-meta{grid-template-columns:1fr}.qa-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <script src="js/shared.js"></script>
 <script>
 const API = 'https://api.valcrown.com';
-
-// Redirect to login if not authenticated
 const token = localStorage.getItem('vc_token');
 if (!token) { window.location.href = 'auth.html'; }
 
-function getUser() {
-  try { return JSON.parse(localStorage.getItem('vc_user') || '{}'); } catch(e) { return {}; }
-}
-function getLicense() {
-  try { return JSON.parse(localStorage.getItem('vc_license') || 'null'); } catch(e) { return null; }
-}
+function getUser()    { try { return JSON.parse(localStorage.getItem('vc_user')||'{}'); } catch(e){ return {}; } }
+function getLicense() { try { return JSON.parse(localStorage.getItem('vc_license')||'null'); } catch(e){ return null; } }
+const email = localStorage.getItem('vc_email') || '';
+
 function signOut() {
-  localStorage.removeItem('vc_token');
-  localStorage.removeItem('vc_refresh');
-  localStorage.removeItem('vc_email');
-  localStorage.removeItem('vc_user');
-  localStorage.removeItem('vc_license');
+  ['vc_token','vc_refresh','vc_email','vc_user','vc_license'].forEach(k=>localStorage.removeItem(k));
   window.location.href = 'auth.html';
 }
 
-function formatDate(d) {
-  if (!d) return 'Never';
-  const date = new Date(d);
-  return date.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+function switchTab(id) {
+  document.querySelectorAll('.dtab').forEach(t=>t.classList.toggle('active', t.dataset.tab===id));
+  document.querySelectorAll('.dpanel').forEach(p=>p.classList.toggle('active', p.id==='panel-'+id));
 }
 
-function planLabel(plan) {
-  const map = { trial:'3-Day Trial', trial14:'14-Day Trial', pro:'Pro', monthly:'Monthly', yearly:'Yearly', lifetime:'Lifetime', admin:'Admin' };
-  return map[plan] || plan || 'Unknown';
+function formatDate(d) {
+  if (!d) return '—';
+  return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+}
+
+function planLabel(p) {
+  return {trial:'3-Day Trial',trial14:'14-Day Trial',pro:'Monthly',monthly:'Monthly',yearly:'Yearly',lifetime:'Lifetime',admin:'Admin'}[p] || p || 'Unknown';
+}
+
+function daysLeft(expiresAt) {
+  if (!expiresAt) return null;
+  const diff = new Date(expiresAt) - new Date();
+  return Math.max(0, Math.ceil(diff / 86400000));
+}
+
+function apiHeaders() {
+  return {'Content-Type':'application/json','Authorization':'Bearer '+token};
+}
+
+async function apiFetch(url, opts={}) {
+  const res = await fetch(API+url, {...opts, headers:{...apiHeaders(),...(opts.headers||{})}});
+  return res;
+}
+
+function showAlert(id, type, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.className = 'alert '+type+' show';
+  el.textContent = msg;
+  setTimeout(() => el.classList.remove('show'), 4000);
 }
 </script>
 <script>renderNav()</script>
 
-<div class="dash" id="dash-content">
-  <div class="loading"><div class="spin"></div>Loading your account...</div>
+<div class="dash-wrap">
+  <!-- Loading state -->
+  <div id="dash-loading" class="loading"><div class="spin"></div>Loading your dashboard...</div>
+  <div id="dash-main" style="display:none">
+
+    <!-- Top bar -->
+    <div class="dash-top">
+      <div>
+        <div class="dash-greet" id="greet-name">Dashboard</div>
+        <div class="dash-email" id="greet-email"></div>
+      </div>
+      <div class="dash-top-btns">
+        <a href="download.html" style="padding:9px 18px;background:var(--bg2);border:1px solid var(--b2);border-radius:9px;font-size:14px;font-weight:500;color:var(--t2);transition:.15s">Download App</a>
+        <button onclick="signOut()" style="padding:9px 18px;background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.2);color:#ff4757;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--f)">Sign Out</button>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="dtabs">
+      <button class="dtab active" data-tab="overview"  onclick="switchTab('overview')">Overview</button>
+      <button class="dtab"        data-tab="license"   onclick="switchTab('license')">Subscription</button>
+      <button class="dtab"        data-tab="device"    onclick="switchTab('device')">Device</button>
+      <button class="dtab"        data-tab="profile"   onclick="switchTab('profile')">Profile</button>
+      <button class="dtab"        data-tab="releases"  onclick="switchTab('releases')">Releases</button>
+    </div>
+
+    <!-- ── OVERVIEW ── -->
+    <div class="dpanel active" id="panel-overview">
+      <div id="overview-lic"></div>
+      <div class="qa-grid" style="margin-bottom:16px">
+        <a href="download.html" class="qa-card"><div class="qa-ico">⬇️</div><div class="qa-lbl">Download App</div><div class="qa-sub">Windows 10/11</div></a>
+        <a href="pricing.html" class="qa-card"><div class="qa-ico">⚡</div><div class="qa-lbl">Upgrade Plan</div><div class="qa-sub">See all options</div></a>
+        <a href="status.html" class="qa-card"><div class="qa-ico">🟢</div><div class="qa-lbl">Server Status</div><div class="qa-sub">Real-time health</div></a>
+        <a href="contact.html" class="qa-card"><div class="qa-ico">💬</div><div class="qa-lbl">Support</div><div class="qa-sub">24h response</div></a>
+        <a onclick="switchTab('device')" class="qa-card"><div class="qa-ico">💻</div><div class="qa-lbl">My Device</div><div class="qa-sub">View &amp; reset</div></a>
+        <a onclick="switchTab('profile')" class="qa-card"><div class="qa-ico">👤</div><div class="qa-lbl">Edit Profile</div><div class="qa-sub">Name &amp; email</div></a>
+      </div>
+    </div>
+
+    <!-- ── SUBSCRIPTION ── -->
+    <div class="dpanel" id="panel-license">
+      <div id="sub-content"></div>
+    </div>
+
+    <!-- ── DEVICE ── -->
+    <div class="dpanel" id="panel-device">
+      <div class="alert" id="device-alert"></div>
+      <div class="dcard">
+        <div class="dcard-title"><span>💻</span> Bound Device</div>
+        <div id="device-content"><div class="loading"><div class="spin"></div></div></div>
+      </div>
+      <div class="dcard">
+        <div class="dcard-title"><span>ℹ️</span> About Device Binding</div>
+        <div style="font-size:14px;color:var(--t2);line-height:1.7">
+          Your ValCrown license is bound to one Windows PC at a time. This prevents sharing and protects your account.
+          <ul style="padding-left:18px;margin-top:10px">
+            <li>You can reset your device binding <strong style="color:var(--t1)">once every 30 days</strong></li>
+            <li>After reset, your next login on any PC will activate it</li>
+            <li>If you need an emergency reset, contact <a href="mailto:support@valcrown.com" style="color:var(--ac3)">support@valcrown.com</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PROFILE ── -->
+    <div class="dpanel" id="panel-profile">
+      <div class="alert" id="profile-alert"></div>
+      <div class="dcard">
+        <div class="dcard-title"><span>👤</span> Personal Information</div>
+        <div class="form-grid">
+          <div class="fgrp">
+            <label class="flbl">Full Name</label>
+            <input class="finp" type="text" id="p-name" placeholder="Your full name">
+          </div>
+          <div class="fgrp">
+            <label class="flbl">Email Address</label>
+            <input class="finp" type="email" id="p-email" placeholder="your@email.com">
+          </div>
+        </div>
+        <button class="save-btn" onclick="saveProfile()" id="save-profile-btn">Save Changes</button>
+      </div>
+
+      <div class="dcard">
+        <div class="dcard-title"><span>🔒</span> Change Password</div>
+        <div class="alert" id="pw-alert"></div>
+        <div class="form-grid">
+          <div class="fgrp" style="grid-column:1/-1">
+            <label class="flbl">Current Password</label>
+            <input class="finp" type="password" id="p-curpw" placeholder="Enter current password" autocomplete="current-password">
+          </div>
+          <div class="fgrp">
+            <label class="flbl">New Password</label>
+            <input class="finp" type="password" id="p-newpw" placeholder="Minimum 8 characters" autocomplete="new-password">
+          </div>
+          <div class="fgrp">
+            <label class="flbl">Confirm New Password</label>
+            <input class="finp" type="password" id="p-confpw" placeholder="Repeat new password" autocomplete="new-password">
+          </div>
+        </div>
+        <button class="save-btn" onclick="changePassword()" id="save-pw-btn">Update Password</button>
+      </div>
+
+      <div class="dcard" style="border-color:rgba(255,71,87,.2)">
+        <div class="dcard-title" style="color:#ff4757"><span>⚠️</span> Danger Zone</div>
+        <div style="font-size:14px;color:var(--t2);margin-bottom:16px">Permanently delete your account and all associated data. This cannot be undone.</div>
+        <button onclick="confirmDelete()" style="padding:10px 20px;background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.25);color:#ff4757;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--f)">Delete Account</button>
+      </div>
+    </div>
+
+    <!-- ── RELEASES ── -->
+    <div class="dpanel" id="panel-releases">
+      <div class="dcard">
+        <div class="dcard-title"><span>🚀</span> What's New</div>
+        <div class="release-item">
+          <div class="release-dot latest"></div>
+          <div class="release-ver">v1.0.0 — Initial Release <span class="release-tag new">Latest</span></div>
+          <div class="release-date">March 2026</div>
+          <div class="release-notes">
+            <ul>
+              <li>Auto game detection for 200+ games</li>
+              <li>Boost Engine — CPU priority, High Performance power plan</li>
+              <li>Cloud Mode — video decoder pipeline optimization</li>
+              <li>Network optimizer — DNS flush, TCP tuning, real-time ping</li>
+              <li>AI Advisor powered by Claude Sonnet 4.6 + Gemini 2.0 Flash</li>
+              <li>Discord Rich Presence integration</li>
+              <li>System tray with session notifications</li>
+              <li>Session history and performance tracking</li>
+              <li>Auto-updater via GitHub Releases</li>
+              <li>Thermal management alerts</li>
+            </ul>
+          </div>
+        </div>
+        <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--b1)">
+          <div style="font-size:14px;font-weight:700;margin-bottom:8px">Coming Soon</div>
+          <div style="font-size:13px;color:var(--t2);line-height:1.7">
+            <ul style="padding-left:18px">
+              <li>Email notifications for account events</li>
+              <li>Unique signed download links per user</li>
+              <li>VID self-reset with 30-day cooldown (in-app)</li>
+              <li>Gemini predictive boost — analyzes your usage patterns</li>
+              <li>Extended game database (500+ games)</li>
+              <li>Mobile companion app (iOS/Android)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;padding:12px;font-size:13px;color:var(--t3)">
+        <a href="https://github.com/xogamesltd/valcrown-app/releases" target="_blank" rel="noopener" style="color:var(--ac3)">View all releases on GitHub →</a>
+      </div>
+    </div>
+
+  </div><!-- /dash-main -->
+</div>
+
+<!-- ── RESET DEVICE MODAL ── -->
+<div class="modal-bg" id="reset-modal">
+  <div class="modal">
+    <div class="modal-title">Reset Device Binding?</div>
+    <div class="modal-body">
+      Your license will be unbound from your current PC. The next time you sign in on any Windows PC, that device will be activated.<br><br>
+      <strong style="color:var(--yw)">⚠ You can only do this once every 30 days.</strong>
+    </div>
+    <div class="modal-btns">
+      <button class="mbtn cancel" onclick="closeModal()">Cancel</button>
+      <button class="mbtn confirm" onclick="doReset()" id="confirm-reset-btn">Reset Device</button>
+    </div>
+  </div>
 </div>
 
 <script>renderStatusBar(); renderFooter();</script>
-
 <script>
+let userData = {};
+let licenseData = null;
+let deviceData = null;
+
 async function loadDashboard() {
-  const user    = getUser();
-  const license = getLicense();
-  const email   = localStorage.getItem('vc_email') || user.email || '';
-  const name    = user.fullName || user.full_name || email.split('@')[0] || 'Gamer';
-
-  const content = document.getElementById('dash-content');
-
-  // Try to refresh license info from server
-  let lic = license;
   try {
-    const res = await fetch(API + '/api/auth/validate', {
+    // Load from cache first
+    userData    = getUser();
+    licenseData = getLicense();
+
+    // Try to get fresh data from server
+    const res = await apiFetch('/api/auth/validate', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      },
-      body: JSON.stringify({ deviceVid: 'WEB-' + Math.abs(Date.now()).toString(16).toUpperCase() })
+      body: JSON.stringify({ deviceVid: 'WEB-DASHBOARD' })
     });
+
+    if (res.status === 401) { signOut(); return; }
+
     if (res.ok) {
       const d = await res.json();
-      if (d.plan) lic = { plan: d.plan, status: 'active', expiresAt: d.expiresAt };
-      if (d.role === 'admin') lic = { plan: 'admin', status: 'active' };
-    } else if (res.status === 401) {
-      // Token expired — sign out
-      signOut(); return;
+      if (d.plan) {
+        licenseData = { plan: d.plan, status: 'active', expiresAt: d.expiresAt };
+        localStorage.setItem('vc_license', JSON.stringify(licenseData));
+      }
     }
-  } catch(e) { /* offline — use cached */ }
+  } catch(e) { /* use cached */ }
 
-  const isAdmin  = user.role === 'admin' || (lic && lic.plan === 'admin');
-  const hasLic   = lic && lic.status === 'active';
-  const isExpired = lic && lic.expiresAt && new Date(lic.expiresAt) < new Date();
+  renderDashboard();
+  document.getElementById('dash-loading').style.display = 'none';
+  document.getElementById('dash-main').style.display = 'block';
 
-  content.innerHTML = `
-    <div class="dash-header">
-      <div>
-        <div class="dash-welcome">Welcome back, ${name} 👋</div>
-        <div class="dash-sub">${email}</div>
-      </div>
-      <div class="dash-actions">
-        ${isAdmin ? `<a href="https://admin.valcrown.com" class="dbtn primary" target="_blank">Admin Panel →</a>` : ''}
-        <a href="download.html" class="dbtn ghost">Download App</a>
-        <button class="dbtn danger" onclick="signOut()">Sign Out</button>
-      </div>
-    </div>
+  // Load device info
+  loadDeviceInfo();
+}
 
-    <div id="dash-alert" class="alert"></div>
+function renderDashboard() {
+  const name = userData.fullName || userData.full_name || email.split('@')[0] || 'Gamer';
+  document.getElementById('greet-name').textContent = 'Hey, ' + name + ' 👋';
+  document.getElementById('greet-email').textContent = email;
 
-    ${hasLic && !isExpired ? `
-    <div class="lic-card">
-      <div class="lic-top">
-        <div>
-          <div class="lic-plan">${planLabel(lic.plan)} Plan</div>
-          <div style="font-size:13px;color:var(--t2);margin-top:4px">Your active ValCrown license</div>
-        </div>
-        <div class="lic-status">
-          <span class="lic-dot active"></span>
-          <span style="color:#00e87a">Active</span>
-        </div>
-      </div>
-      <div class="lic-grid">
-        <div class="lic-item">
-          <div class="lic-item-label">Plan</div>
-          <div class="lic-item-val">${planLabel(lic.plan)}</div>
-        </div>
-        <div class="lic-item">
-          <div class="lic-item-label">Status</div>
-          <div class="lic-item-val" style="color:#00e87a">Active ✓</div>
-        </div>
-        <div class="lic-item">
-          <div class="lic-item-label">Expires</div>
-          <div class="lic-item-val">${lic.expiresAt ? formatDate(lic.expiresAt) : 'Never (Lifetime)'}</div>
-        </div>
-      </div>
-    </div>` : isExpired ? `
-    <div class="lic-card" style="border-color:rgba(255,71,87,.3)">
-      <div class="lic-top">
-        <div>
-          <div class="lic-plan" style="color:#ff4757">License Expired</div>
-          <div style="font-size:13px;color:var(--t2);margin-top:4px">Your ${planLabel(lic.plan)} plan expired on ${formatDate(lic.expiresAt)}</div>
-        </div>
-        <div class="lic-status"><span class="lic-dot expired"></span><span style="color:#ff4757">Expired</span></div>
-      </div>
-      <a href="pricing.html" class="dbtn primary" style="display:inline-block;margin-top:4px">Renew License →</a>
-    </div>` : `
+  // Fill profile fields
+  document.getElementById('p-name').value  = userData.fullName || userData.full_name || '';
+  document.getElementById('p-email').value = email;
+
+  // Render overview license block
+  renderLicenseBlock('overview-lic');
+  renderLicenseBlock('sub-content');
+}
+
+function renderLicenseBlock(containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+
+  if (!licenseData || licenseData.status !== 'active') {
+    el.innerHTML = `
     <div class="no-lic">
       <div class="no-lic-ico">🔑</div>
       <div class="no-lic-h">No active license</div>
-      <div class="no-lic-p">Get a ValCrown license to start boosting your cloud gaming sessions. Start with the free 3-day trial — no card needed.</div>
+      <div class="no-lic-p">Get a ValCrown license to start boosting your gaming sessions. Start free — no card needed.</div>
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-        <a href="download.html" class="dbtn ghost">Start Free Trial</a>
-        <a href="pricing.html" class="dbtn primary">View Plans →</a>
+        <a href="download.html" style="padding:10px 22px;background:var(--bg3);border:1px solid var(--b2);border-radius:9px;font-size:14px;font-weight:600;color:var(--t1)">Free 3-Day Trial</a>
+        <a href="pricing.html" style="padding:10px 22px;background:linear-gradient(135deg,#7c6aff,#a89fff);border-radius:9px;font-size:14px;font-weight:700;color:#fff">View Plans →</a>
       </div>
-    </div>`}
+    </div>`;
+    return;
+  }
 
-    <div class="action-grid">
-      <a href="download.html" class="acard">
-        <div class="acard-ico">⬇️</div>
-        <div class="acard-title">Download ValCrown</div>
-        <div class="acard-desc">Get the latest version of ValCrown for Windows. Installs in 30 seconds.</div>
-      </a>
-      <a href="pricing.html" class="acard">
-        <div class="acard-ico">⚡</div>
-        <div class="acard-title">${hasLic ? 'Upgrade Plan' : 'Get a License'}</div>
-        <div class="acard-desc">${hasLic ? 'Upgrade to a higher tier for more AI calls and priority support.' : 'Choose from 5 plans starting from free. 7-day money back guarantee.'}</div>
-      </a>
-      <a href="status.html" class="acard">
-        <div class="acard-ico">🟢</div>
-        <div class="acard-title">Server Status</div>
-        <div class="acard-desc">Check real-time health of all ValCrown services and API uptime.</div>
-      </a>
-      <a href="contact.html" class="acard">
-        <div class="acard-ico">💬</div>
-        <div class="acard-title">Support</div>
-        <div class="acard-desc">Create a support ticket. We respond within 24 hours on business days.</div>
-      </a>
+  const lic     = licenseData;
+  const days    = daysLeft(lic.expiresAt);
+  const isLife  = !lic.expiresAt || lic.plan === 'lifetime';
+  const pct     = isLife ? 100 : lic.expiresAt ? Math.min(100, Math.round((days / 365) * 100)) : 100;
+  const barCls  = pct > 50 ? 'high' : pct > 20 ? 'medium' : 'low';
+  const stCls   = lic.plan?.includes('trial') ? 'trial' : 'active';
+  const stLabel = lic.plan?.includes('trial') ? 'Trial Active' : 'Active';
+
+  el.innerHTML = `
+  <div class="sub-banner">
+    <div class="sub-row">
+      <div>
+        <div class="sub-plan">${planLabel(lic.plan)}</div>
+        <div class="sub-status ${stCls}"><span class="sdot ${stCls}"></span>${stLabel}</div>
+      </div>
+      <div style="text-align:right">
+        ${isLife
+          ? '<div style="font-size:32px;font-weight:900;color:#00e87a">∞</div><div style="font-size:12px;color:var(--t2)">Never expires</div>'
+          : `<div style="font-size:32px;font-weight:900">${days}</div><div style="font-size:12px;color:var(--t2)">days remaining</div>`
+        }
+      </div>
     </div>
 
-    <div style="background:var(--bg1);border:1px solid var(--b2);border-radius:14px;padding:20px 24px;font-size:13px;color:var(--t2)">
-      Signed in as <strong style="color:var(--t1)">${email}</strong> · 
-      <a href="auth.html?mode=login" style="color:var(--ac3)" onclick="signOut();return false">Sign out</a> · 
-      <a href="contact.html" style="color:var(--ac3)">Need help?</a>
+    ${!isLife ? `
+    <div class="time-left-wrap">
+      <div class="time-left-label">
+        <span>Time remaining</span>
+        <span>${days} days left</span>
+      </div>
+      <div class="time-left-track">
+        <div class="time-left-fill ${barCls}" style="width:${pct}%"></div>
+      </div>
+    </div>` : ''}
+
+    <div class="sub-meta">
+      <div class="smi"><div class="smi-lbl">Plan</div><div class="smi-val">${planLabel(lic.plan)}</div></div>
+      <div class="smi"><div class="smi-lbl">Expires</div><div class="smi-val">${isLife ? 'Never' : formatDate(lic.expiresAt)}</div></div>
+      <div class="smi"><div class="smi-lbl">Status</div><div class="smi-val" style="color:#00e87a">Active ✓</div></div>
     </div>
-  `;
+  </div>
+
+  ${containerId === 'sub-content' ? `
+  <div class="dcard">
+    <div class="dcard-title"><span>💳</span> Manage Subscription</div>
+    <div style="font-size:14px;color:var(--t2);margin-bottom:16px;line-height:1.65">
+      To upgrade, cancel, or update your payment method, visit our pricing page or contact support.
+      ValCrown does not store card details — all billing is handled securely by Stripe.
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a href="pricing.html" style="padding:10px 20px;background:linear-gradient(135deg,#7c6aff,#a89fff);border-radius:9px;font-size:14px;font-weight:700;color:#fff">Upgrade Plan</a>
+      <a href="mailto:support@valcrown.com?subject=Cancel Subscription" style="padding:10px 20px;background:var(--bg2);border:1px solid var(--b2);border-radius:9px;font-size:14px;font-weight:500;color:var(--t2)">Cancel Subscription</a>
+    </div>
+  </div>` : ''}`;
 }
 
+async function loadDeviceInfo() {
+  const el = document.getElementById('device-content');
+  if (!el) return;
+  try {
+    const res = await apiFetch('/api/config/device', { method: 'GET' });
+    if (res.ok) {
+      const d = await res.json();
+      deviceData = d;
+      renderDevice(d);
+    } else {
+      renderDevice(null);
+    }
+  } catch(e) {
+    renderDevice(null);
+  }
+}
+
+function renderDevice(d) {
+  const el = document.getElementById('device-content');
+  if (!el) return;
+
+  // Calculate reset availability
+  const lastReset     = d?.lastReset;
+  const daysSinceReset = lastReset ? Math.floor((Date.now() - new Date(lastReset)) / 86400000) : 999;
+  const canReset      = daysSinceReset >= 30;
+  const daysUntil     = Math.max(0, 30 - daysSinceReset);
+
+  el.innerHTML = `
+  <div class="device-card">
+    <div class="device-left">
+      <div class="device-ico">🖥️</div>
+      <div>
+        <div class="device-name">${d?.deviceName || d?.device_name || 'Windows PC'}</div>
+        <div class="device-vid">VID: ${d?.deviceVid || d?.device_vid || 'Not bound yet'}</div>
+        <div class="device-badge ${d ? 'active' : 'none'}">
+          ${d ? '● Active device' : '○ No device bound'}
+        </div>
+      </div>
+    </div>
+    <div>
+      <button class="reset-btn" onclick="openResetModal()" id="reset-btn" ${!canReset || !d ? 'disabled' : ''}>
+        ${canReset ? 'Reset Device' : 'Reset in ' + daysUntil + 'd'}
+      </button>
+      <div class="cooldown-info ${canReset ? 'ok' : 'warn'}">
+        ${canReset
+          ? '✓ Reset available now'
+          : '⏳ ' + daysUntil + ' days until next reset'}
+      </div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:var(--t3);margin-top:8px;padding:12px 14px;background:var(--bg2);border-radius:8px">
+    Last seen: ${d?.lastSeen ? new Date(d.lastSeen).toLocaleString() : 'Never'} · 
+    OS: ${d?.osVersion || d?.os_version || 'Unknown'} · 
+    App version: ${d?.appVersion || d?.app_version || 'Not installed'}
+  </div>`;
+}
+
+function openResetModal() { document.getElementById('reset-modal').classList.add('show'); }
+function closeModal()      { document.getElementById('reset-modal').classList.remove('show'); }
+
+async function doReset() {
+  const btn = document.getElementById('confirm-reset-btn');
+  btn.disabled = true; btn.textContent = 'Resetting...';
+  try {
+    const res = await apiFetch('/api/auth/reset-device', {
+      method: 'POST',
+      body: JSON.stringify({ confirm: true })
+    });
+    const d = await res.json();
+    closeModal();
+    if (res.ok) {
+      showAlert('device-alert', 'ok', '✓ Device reset successfully. Your next login will activate a new device.');
+      loadDeviceInfo();
+    } else {
+      showAlert('device-alert', 'err', d.error || 'Reset failed. Please try again or contact support.');
+    }
+  } catch(e) {
+    closeModal();
+    showAlert('device-alert', 'err', 'Cannot connect to server. Please try again.');
+  }
+  btn.disabled = false; btn.textContent = 'Reset Device';
+}
+
+async function saveProfile() {
+  const name  = document.getElementById('p-name').value.trim();
+  const newEmail = document.getElementById('p-email').value.trim().toLowerCase();
+  const btn   = document.getElementById('save-profile-btn');
+  btn.disabled = true; btn.textContent = 'Saving...';
+  try {
+    const res = await apiFetch('/api/auth/update-profile', {
+      method: 'POST',
+      body: JSON.stringify({ fullName: name, email: newEmail })
+    });
+    const d = await res.json();
+    if (res.ok) {
+      if (name) { userData.fullName = name; localStorage.setItem('vc_user', JSON.stringify(userData)); }
+      if (newEmail !== email) localStorage.setItem('vc_email', newEmail);
+      showAlert('profile-alert', 'ok', '✓ Profile updated successfully.');
+      document.getElementById('greet-name').textContent = 'Hey, ' + (name || email.split('@')[0]) + ' 👋';
+    } else {
+      showAlert('profile-alert', 'err', d.error || 'Update failed. Please try again.');
+    }
+  } catch(e) {
+    showAlert('profile-alert', 'err', 'Cannot connect. Please try again.');
+  }
+  btn.disabled = false; btn.textContent = 'Save Changes';
+}
+
+async function changePassword() {
+  const cur  = document.getElementById('p-curpw').value;
+  const nw   = document.getElementById('p-newpw').value;
+  const conf = document.getElementById('p-confpw').value;
+  if (!cur || !nw || !conf) { showAlert('pw-alert','err','Please fill in all password fields.'); return; }
+  if (nw.length < 8)        { showAlert('pw-alert','err','New password must be at least 8 characters.'); return; }
+  if (nw !== conf)           { showAlert('pw-alert','err','New passwords do not match.'); return; }
+  const btn = document.getElementById('save-pw-btn');
+  btn.disabled = true; btn.textContent = 'Updating...';
+  try {
+    const res = await apiFetch('/api/auth/change-password', {
+      method: 'POST',
+      body: JSON.stringify({ currentPassword: cur, newPassword: nw })
+    });
+    const d = await res.json();
+    if (res.ok) {
+      showAlert('pw-alert','ok','✓ Password updated. Use your new password next time you sign in.');
+      document.getElementById('p-curpw').value = '';
+      document.getElementById('p-newpw').value = '';
+      document.getElementById('p-confpw').value = '';
+    } else {
+      showAlert('pw-alert','err', d.error || 'Password update failed. Check your current password.');
+    }
+  } catch(e) {
+    showAlert('pw-alert','err','Cannot connect. Please try again.');
+  }
+  btn.disabled = false; btn.textContent = 'Update Password';
+}
+
+function confirmDelete() {
+  if (confirm('Are you absolutely sure? This will permanently delete your account and all data. This cannot be undone.')) {
+    apiFetch('/api/auth/delete-account', { method: 'DELETE' })
+      .then(() => signOut())
+      .catch(() => alert('Could not delete account. Please email support@valcrown.com'));
+  }
+}
+
+// Init
 loadDashboard();
+
+// Close modal on background click
+document.getElementById('reset-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
 </script>
 </body>
 </html>
