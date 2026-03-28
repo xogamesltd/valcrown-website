@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Download ValCrown — Free for Windows 10/11</title>
 <meta property="og:title" content="Download ValCrown — Free for Windows 10/11">
@@ -64,7 +67,7 @@
 
   <div style="text-align:center;margin-top:36px;padding:24px;background:var(--bg1);border:1px solid var(--b1);border-radius:16px;max-width:600px;margin-left:auto;margin-right:auto">
     <div style="font-size:14px;color:var(--t2);margin-bottom:8px">⚠️ Windows security warning is normal</div>
-    <div style="font-size:13px;color:var(--t3);line-height:1.6">ValCrown is a new app so Windows SmartScreen may show a warning. Click <strong style="color:var(--t2)">"More info"</strong> then <strong style="color:var(--t2)">"Run anyway"</strong> to install. The app is safe — you can verify on <a href="https://github.com/xogamesltd/valcrown-wpf" target="_blank" style="color:var(--ac3)">our GitHub</a>.</div>
+    <div style="font-size:13px;color:var(--t3);line-height:1.6">ValCrown is a new app so Windows SmartScreen may show a warning. Click <strong style="color:var(--t2)">"More info"</strong> then <strong style="color:var(--t2)">"Run anyway"</strong> to install. The app is safe — you can verify on <a href="https://github.com/xogamesltd/valcrown-app" target="_blank" style="color:var(--ac3)">our GitHub</a>.</div>
   </div>
 </div>
 
@@ -83,7 +86,7 @@ async function loadLatestRelease() {
   } catch(e) {
     // fallback to GitHub
     try {
-      const r = await fetch('https://api.github.com/repos/xogamesltd/valcrown-wpf/releases/latest');
+      const r = await fetch('https://api.github.com/repos/xogamesltd/valcrown-app/releases/latest');
       const d = await r.json();
       const exe = d.assets?.find(a => a.name.endsWith('.exe'));
       if (exe) {
@@ -96,7 +99,7 @@ async function loadLatestRelease() {
 }
 
 function downloadApp() {
-  const url = window._dlUrl || 'https://github.com/xogamesltd/valcrown-wpf/releases/latest';
+  const url = window._dlUrl || 'https://github.com/xogamesltd/valcrown-app/releases/latest';
   window.location.href = url;
 }
 
