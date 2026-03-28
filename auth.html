@@ -3,647 +3,340 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ValCrown — Sign In or Create Account</title>
-<meta name="description" content="Sign in or create your ValCrown account to start optimizing your gaming performance.">
+<title>ValCrown — Sign In</title>
 <meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%237c6aff'/><text x='16' y='23' font-family='Arial Black' font-size='18' font-weight='900' fill='white' text-anchor='middle'>V</text></svg>">
 <style>
-  :root {
-    --bg: #0a0a0f;
-    --surface: #12121a;
-    --surface2: #1a1a28;
-    --border: #2a2a40;
-    --accent: #7c3aed;
-    --accent2: #a855f7;
-    --accent-glow: rgba(124,58,237,0.3);
-    --text: #f0f0f8;
-    --text2: #8888aa;
-    --success: #22c55e;
-    --error: #ef4444;
-    --warning: #f59e0b;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html { height:100%; }
-  body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    position: relative;
-    overflow: hidden;
-  }
-  body::before {
-    content: '';
-    position: fixed;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(ellipse at 60% 20%, rgba(124,58,237,0.12) 0%, transparent 60%),
-                radial-gradient(ellipse at 20% 80%, rgba(168,85,247,0.08) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
-  }
-  .container {
-    width: 100%;
-    max-width: 460px;
-    position: relative;
-    z-index: 1;
-  }
-  .logo {
-    text-align: center;
-    margin-bottom: 32px;
-  }
-  .logo a { text-decoration:none; }
-  .logo-mark {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .logo-icon {
-    width: 40px; height: 40px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px; font-weight: 900;
-    color: white;
-    box-shadow: 0 0 20px var(--accent-glow);
-  }
-  .logo-text {
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    background: linear-gradient(135deg, #fff, var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03);
-  }
-  .tabs {
-    display: flex;
-    border-bottom: 1px solid var(--border);
-  }
-  .tab-btn {
-    flex: 1;
-    background: none;
-    border: none;
-    color: var(--text2);
-    font-size: 14px;
-    font-weight: 600;
-    padding: 16px;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-    letter-spacing: 0.3px;
-  }
-  .tab-btn:hover { color: var(--text); }
-  .tab-btn.active {
-    color: var(--accent2);
-    background: rgba(124,58,237,0.06);
-  }
-  .tab-btn.active::after {
-    content: '';
-    position: absolute;
-    bottom: -1px; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-  }
-  .tab-content { display: none; padding: 32px; }
-  .tab-content.active { display: block; }
-  .section-title {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 6px;
-    color: var(--text);
-  }
-  .section-sub {
-    font-size: 13px;
-    color: var(--text2);
-    margin-bottom: 24px;
-    line-height: 1.5;
-  }
-  .field { margin-bottom: 16px; }
-  .field label {
-    display: block;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text2);
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin-bottom: 7px;
-  }
-  .field input {
-    width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: var(--text);
-    font-size: 15px;
-    padding: 12px 14px;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    -webkit-appearance: none;
-  }
-  .field input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-glow);
-  }
-  .field input::placeholder { color: #55556a; }
-  .key-field {
-    display: flex;
-    gap: 8px;
-  }
-  .key-field input { flex: 1; font-family: 'Courier New', monospace; letter-spacing: 1px; }
-  .btn {
-    width: 100%;
-    padding: 14px;
-    border-radius: 12px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    border: none;
-    transition: all 0.2s;
-    letter-spacing: 0.3px;
-    margin-top: 4px;
-  }
-  .btn-primary {
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    color: white;
-    box-shadow: 0 4px 20px var(--accent-glow);
-  }
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 28px var(--accent-glow); }
-  .btn-primary:active { transform: translateY(0); }
-  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-  .btn-secondary {
-    background: var(--surface2);
-    color: var(--text);
-    border: 1px solid var(--border);
-  }
-  .btn-secondary:hover { border-color: var(--accent); color: var(--accent2); }
-  .btn-sm {
-    width: auto;
-    padding: 12px 16px;
-    font-size: 13px;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .msg {
-    padding: 12px 14px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: 500;
-    margin-bottom: 16px;
-    display: none;
-    line-height: 1.5;
-  }
-  .msg.error { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; display: block; }
-  .msg.success { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); color: #86efac; display: block; }
-  .msg.info { background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.3); color: var(--accent2); display: block; }
-  .divider {
-    text-align: center;
-    color: var(--text2);
-    font-size: 12px;
-    margin: 20px 0;
-    position: relative;
-  }
-  .divider::before, .divider::after {
-    content: '';
-    position: absolute;
-    top: 50%; width: calc(50% - 60px);
-    height: 1px; background: var(--border);
-  }
-  .divider::before { left: 0; }
-  .divider::after { right: 0; }
-  .redeem-box {
-    background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(168,85,247,0.05));
-    border: 1px solid rgba(124,58,237,0.25);
-    border-radius: 14px;
-    padding: 20px;
-    margin-top: 8px;
-  }
-  .redeem-box .redeem-title {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--accent2);
-    margin-bottom: 4px;
-    display: flex; align-items: center; gap: 6px;
-  }
-  .redeem-box .redeem-sub {
-    font-size: 12px;
-    color: var(--text2);
-    margin-bottom: 14px;
-    line-height: 1.4;
-  }
-  .forgot-link {
-    text-align: right;
-    margin-top: -8px;
-    margin-bottom: 16px;
-  }
-  .forgot-link button {
-    background: none; border: none;
-    color: var(--accent2); font-size: 12px;
-    cursor: pointer; text-decoration: underline;
-    text-underline-offset: 2px;
-  }
-  .footer-note {
-    text-align: center;
-    font-size: 12px;
-    color: var(--text2);
-    margin-top: 20px;
-    line-height: 1.6;
-  }
-  .footer-note a { color: var(--accent2); text-decoration: none; }
-  .footer-note a:hover { text-decoration: underline; }
-  .spinner {
-    display: inline-block;
-    width: 14px; height: 14px;
-    border: 2px solid rgba(255,255,255,0.3);
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    vertical-align: middle;
-    margin-right: 6px;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .back-home {
-    text-align: center;
-    margin-top: 20px;
-  }
-  .back-home a {
-    color: var(--text2);
-    font-size: 13px;
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .back-home a:hover { color: var(--text); }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg0:#07070f;--bg1:#0e0e1c;--bg2:#141428;--bg3:#1c1c38;
+  --b1:rgba(255,255,255,.07);--b2:rgba(255,255,255,.13);
+  --t1:#f0f0ff;--t2:#9090c0;--t3:#505080;
+  --ac:#7c6aff;--ac3:#a89fff;--acg:rgba(124,106,255,.28);
+  --gr:#00e87a;--rd:#ff4757;--yw:#ffb800;
+  --f:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+}
+html{height:100%}
+body{font-family:var(--f);background:var(--bg0);color:var(--t1);min-height:100%;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}button{cursor:pointer}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px;border-radius:4px}
+.nav{background:rgba(7,7,15,.97);border-bottom:1px solid var(--b1);padding:0 20px}
+.nav-in{max-width:1180px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-v{width:32px;height:32px;background:linear-gradient(135deg,#7c6aff,#a89fff);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#fff}
+.logo-n{font-size:17px;font-weight:800;letter-spacing:-.5px;background:linear-gradient(90deg,#fff,#a89fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-r{display:flex;gap:6px}
+.nav-r a{padding:7px 13px;border-radius:7px;font-size:14px;color:var(--t2);transition:.15s}
+.nav-r a:hover{background:var(--bg3);color:var(--t1)}
+.page{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:28px 16px 48px}
+.card{background:var(--bg1);border:1px solid var(--b2);border-radius:22px;padding:36px 32px;width:100%;max-width:440px;margin-top:16px}
+.card-top{text-align:center;margin-bottom:26px}
+.card-ico{width:54px;height:54px;background:linear-gradient(135deg,#7c6aff,#a89fff);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff;margin:0 auto 12px;box-shadow:0 8px 24px rgba(124,106,255,.35)}
+.card-title{font-size:21px;font-weight:800;letter-spacing:-.5px}
+.card-sub{font-size:14px;color:var(--t2);margin-top:5px;min-height:20px}
+.tabs{display:flex;background:var(--bg2);border-radius:11px;padding:3px;gap:2px;margin-bottom:22px}
+.tab{flex:1;height:36px;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;background:none;color:var(--t3);font-family:var(--f);transition:.15s;white-space:nowrap;padding:0 4px}
+.tab:hover{color:var(--t2)}.tab.on{background:var(--bg3);color:var(--t1);box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.panel{display:none}.panel.on{display:block}
+.fg{margin-bottom:14px}
+.fl{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;display:block}
+.fi{width:100%;background:var(--bg2);border:1.5px solid var(--b2);border-radius:9px;padding:12px 14px;color:var(--t1);font-size:15px;outline:none;font-family:var(--f);transition:.15s;-webkit-appearance:none}
+.fi:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,106,255,.15)}
+.fi::placeholder{color:var(--t3)}
+.rw{position:relative}
+.rw .fi{padding-right:54px;font-family:monospace;font-size:14px;letter-spacing:.5px}
+.rpaste{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:var(--bg3);border:none;color:var(--t2);padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--f)}
+.rpaste:hover{color:var(--t1)}
+.btn{width:100%;height:48px;background:linear-gradient(135deg,#7c6aff,#a89fff);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--f);transition:.2s;margin-top:6px;letter-spacing:.2px}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(124,106,255,.4)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.btn.g{background:linear-gradient(135deg,#00c96a,#00e87a);color:#000}
+.btn.g:hover{box-shadow:0 8px 28px rgba(0,232,122,.35)}
+.msg{padding:11px 14px;border-radius:9px;font-size:13px;margin-bottom:14px;line-height:1.55;display:none}
+.msg.show{display:block}
+.msg.err{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.3);color:#ff4757}
+.msg.ok{background:rgba(0,232,122,.08);border:1px solid rgba(0,232,122,.3);color:#00e87a}
+.msg.warn{background:rgba(255,184,0,.08);border:1px solid rgba(255,184,0,.3);color:#ffb800}
+.bot{text-align:center;margin-top:16px;font-size:13px;color:var(--t3);line-height:1.8}
+.bot a{color:var(--ac3);font-weight:500;cursor:pointer}
+.bot a:hover{text-decoration:underline}
+.hint{font-size:13px;color:var(--t2);margin-bottom:16px;line-height:1.6}
+footer{background:var(--bg1);border-top:1px solid var(--b1);padding:14px 20px;text-align:center;font-size:12px;color:var(--t3)}
+footer a{color:var(--ac3)}
+@media(max-width:480px){.card{padding:24px 16px;border-radius:18px;margin-top:8px}}
+@keyframes pop{0%{transform:scale(.9);opacity:0}70%{transform:scale(1.03)}100%{transform:scale(1);opacity:1}}
+.popin{animation:pop .35s ease}
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="logo">
-    <a href="/" class="logo-mark">
-      <div class="logo-icon">V</div>
-      <span class="logo-text">ValCrown</span>
+<nav>
+  <div class="nav-in">
+    <a href="index.html" class="logo" aria-label="ValCrown home">
+      <div class="logo-v" aria-hidden="true">V</div>
+      <span class="logo-n">ValCrown</span>
     </a>
+    <div class="nav-r">
+      <a href="index.html">Home</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="download.html">Download</a>
+    </div>
   </div>
+</nav>
 
+<div class="page">
   <div class="card">
-    <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('signin')">Sign In</button>
-      <button class="tab-btn" onclick="switchTab('register')">Create Account</button>
-      <button class="tab-btn" onclick="switchTab('redeem')">🎟 Redeem Key</button>
+    <div class="card-top">
+      <div class="card-ico" aria-hidden="true">V</div>
+      <div class="card-title">ValCrown</div>
+      <div class="card-sub" id="csub">Welcome back</div>
+    </div>
+
+    <div class="tabs" id="tabs-bar" role="tablist">
+      <button class="tab on" id="tab-login"    role="tab" aria-selected="true"  onclick="show('login')">Sign In</button>
+      <button class="tab"    id="tab-register" role="tab" aria-selected="false" onclick="show('register')">Register</button>
+      <button class="tab"    id="tab-redeem"   role="tab" aria-selected="false" onclick="show('redeem')">&#128273; Redeem</button>
+      <button class="tab"    id="tab-forgot"   role="tab" aria-selected="false" onclick="show('forgot')">Forgot?</button>
     </div>
 
     <!-- SIGN IN -->
-    <div id="tab-signin" class="tab-content active">
-      <div class="section-title">Welcome back</div>
-      <div class="section-sub">Sign in to access your dashboard and gaming optimizer.</div>
-      <div id="signin-msg" class="msg"></div>
-      <div class="field">
-        <label>Email Address</label>
-        <input type="email" id="signin-email" placeholder="you@example.com" autocomplete="email">
-      </div>
-      <div class="field">
-        <label>Password</label>
-        <input type="password" id="signin-pass" placeholder="••••••••" autocomplete="current-password">
-      </div>
-      <div class="forgot-link">
-        <button onclick="switchTab('forgot')">Forgot password?</button>
-      </div>
-      <button class="btn btn-primary" id="signin-btn" onclick="doSignIn()">Sign In</button>
-      <div class="divider">or</div>
-      <div class="redeem-box">
-        <div class="redeem-title">🎟 Have a license key?</div>
-        <div class="redeem-sub">Already have an account with a key? Sign in above then redeem from your dashboard. New user with a key? Create an account first.</div>
-      </div>
+    <div id="panel-login" class="panel on" role="tabpanel">
+      <div class="msg" id="msg-login"></div>
+      <div class="fg"><label class="fl" for="l-em">Email Address</label><input class="fi" type="email" id="l-em" placeholder="your@email.com" autocomplete="email" inputmode="email"></div>
+      <div class="fg"><label class="fl" for="l-pw">Password</label><input class="fi" type="password" id="l-pw" placeholder="Your password" autocomplete="current-password"></div>
+      <button class="btn" id="btn-login" onclick="doLogin()">Sign In</button>
+      <div class="bot">No account? <a onclick="show('register')">Create one free &rarr;</a></div>
     </div>
 
     <!-- REGISTER -->
-    <div id="tab-register" class="tab-content">
-      <div class="section-title">Create your account</div>
-      <div class="section-sub">Start with a 3-day free trial — no card required.</div>
-      <div id="register-msg" class="msg"></div>
-      <div class="field">
-        <label>Full Name</label>
-        <input type="text" id="reg-name" placeholder="Your name" autocomplete="name">
-      </div>
-      <div class="field">
-        <label>Email Address</label>
-        <input type="email" id="reg-email" placeholder="you@example.com" autocomplete="email">
-      </div>
-      <div class="field">
-        <label>Password</label>
-        <input type="password" id="reg-pass" placeholder="Min 8 characters" autocomplete="new-password">
-      </div>
-      <button class="btn btn-primary" id="register-btn" onclick="doRegister()">Create Account & Continue</button>
-      <div class="divider">got a license key already?</div>
-      <div class="redeem-box">
-        <div class="redeem-title">🎟 Redeem at signup</div>
-        <div class="redeem-sub">Create your account above, then you can redeem your license key immediately from the dashboard.</div>
-      </div>
-      <div class="footer-note" style="margin-top:16px">
-        By creating an account you agree to our <a href="/terms.html">Terms</a> and <a href="/privacy.html">Privacy Policy</a>.
-      </div>
+    <div id="panel-register" class="panel" role="tabpanel">
+      <div class="msg" id="msg-reg"></div>
+      <div class="fg"><label class="fl" for="r-nm">Full Name</label><input class="fi" type="text" id="r-nm" placeholder="Your full name" autocomplete="name"></div>
+      <div class="fg"><label class="fl" for="r-em">Email Address</label><input class="fi" type="email" id="r-em" placeholder="your@email.com" autocomplete="email" inputmode="email"></div>
+      <div class="fg"><label class="fl" for="r-pw">Password</label><input class="fi" type="password" id="r-pw" placeholder="Minimum 8 characters" autocomplete="new-password"></div>
+      <button class="btn" id="btn-reg" onclick="doReg()">Create Account</button>
+      <div class="bot">Already have one? <a onclick="show('login')">Sign in &rarr;</a></div>
     </div>
 
-    <!-- REDEEM KEY -->
-    <div id="tab-redeem" class="tab-content">
-      <div class="section-title">Redeem a License Key</div>
-      <div class="section-sub">Enter your ValCrown license key to activate your account. Sign in first if you already have an account.</div>
-      <div id="redeem-msg" class="msg"></div>
-      <div class="field">
-        <label>Email Address</label>
-        <input type="email" id="redeem-email" placeholder="you@example.com" autocomplete="email">
-      </div>
-      <div class="field">
-        <label>Password</label>
-        <input type="password" id="redeem-pass" placeholder="••••••••" autocomplete="current-password">
-      </div>
-      <div class="field">
-        <label>License Key</label>
-        <div class="key-field">
-          <input type="text" id="redeem-key" placeholder="VC-XXXX-XXXX-XXXX" style="text-transform:uppercase" autocomplete="off">
+    <!-- REDEEM -->
+    <div id="panel-redeem" class="panel" role="tabpanel">
+      <div class="msg" id="msg-redeem"></div>
+      <p class="hint">Enter your license key below to activate ValCrown. You must be signed in &mdash; sign in or create an account first.</p>
+      <div class="fg"><label class="fl" for="rd-em">Account Email</label><input class="fi" type="email" id="rd-em" placeholder="your@email.com" autocomplete="email" inputmode="email"></div>
+      <div class="fg">
+        <label class="fl" for="rd-key">License Key</label>
+        <div class="rw">
+          <input class="fi" type="text" id="rd-key" placeholder="XXXXXXXX-XXXX-XXXX-XXXXXXXXXXXXXXXX" autocomplete="off" autocapitalize="characters" spellcheck="false">
+          <button class="rpaste" onclick="pasteit()" title="Paste">Paste</button>
         </div>
       </div>
-      <button class="btn btn-primary" id="redeem-btn" onclick="doRedeem()">Sign In & Activate Key</button>
-      <div class="footer-note">
-        Don't have a key yet? <a href="/pricing.html">View pricing →</a>
-      </div>
+      <button class="btn g" id="btn-redeem" onclick="doRedeem()">&#128273; Activate License Key</button>
+      <div class="bot">No key yet? <a href="pricing.html">Get a plan &rarr;</a></div>
     </div>
 
-    <!-- FORGOT PASSWORD -->
-    <div id="tab-forgot" class="tab-content">
-      <div class="section-title">Reset your password</div>
-      <div class="section-sub">Enter your email and we'll send you a reset link.</div>
-      <div id="forgot-msg" class="msg"></div>
-      <div class="field">
-        <label>Email Address</label>
-        <input type="email" id="forgot-email" placeholder="you@example.com" autocomplete="email">
-      </div>
-      <button class="btn btn-primary" id="forgot-btn" onclick="doForgot()">Send Reset Link</button>
-      <div class="footer-note" style="margin-top:16px">
-        <button onclick="switchTab('signin')" style="background:none;border:none;color:var(--accent2);cursor:pointer;font-size:13px">← Back to Sign In</button>
-      </div>
+    <!-- FORGOT -->
+    <div id="panel-forgot" class="panel" role="tabpanel">
+      <div class="msg" id="msg-forgot"></div>
+      <p class="hint">Enter your account email and we will send a password reset link. Check spam if you do not see it within 5 minutes.</p>
+      <div class="fg"><label class="fl" for="fo-em">Email Address</label><input class="fi" type="email" id="fo-em" placeholder="your@email.com" autocomplete="email" inputmode="email"></div>
+      <button class="btn" id="btn-forgot" onclick="doForgot()">Send Reset Link</button>
+      <div class="bot">Remembered it? <a onclick="show('login')">Sign in &rarr;</a></div>
     </div>
-  </div>
 
-  <div class="back-home">
-    <a href="/">← Back to valcrown.com</a>
+    <!-- RESET (from email link) -->
+    <div id="panel-reset" class="panel" role="tabpanel">
+      <div class="msg" id="msg-reset"></div>
+      <div class="fg"><label class="fl" for="rs-pw">New Password</label><input class="fi" type="password" id="rs-pw" placeholder="Minimum 8 characters" autocomplete="new-password"></div>
+      <div class="fg"><label class="fl" for="rs-pw2">Confirm Password</label><input class="fi" type="password" id="rs-pw2" placeholder="Repeat new password" autocomplete="new-password"></div>
+      <button class="btn" id="btn-reset" onclick="doReset()">Set New Password</button>
+    </div>
   </div>
 </div>
 
-<script>
-const API = 'https://api.valcrown.com';
+<footer>
+  &copy; 2026 ValCrown &middot;
+  <a href="terms.html">Terms</a> &middot;
+  <a href="privacy.html">Privacy</a> &middot;
+  <a href="https://xogamess.com" target="_blank" rel="noopener">XOGAMESLTD</a>
+</footer>
 
-// Redirect if already logged in
-(function() {
-  const token = localStorage.getItem('vc_token');
-  if (token) {
-    window.location.href = '/dashboard.html';
-  }
+<script>
+const API='https://api.valcrown.com';
+let resetToken='';
+
+// Already logged in? Go straight to dashboard
+(function(){
+  const t=localStorage.getItem('vc_token');
+  const p=new URLSearchParams(location.search);
+  if(t&&t.length>20&&!p.get('reset_token')) location.replace('dashboard.html');
 })();
 
-function switchTab(name) {
-  document.querySelectorAll('.tab-btn').forEach((b,i) => {
-    const names = ['signin','register','redeem','forgot'];
-    b.classList.toggle('active', names[i] === name);
+const $=id=>document.getElementById(id);
+
+function smsg(id,type,text){const e=$(id);if(!e)return;e.className='msg '+type+' show';e.textContent=text;}
+function cmsg(id){const e=$(id);if(e){e.className='msg';e.textContent='';}}
+function sbtn(id,text,off){const b=$(id);if(!b)return;b.textContent=text;b.disabled=!!off;}
+
+function vid(){
+  const s=[navigator.userAgent,navigator.language,screen.height,screen.width,new Date().getTimezoneOffset()].join('|');
+  let h=0;for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h=h&h;}
+  return'WEB-'+Math.abs(h).toString(16).toUpperCase().padStart(8,'0');
+}
+
+function save(d,email){
+  if(d.accessToken)localStorage.setItem('vc_token',d.accessToken);
+  if(d.refreshToken)localStorage.setItem('vc_refresh',d.refreshToken);
+  if(email)localStorage.setItem('vc_email',email);
+  if(d.user)localStorage.setItem('vc_user',JSON.stringify(d.user));
+  if(d.license)localStorage.setItem('vc_license',JSON.stringify(d.license));
+}
+
+async function api(url,body,token){
+  const h={'Content-Type':'application/json'};
+  if(token)h['Authorization']='Bearer '+token;
+  const r=await fetch(API+url,{method:'POST',headers:h,body:JSON.stringify(body)});
+  let d={};try{d=await r.json();}catch(e){}
+  return{ok:r.ok,s:r.status,d};
+}
+
+const TABS=['login','register','redeem','forgot'];
+const SUBS={login:'Sign in to your account',register:'Create your free account',redeem:'Activate a license key',forgot:'Reset your password',reset:'Set a new password'};
+
+function show(v){
+  ['login','register','redeem','forgot','reset'].forEach(p=>{
+    const e=$('panel-'+p);if(e)e.className='panel';
   });
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  const el = document.getElementById('tab-' + name);
-  if (el) el.classList.add('active');
+  TABS.forEach(t=>{
+    const e=$('tab-'+t);
+    if(e){e.className='tab'+(t===v?' on':'');e.setAttribute('aria-selected',t===v);}
+  });
+  ['msg-login','msg-reg','msg-redeem','msg-forgot','msg-reset'].forEach(cmsg);
+  const panel=$('panel-'+v);if(panel){panel.className='panel on';}
+  const sub=$('csub');if(sub&&SUBS[v])sub.textContent=SUBS[v];
 }
 
-function showMsg(id, type, text) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.className = 'msg ' + type;
-  el.textContent = text;
+async function doLogin(){
+  const em=$('l-em').value.trim().toLowerCase();
+  const pw=$('l-pw').value;
+  cmsg('msg-login');
+  if(!em||!em.includes('@')){smsg('msg-login','err','Please enter a valid email address.');$('l-em').focus();return;}
+  if(!pw||pw.length<8){smsg('msg-login','err','Password must be at least 8 characters.');$('l-pw').focus();return;}
+  sbtn('btn-login','Signing in\u2026',1);
+  try{
+    const{ok,s,d}=await api('/api/auth/login',{email:em,password:pw,deviceVid:vid()});
+    if(ok&&d.accessToken){save(d,em);smsg('msg-login','ok','\u2713 Signed in! Loading your dashboard\u2026');setTimeout(()=>location.replace('dashboard.html'),700);return;}
+    if(s===403&&d.code==='NO_LICENSE'){save(d,em);smsg('msg-login','warn','\u2713 Signed in! No active license yet \u2014 get one from your dashboard.');setTimeout(()=>location.replace('dashboard.html'),1200);return;}
+    if(s===401){smsg('msg-login','err','Incorrect email or password. Please try again.');$('l-pw').value='';$('l-pw').focus();sbtn('btn-login','Sign In',0);return;}
+    if(s===403&&d.code==='DEVICE_MISMATCH'){smsg('msg-login','err','This license is bound to another device. Go to your dashboard to reset it.');sbtn('btn-login','Sign In',0);return;}
+    smsg('msg-login','err',d.error||'Sign in failed. Please try again.');
+  }catch(e){smsg('msg-login','err','Cannot reach server. Check your internet and try again.');}
+  sbtn('btn-login','Sign In',0);
 }
 
-function setLoading(btnId, loading, text) {
-  const btn = document.getElementById(btnId);
-  if (!btn) return;
-  btn.disabled = loading;
-  btn.innerHTML = loading ? '<span class="spinner"></span>' + text : text;
-}
-
-function saveSession(data) {
-  if (data.accessToken) localStorage.setItem('vc_token', data.accessToken);
-  if (data.refreshToken) localStorage.setItem('vc_refresh', data.refreshToken);
-  if (data.user) {
-    localStorage.setItem('vc_email', data.user.email || '');
-    localStorage.setItem('vc_name', data.user.fullName || data.user.full_name || '');
-    localStorage.setItem('vc_role', data.user.role || 'user');
-  }
-  if (data.license) {
-    localStorage.setItem('vc_plan', data.license.plan || '');
-    localStorage.setItem('vc_license_status', data.license.status || '');
-  }
-}
-
-// ── SIGN IN ──────────────────────────────────────────────────────────
-async function doSignIn() {
-  const email = document.getElementById('signin-email').value.trim();
-  const pass = document.getElementById('signin-pass').value;
-  if (!email || !pass) { showMsg('signin-msg','error','Please fill in all fields.'); return; }
-
-  setLoading('signin-btn', true, 'Signing in...');
-  showMsg('signin-msg','','');
-
-  try {
-    const res = await fetch(API + '/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password: pass, deviceVid: 'WEB-' + Date.now() })
-    });
-    const data = await res.json();
-
-    if (data.accessToken) {
-      saveSession(data);
-      window.location.href = '/dashboard.html';
+async function doReg(){
+  const nm=$('r-nm').value.trim();
+  const em=$('r-em').value.trim().toLowerCase();
+  const pw=$('r-pw').value;
+  cmsg('msg-reg');
+  if(!em||!em.includes('@')){smsg('msg-reg','err','Please enter a valid email address.');$('r-em').focus();return;}
+  if(!pw||pw.length<8){smsg('msg-reg','err','Password must be at least 8 characters.');$('r-pw').focus();return;}
+  sbtn('btn-reg','Creating account\u2026',1);
+  try{
+    const r1=await api('/api/auth/register',{email:em,password:pw,fullName:nm||undefined,deviceVid:vid()});
+    if(r1.ok){
+      smsg('msg-reg','ok','\u2713 Account created! Signing you in\u2026');
+      try{
+        const r2=await api('/api/auth/login',{email:em,password:pw,deviceVid:vid()});
+        if(r2.d.accessToken){save(r2.d,em);setTimeout(()=>location.replace('dashboard.html'),800);return;}
+        if(r2.s===403&&r2.d.code==='NO_LICENSE'){save(r2.d,em);setTimeout(()=>location.replace('dashboard.html'),800);return;}
+      }catch(e2){}
+      setTimeout(()=>{show('login');$('l-em').value=em;smsg('msg-login','ok','Account created! Enter your password to continue.');},1200);
       return;
     }
-    // NO_LICENSE — still log them in, send to dashboard to buy
-    if (data.code === 'NO_LICENSE' && data.accessToken === undefined) {
-      // Try to get token from a partial response or just send to pricing
-      showMsg('signin-msg','info','No active license. Redirecting to pricing...');
-      setTimeout(() => { window.location.href = '/pricing.html'; }, 1500);
-      return;
-    }
-    showMsg('signin-msg','error', data.error || 'Sign in failed. Check your email and password.');
-  } catch(e) {
-    showMsg('signin-msg','error','Cannot connect to server. Check your internet connection.');
-  }
-  setLoading('signin-btn', false, 'Sign In');
+    if(r1.s===409){smsg('msg-reg','warn','An account with this email already exists.');setTimeout(()=>{show('login');$('l-em').value=em;},1500);return;}
+    smsg('msg-reg','err',r1.d.error||'Registration failed. Please try again.');
+  }catch(e){smsg('msg-reg','err','Cannot reach server. Check your internet and try again.');}
+  sbtn('btn-reg','Create Account',0);
 }
 
-// ── REGISTER ─────────────────────────────────────────────────────────
-async function doRegister() {
-  const name = document.getElementById('reg-name').value.trim();
-  const email = document.getElementById('reg-email').value.trim();
-  const pass = document.getElementById('reg-pass').value;
-
-  if (!name || !email || !pass) { showMsg('register-msg','error','Please fill in all fields.'); return; }
-  if (pass.length < 8) { showMsg('register-msg','error','Password must be at least 8 characters.'); return; }
-  if (!email.includes('@')) { showMsg('register-msg','error','Please enter a valid email address.'); return; }
-
-  setLoading('register-btn', true, 'Creating account...');
-  showMsg('register-msg','','');
-
-  try {
-    const res = await fetch(API + '/api/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password: pass, fullName: name, turnstileToken: 'SKIP' })
-    });
-    const data = await res.json();
-
-    if (res.ok || data.userId || data.message?.includes('created') || data.message?.includes('success')) {
-      showMsg('register-msg','success','Account created! Signing you in...');
-      // Auto sign in
-      setTimeout(async () => {
-        try {
-          const r2 = await fetch(API + '/api/auth/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password: pass, deviceVid: 'WEB-' + Date.now() })
-          });
-          const d2 = await r2.json();
-          if (d2.accessToken) {
-            saveSession(d2);
-            window.location.href = '/dashboard.html';
-          } else {
-            // Still go to dashboard — they'll see the buy license prompt
-            localStorage.setItem('vc_email', email);
-            localStorage.setItem('vc_name', name);
-            window.location.href = '/dashboard.html?new=1';
-          }
-        } catch(e) {
-          window.location.href = '/dashboard.html?new=1';
-        }
-      }, 800);
-      return;
-    }
-
-    if (data.error?.includes('already') || data.error?.includes('exists')) {
-      showMsg('register-msg','error','An account with this email already exists. <a href="javascript:switchTab(\'signin\')" style="color:var(--accent2)">Sign in instead →</a>');
-      document.getElementById('register-msg').innerHTML = 'An account with this email already exists. <button onclick="switchTab(\'signin\')" style="background:none;border:none;color:var(--accent2);cursor:pointer;text-decoration:underline">Sign in instead →</button>';
-    } else {
-      showMsg('register-msg','error', data.error || 'Registration failed. Please try again.');
-    }
-  } catch(e) {
-    showMsg('register-msg','error','Cannot connect to server. Check your internet connection.');
-  }
-  setLoading('register-btn', false, 'Create Account & Continue');
+async function pasteit(){
+  try{const t=await navigator.clipboard.readText();$('rd-key').value=t.trim().toUpperCase();}
+  catch(e){$('rd-key').focus();}
 }
 
-// ── REDEEM KEY ───────────────────────────────────────────────────────
-async function doRedeem() {
-  const email = document.getElementById('redeem-email').value.trim();
-  const pass = document.getElementById('redeem-pass').value;
-  const key = document.getElementById('redeem-key').value.trim().toUpperCase();
-
-  if (!email || !pass || !key) { showMsg('redeem-msg','error','Please fill in all fields including your license key.'); return; }
-  if (!key.startsWith('VC-') && key.length < 8) { showMsg('redeem-msg','error','Invalid key format. Keys start with VC-'); return; }
-
-  setLoading('redeem-btn', true, 'Activating...');
-  showMsg('redeem-msg','','');
-
-  try {
-    // First sign in to get a token
-    const r1 = await fetch(API + '/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password: pass, deviceVid: 'WEB-' + Date.now() })
-    });
-    const d1 = await r1.json();
-
-    let token = d1.accessToken;
-
-    // If login failed because wrong credentials
-    if (!token && d1.code !== 'NO_LICENSE') {
-      showMsg('redeem-msg','error', d1.error || 'Invalid email or password.');
-      setLoading('redeem-btn', false, 'Sign In & Activate Key');
-      return;
+async function doRedeem(){
+  const em=$('rd-em').value.trim().toLowerCase();
+  const key=$('rd-key').value.trim().toUpperCase();
+  cmsg('msg-redeem');
+  if(!em||!em.includes('@')){smsg('msg-redeem','err','Please enter your account email address.');$('rd-em').focus();return;}
+  if(!key||key.length<6){smsg('msg-redeem','err','Please enter a valid license key.');$('rd-key').focus();return;}
+  const token=localStorage.getItem('vc_token');
+  if(!token||token.length<20){smsg('msg-redeem','warn','You need to be signed in to redeem a key. Sign in first.');setTimeout(()=>{show('login');$('l-em').value=em;},1500);return;}
+  sbtn('btn-redeem','\u23F3 Activating\u2026',1);
+  try{
+    const r=await fetch(API+'/api/auth/redeem-key',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({licenseKey:key,email:em})});
+    let d={};try{d=await r.json();}catch(e){}
+    if(r.ok&&d.success){
+      if(d.license)localStorage.setItem('vc_license',JSON.stringify(d.license));
+      smsg('msg-redeem','ok','\uD83C\uDF89 License activated! Taking you to your dashboard\u2026');
+      setTimeout(()=>location.replace('dashboard.html'),1500);return;
     }
+    if(r.status===401){smsg('msg-redeem','warn','Session expired. Please sign in again first.');setTimeout(()=>show('login'),1500);return;}
+    if(r.status===404){smsg('msg-redeem','err','Invalid license key. Please check and try again.');sbtn('btn-redeem','\uD83D\uDD13 Activate License Key',0);return;}
+    if(r.status===409){smsg('msg-redeem','err','This key is already activated on another account.');sbtn('btn-redeem','\uD83D\uDD13 Activate License Key',0);return;}
+    if(r.status===410){smsg('msg-redeem','err','This license key has expired.');sbtn('btn-redeem','\uD83D\uDD13 Activate License Key',0);return;}
+    smsg('msg-redeem','err',d.error||'Could not activate. Please contact support@valcrown.com');
+  }catch(e){smsg('msg-redeem','err','Cannot reach server. Check your internet and try again.');}
+  sbtn('btn-redeem','\uD83D\uDD13 Activate License Key',0);
+}
 
-    // If NO_LICENSE, they may still have a token from a different endpoint — try activate anyway
-    // with the key as an override
-    if (!token) {
-      showMsg('redeem-msg','error', 'Could not sign in. Check your email and password.');
-      setLoading('redeem-btn', false, 'Sign In & Activate Key');
-      return;
-    }
-
-    // Now activate the key
-    const r2 = await fetch(API + '/api/auth/activate-license', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-      body: JSON.stringify({ licenseKey: key, deviceVid: 'WEB-' + Date.now() })
-    });
-    const d2 = await r2.json();
-
-    if (r2.ok || d2.success || d2.message?.includes('activated')) {
-      showMsg('redeem-msg','success','🎉 License activated successfully! Redirecting to dashboard...');
-      saveSession(d1);
-      if (d2.accessToken) localStorage.setItem('vc_token', d2.accessToken);
-      setTimeout(() => { window.location.href = '/dashboard.html'; }, 1200);
-    } else {
-      showMsg('redeem-msg','error', d2.error || 'Key activation failed. Check the key and try again.');
-      setLoading('redeem-btn', false, 'Sign In & Activate Key');
-    }
-  } catch(e) {
-    showMsg('redeem-msg','error','Cannot connect to server. Check your internet connection.');
-    setLoading('redeem-btn', false, 'Sign In & Activate Key');
+async function doForgot(){
+  const em=$('fo-em').value.trim().toLowerCase();
+  cmsg('msg-forgot');
+  if(!em||!em.includes('@')){smsg('msg-forgot','err','Please enter your account email address.');$('fo-em').focus();return;}
+  sbtn('btn-forgot','Sending\u2026',1);
+  try{
+    await api('/api/auth/forgot-password',{email:em});
+    smsg('msg-forgot','ok','\u2713 If an account exists with that email, a reset link was sent. Check inbox and spam folder.');
+    sbtn('btn-forgot','Link Sent \u2713',1);
+  }catch(e){
+    smsg('msg-forgot','err','Cannot reach server. Email support@valcrown.com for a manual reset.');
+    sbtn('btn-forgot','Send Reset Link',0);
   }
 }
 
-// ── FORGOT PASSWORD ──────────────────────────────────────────────────
-async function doForgot() {
-  const email = document.getElementById('forgot-email').value.trim();
-  if (!email) { showMsg('forgot-msg','error','Please enter your email address.'); return; }
-
-  setLoading('forgot-btn', true, 'Sending...');
-  showMsg('forgot-msg','','');
-
-  try {
-    const res = await fetch(API + '/api/auth/forgot-password', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email })
-    });
-    const data = await res.json();
-    if (res.ok || data.message) {
-      showMsg('forgot-msg','success','Check your email for a reset link. It may take a minute to arrive.');
-    } else {
-      showMsg('forgot-msg','error', data.error || 'Request failed. Please try again.');
-    }
-  } catch(e) {
-    showMsg('forgot-msg','error','Cannot connect to server.');
-  }
-  setLoading('forgot-btn', false, 'Send Reset Link');
+async function doReset(){
+  const pw=$('rs-pw').value;const pw2=$('rs-pw2').value;
+  cmsg('msg-reset');
+  if(!pw||pw.length<8){smsg('msg-reset','err','Password must be at least 8 characters.');return;}
+  if(pw!==pw2){smsg('msg-reset','err','Passwords do not match.');return;}
+  sbtn('btn-reset','Updating\u2026',1);
+  try{
+    const{ok,d}=await api('/api/auth/reset-password',{token:resetToken,password:pw});
+    if(ok){smsg('msg-reset','ok','\u2713 Password updated! Redirecting to sign in\u2026');setTimeout(()=>show('login'),2000);}
+    else{smsg('msg-reset','err',d.error||'Reset link expired. Please request a new one.');sbtn('btn-reset','Set New Password',0);}
+  }catch(e){smsg('msg-reset','err','Cannot reach server. Please try again.');sbtn('btn-reset','Set New Password',0);}
 }
 
-// ── KEYBOARD SUPPORT ─────────────────────────────────────────────────
-document.addEventListener('keydown', function(e) {
-  if (e.key !== 'Enter') return;
-  const active = document.querySelector('.tab-content.active');
-  if (!active) return;
-  const id = active.id;
-  if (id === 'tab-signin') doSignIn();
-  else if (id === 'tab-register') doRegister();
-  else if (id === 'tab-redeem') doRedeem();
-  else if (id === 'tab-forgot') doForgot();
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Enter')return;
+  const on=document.querySelector('.panel.on');if(!on)return;
+  const id=on.id.replace('panel-','');
+  if(id==='login')doLogin();
+  else if(id==='register')doReg();
+  else if(id==='redeem')doRedeem();
+  else if(id==='forgot')doForgot();
+  else if(id==='reset')doReset();
 });
+
+// Init
+(function(){
+  const p=new URLSearchParams(location.search);
+  if(p.get('reset_token')){resetToken=p.get('reset_token');$('tabs-bar').style.display='none';show('reset');}
+  else if(['register','redeem','forgot'].includes(p.get('tab'))){show(p.get('tab'));}
+  else show('login');
+  const em=p.get('email')||'';
+  if(em)['l-em','r-em','rd-em','fo-em'].forEach(id=>{const e=$(id);if(e)e.value=em;});
+})();
 </script>
 </body>
 </html>

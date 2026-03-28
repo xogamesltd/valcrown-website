@@ -2,8 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ValCrown — System Status</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ValCrown System Status — Live Service Health</title>
+<meta property="og:title" content="ValCrown System Status — Live Service Health">
+<meta property="og:description" content="Real-time status of ValCrown services. Check API, database, AI advisor and website uptime.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://valcrown.com/status.html">
+<meta property="og:site_name" content="ValCrown">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ValCrown System Status — Live Service Health">
+<meta name="twitter:description" content="Real-time status of ValCrown services. Check API, database, AI advisor and website uptime.">
+<link rel="canonical" href="https://valcrown.com/status.html">
+<meta name="description" content="Real-time status of ValCrown services. Check API, database, AI advisor and website uptime.">
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <link rel="stylesheet" href="css/shared.css">
 <style>
@@ -65,6 +75,7 @@
 .ext-note{font-size:12px;color:var(--t3);margin-top:8px;display:flex;align-items:center;gap:6px}
 .ext-note a{color:var(--ac3)}
 </style>
+<meta name="theme-color" content="#7c6aff">
 </head>
 <body>
 <script src="js/shared.js"></script>
@@ -98,10 +109,10 @@
 // Services we can actually check from browser (no CORS issues)
 // Stripe is not directly checkable from browser due to CORS — show as "External" with link
 const SVCS=[
-  {id:'backend', name:'Backend API',    url:API+'/health',     icon:'⚡', desc:'Core server — auth, licensing, user management', checkable:true},
-  {id:'website', name:'Website',        url:'https://valcrown.com', icon:'🌐', desc:'valcrown.com — Marketing, downloads, pricing', checkable:true},
-  {id:'auth',    name:'Auth Service',   url:API+'/health',     icon:'🔐', desc:'Login, registration, session management', checkable:true},
-  {id:'ai',      name:'AI Advisor',     url:API+'/health',     icon:'🤖', desc:'Claude + Gemini — real-time optimization advice', checkable:true},
+  {id:'backend', name:'Backend API',    url:API+'/health',          icon:'⚡', desc:'api.valcrown.com — Core server, auth, licensing'},
+  {id:'database',name:'Database',       url:API+'/health',          icon:'🗄️', desc:'PostgreSQL — User data, licenses, sessions'},
+  {id:'website', name:'Website',        url:'https://valcrown.com', icon:'🌐', desc:'valcrown.com — Marketing, downloads, pricing'},
+  {id:'ai',      name:'AI Advisor',     url:API+'/health',          icon:'🤖', desc:'Claude + Gemini — real-time optimization advice'},
 ];
 
 // External services shown separately (not checkable via CORS)
@@ -171,7 +182,22 @@ function upCard(id,r){
 }
 
 async function chk(s){
-  try{const t=Date.now();const r=await fetch(s.url,{signal:AbortSignal.timeout(5000)});const ms=Date.now()-t;return{ok:r.ok,ms,status:r.ok?'ok':'warn'}}
+  try{
+    const ctrl=new AbortController();
+    const timer=setTimeout(()=>ctrl.abort(),5000);
+    const t=Date.now();
+    const r=await fetch(s.url,{signal:ctrl.signal});
+    clearTimeout(timer);
+    const ms=Date.now()-t;
+    let data={};
+    try{data=await r.json();}catch(e){}
+    // Database check uses health endpoint's DB field
+    if(s.id==='database'){
+      const dbOk=data.database==='ok';
+      return{ok:dbOk,ms:data.db_ms||ms,status:dbOk?'ok':'err'};
+    }
+    return{ok:r.ok,ms,status:r.ok?'ok':'warn'};
+  }
   catch(e){return{ok:false,ms:null,status:'err'}}
 }
 
