@@ -60,9 +60,30 @@
 
 <script>renderStatusBar();renderFooter()</script>
 <script>
-function downloadApp() {
-  window.location.href = 'https://github.com/xogamesltd/valcrown-app/releases/download/v1.0.0/ValCrown-Setup-1.0.0.exe';
+const GITHUB_REPO = 'xogamesltd/valcrown-app';
+
+async function loadLatestRelease() {
+  try {
+    const res = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/releases/latest');
+    const data = await res.json();
+    const exe = data.assets?.find(a => a.name.endsWith('.exe'));
+    if (exe) {
+      // Update download button
+      window._downloadUrl = exe.browser_download_url;
+      // Update version text
+      const ver = document.querySelector('.dl-ver');
+      if (ver) ver.textContent = data.tag_name + ' · Windows 10/11 64-bit · ' + Math.round(exe.size/1024/1024) + 'MB';
+    }
+  } catch(e) {
+    window._downloadUrl = 'https://github.com/' + GITHUB_REPO + '/releases/latest';
+  }
 }
+
+function downloadApp() {
+  window.location.href = window._downloadUrl || ('https://github.com/' + GITHUB_REPO + '/releases/latest');
+}
+
+loadLatestRelease();
 </script>
 </body>
 </html>
