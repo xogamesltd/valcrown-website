@@ -2,17 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ValCrown — Download</title>
-<meta name="description" content="Download ValCrown for Windows. Free 3-day trial included. No credit card needed.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Download ValCrown — Free for Windows 10/11</title>
+<meta property="og:title" content="Download ValCrown — Free for Windows 10/11">
+<meta property="og:description" content="Download ValCrown gaming optimizer for Windows. Free 3-day trial included. No credit card needed. Installs in 30 seconds.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://valcrown.com/download.html">
+<meta property="og:site_name" content="ValCrown">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Download ValCrown — Free for Windows 10/11">
+<meta name="twitter:description" content="Download ValCrown gaming optimizer for Windows. Free 3-day trial included. No credit card needed. Installs in 30 seconds.">
+<link rel="canonical" href="https://valcrown.com/download.html">
+<meta name="description" content="Download ValCrown gaming optimizer for Windows. Free 3-day trial included. No credit card needed. Installs in 30 seconds.">
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <link rel="stylesheet" href="css/shared.css">
+<meta name="theme-color" content="#7c6aff">
 </head>
 <body>
 <script src="js/shared.js"></script>
 <script>renderNav('download')</script>
 
-<div class="dl-wrap">
+<div class="dl-wrap" id="main-content">
   <div class="dl-card">
     <div class="dl-ico">⬇️</div>
     <div class="dl-h">Download ValCrown</div>
@@ -60,27 +70,34 @@
 
 <script>renderStatusBar();renderFooter()</script>
 <script>
-const GITHUB_REPO = 'xogamesltd/valcrown-app';
-
+// Auto-fetch latest version from self-hosted VPS
 async function loadLatestRelease() {
   try {
-    const res = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/releases/latest');
+    const res = await fetch('https://api.valcrown.com/api/config/latest-version');
     const data = await res.json();
-    const exe = data.assets?.find(a => a.name.endsWith('.exe'));
-    if (exe) {
-      // Update download button
-      window._downloadUrl = exe.browser_download_url;
-      // Update version text
+    if (data.version) {
+      window._dlUrl = data.url || ('https://valcrown.com/download/ValCrown-Setup-' + data.version + '.exe');
       const ver = document.querySelector('.dl-ver');
-      if (ver) ver.textContent = data.tag_name + ' · Windows 10/11 64-bit · ' + Math.round(exe.size/1024/1024) + 'MB';
+      if (ver) ver.textContent = 'Version ' + data.version + ' · Windows 10/11 64-bit';
     }
   } catch(e) {
-    window._downloadUrl = 'https://github.com/' + GITHUB_REPO + '/releases/latest';
+    // fallback to GitHub
+    try {
+      const r = await fetch('https://api.github.com/repos/xogamesltd/valcrown-app/releases/latest');
+      const d = await r.json();
+      const exe = d.assets?.find(a => a.name.endsWith('.exe'));
+      if (exe) {
+        window._dlUrl = exe.browser_download_url;
+        const ver = document.querySelector('.dl-ver');
+        if (ver) ver.textContent = d.tag_name + ' · Windows 10/11 64-bit · ' + Math.round(exe.size/1024/1024) + 'MB';
+      }
+    } catch(e2) {}
   }
 }
 
 function downloadApp() {
-  window.location.href = window._downloadUrl || ('https://github.com/' + GITHUB_REPO + '/releases/latest');
+  const url = window._dlUrl || 'https://github.com/xogamesltd/valcrown-app/releases/latest';
+  window.location.href = url;
 }
 
 loadLatestRelease();
