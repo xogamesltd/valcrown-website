@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /dashboard.html
-Disallow: /auth.html
-Disallow: /success.html
-
-Sitemap: https://valcrown.com/sitemap.xml

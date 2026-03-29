@@ -178,61 +178,43 @@ const TRANSLATIONS = {
 let currentLang = 'en';
 
 function initLanguage() {
-  // Detect browser language
-  const browserLang = navigator.language?.split('-')[0] || 'en';
+  const browserLang = (navigator.language || 'en').split('-')[0];
   const savedLang = localStorage.getItem('vc_lang');
   const lang = savedLang || (TRANSLATIONS[browserLang] ? browserLang : 'en');
-  setLanguage(lang, false);
+  // Apply immediately for already-rendered content
+  applyTranslations(lang);
+  // Also apply after a short delay to catch nav elements injected by shared.js
+  setTimeout(() => applyTranslations(lang), 100);
 }
 
 function setLanguage(lang, save = true) {
   if (!TRANSLATIONS[lang]) lang = 'en';
   currentLang = lang;
   if (save) localStorage.setItem('vc_lang', lang);
+  applyTranslations(lang);
+}
 
+function applyTranslations(lang) {
+  if (!TRANSLATIONS[lang]) lang = 'en';
   const t = TRANSLATIONS[lang];
 
-  // Apply translations to all elements with data-i18n
+  // Apply to all data-i18n elements
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (t[key]) el.textContent = t[key];
+    if (t[key] !== undefined) el.textContent = t[key];
   });
 
-  // Update language selector
+  // Update language selector (may not exist yet)
   const sel = document.getElementById('lang-select');
   if (sel) sel.value = lang;
 
   // RTL for Arabic
   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+  // Update html lang attribute
+  document.documentElement.lang = lang;
 }
 
 function t(key) {
   return TRANSLATIONS[currentLang]?.[key] || TRANSLATIONS.en[key] || key;
-}
-
-// ── SHARED.JS INTEGRATION ─────────────────────────────────────────────────────
-// Expose TRANSLATIONS globally so shared.js can use them for language switcher
-if (typeof window !== 'undefined') window.TRANSLATIONS = TRANSLATIONS;
-
-// Override initLanguage to work with shared.js nav
-(function() {
-  const _orig = typeof initLanguage === 'function' ? initLanguage : null;
-  window.initLanguage = function() {
-    window.TRANSLATIONS = TRANSLATIONS;
-    const saved = localStorage.getItem('vc_lang') ||
-      (navigator.language || 'en').split('-')[0];
-    const lang = TRANSLATIONS[saved] ? saved : 'en';
-    // Apply to page content immediately
-    if (typeof window._applyLang === 'function') window._applyLang(lang);
-    else if (_orig) _orig();
-    // Apply again after nav renders
-    setTimeout(() => {
-      if (typeof window._applyLang === 'function') window._applyLang(lang);
-    }, 150);
-  };
-})();
-
-// Alias so shared.js can call applyTranslations
-function applyTranslations(lang) {
-  setLanguage(lang, false);
 }
