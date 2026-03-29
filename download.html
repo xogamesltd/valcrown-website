@@ -18,7 +18,7 @@
 <link rel="canonical" href="https://valcrown.com/download.html">
 <meta name="description" content="Download ValCrown gaming optimizer for Windows. Free 3-day trial included. No credit card needed. Installs in 30 seconds.">
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
-<link rel="stylesheet" href="css/shared.css">
+<link rel="stylesheet" href="shared.css">
 <meta name="theme-color" content="#7c6aff">
 </head>
 <body>
@@ -67,7 +67,7 @@
 
   <div style="text-align:center;margin-top:36px;padding:24px;background:var(--bg1);border:1px solid var(--b1);border-radius:16px;max-width:600px;margin-left:auto;margin-right:auto">
     <div style="font-size:14px;color:var(--t2);margin-bottom:8px">⚠️ Windows security warning is normal</div>
-    <div style="font-size:13px;color:var(--t3);line-height:1.6">ValCrown is a new app so Windows SmartScreen may show a warning. Click <strong style="color:var(--t2)">"More info"</strong> then <strong style="color:var(--t2)">"Run anyway"</strong> to install. The app is safe — you can verify on <a href="https://github.com/xogamesltd/valcrown-app" target="_blank" style="color:var(--ac3)">our GitHub</a>.</div>
+    <div style="font-size:13px;color:var(--t3);line-height:1.6">ValCrown is a new app so Windows SmartScreen may show a warning. Click <strong style="color:var(--t2)">"More info"</strong> then <strong style="color:var(--t2)">"Run anyway"</strong> to install. The app is safe — you can verify on <a href="https://github.com/xogamesltd/valcrown-wpf" target="_blank" style="color:var(--ac3)">our GitHub</a>.</div>
   </div>
 </div>
 
@@ -76,7 +76,7 @@
 async function loadLatestRelease() {
   const ver = document.getElementById('dl-ver');
   try {
-    const r = await fetch('https://api.github.com/repos/xogamesltd/valcrown-app/releases/latest', { cache: 'no-store' });
+    const r = await fetch('https://api.github.com/repos/xogamesltd/valcrown-wpf/releases/latest', { cache: 'no-store' });
     const d = await r.json();
     const exe = d.assets && d.assets.find(function(a){ return a.name.endsWith('.exe'); });
     if (exe && d.tag_name) {
@@ -85,16 +85,16 @@ async function loadLatestRelease() {
       if (ver) ver.textContent = d.tag_name + ' · Windows 10/11 64-bit · ~' + mb + 'MB';
     } else {
       if (ver) ver.textContent = 'Latest · Windows 10/11 64-bit';
-      window._dlUrl = 'https://github.com/xogamesltd/valcrown-app/releases/latest';
+      window._dlUrl = 'https://github.com/xogamesltd/valcrown-wpf/releases/latest';
     }
   } catch(e) {
     if (ver) ver.textContent = 'Latest · Windows 10/11 64-bit';
-    window._dlUrl = 'https://github.com/xogamesltd/valcrown-app/releases/latest';
+    window._dlUrl = 'https://github.com/xogamesltd/valcrown-wpf/releases/latest';
   }
 }
 
 function downloadApp() {
-  window.location.href = window._dlUrl || 'https://github.com/xogamesltd/valcrown-app/releases/latest';
+  window.location.href = window._dlUrl || 'https://github.com/xogamesltd/valcrown-wpf/releases/latest';
 }
 
 loadLatestRelease();

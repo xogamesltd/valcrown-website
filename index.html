@@ -2,128 +2,138 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ValCrown — Cloud Gaming Optimizer | Auto-Boost Your PC</title>
-<meta name="description" content="ValCrown automatically detects your games and optimizes your PC for cloud gaming. AI-powered. 200+ games. Free 3-day trial — no card needed.">
-<meta name="keywords" content="cloud gaming optimizer, PC booster, GeForce NOW, Xbox Cloud Gaming, ping reducer, FPS booster">
+<meta name="description" content="ValCrown automatically detects your games and optimizes your PC for cloud gaming. AI-powered. 200+ games. Free 3-day trial.">
 <meta property="og:title" content="ValCrown — Cloud Gaming Optimizer">
-<meta property="og:description" content="Stop losing frames. ValCrown auto-detects 200+ games and boosts your PC instantly.">
+<meta property="og:description" content="Stop losing frames. Auto-detects 200+ games and boosts your PC instantly.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://valcrown.com">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#7c6aff">
-<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <link rel="canonical" href="https://valcrown.com/">
-<link rel="stylesheet" href="css/shared.css">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="shared.css">
 <style>
-/* Homepage-specific styles */
-.hero{max-width:1180px;margin:0 auto;padding:88px 24px 72px;text-align:center;position:relative}
-.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:900px;height:500px;background:radial-gradient(ellipse at 50% 30%,rgba(124,106,255,.07),transparent 65%);pointer-events:none}
-.ey{display:inline-flex;align-items:center;gap:8px;background:var(--acd);border:1px solid rgba(124,106,255,.22);color:var(--ac3);padding:7px 18px;border-radius:40px;font-size:13px;font-weight:600;margin-bottom:28px}
-.ey-d{width:6px;height:6px;background:var(--gr);border-radius:50%;animation:bl 2s infinite}
-@keyframes bl{0%,100%{opacity:1}50%{opacity:.3}}
-.ht{font-size:clamp(46px,7vw,84px);font-weight:900;line-height:1.04;letter-spacing:-3px;margin-bottom:22px}
-.ht .hg{background:linear-gradient(135deg,#a89fff,#c4b5fd 40%,#00e87a);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hd{font-size:18px;color:var(--t2);max-width:600px;margin:0 auto 38px;line-height:1.72}
-.hbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
-.hn{font-size:13px;color:var(--t3);margin-bottom:64px}
-.hn strong{color:var(--gr);font-weight:600}
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 28px 80px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.18}
+.hero-orb-1{width:700px;height:700px;background:radial-gradient(circle,#7c6aff,transparent);top:-200px;left:50%;transform:translateX(-50%)}
+.hero-orb-2{width:400px;height:400px;background:radial-gradient(circle,#00e87a,transparent);bottom:-100px;left:-100px;opacity:.1}
+.hero-orb-3{width:300px;height:300px;background:radial-gradient(circle,#5daaff,transparent);bottom:0;right:-80px;opacity:.08}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(124,106,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(124,106,255,.04) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black,transparent)}
+.hero-scan{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(124,106,255,.4),transparent);animation:scan 4s linear infinite;pointer-events:none}
+.hero-content{position:relative;z-index:1;max-width:780px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,232,122,.08);border:1px solid rgba(0,232,122,.2);color:var(--gr);padding:7px 18px;border-radius:40px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:28px;font-family:var(--f-display)}
+.hero-badge-dot{width:6px;height:6px;background:var(--gr);border-radius:50%;animation:spulse 2s infinite}
+.hero-h{font-size:clamp(46px,7.5vw,92px);font-weight:900;letter-spacing:-4px;line-height:.95;font-family:var(--f-display);margin-bottom:24px}
+.hero-h em{font-style:normal;background:linear-gradient(135deg,#7c6aff,#a89fff,#00e87a);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:clamp(16px,2vw,20px);color:var(--t2);line-height:1.7;max-width:560px;margin:0 auto 40px}
+.hero-cta{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:56px}
+.hero-note{font-size:13px;color:var(--t3);display:flex;align-items:center;gap:6px}
+.hero-note svg{width:14px;height:14px;fill:var(--gr)}
+.hero-stats{display:flex;align-items:center;justify-content:center;gap:0;position:relative;z-index:1}
+.hero-stat{padding:18px 36px;text-align:center;border-right:1px solid var(--b1)}
+.hero-stat:last-child{border:none}
+.hero-stat-n{font-size:clamp(24px,3vw,36px);font-weight:900;font-family:var(--f-display);background:linear-gradient(135deg,#fff,#a89fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.hero-stat-l{font-size:12px;color:var(--t3);margin-top:5px;text-transform:uppercase;letter-spacing:.8px;font-family:var(--f-display)}
+.hero-divider{width:1px;height:50px;background:var(--b2)}
 
-/* Before/After Boost Demo */
-.boost-demo{max-width:800px;margin:0 auto 0;position:relative}
-.demo-tabs{display:flex;gap:6px;justify-content:center;margin-bottom:16px}
-.demo-tab{padding:8px 20px;border-radius:30px;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;border:none;font-family:var(--f)}
-.demo-tab.before{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.3);color:var(--rd)}
-.demo-tab.after{background:var(--gd);border:1px solid rgba(0,232,122,.3);color:var(--gr)}
-.demo-tab.active{transform:scale(1.05)}
-.demo-tab.before.active{background:rgba(255,71,87,.2)}
-.demo-tab.after.active{background:rgba(0,232,122,.2)}
-.demo-window{background:var(--bg1);border:1px solid var(--b2);border-radius:20px;overflow:hidden;box-shadow:0 48px 120px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.04)}
-.demo-bar{background:var(--bg2);padding:12px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--b1)}
-.demo-dots{display:flex;gap:6px}
-.demo-dots span{width:11px;height:11px;border-radius:50%}
-.demo-dots .dr{background:#ff5f56}.demo-dots .dy{background:#ffbd2e}.demo-dots .dg{background:#27c93f}
-.demo-title{font-size:12px;color:var(--t3);margin:0 auto;font-family:monospace}
-.demo-body{padding:20px}
+/* ── TICKER ── */
+.ticker{overflow:hidden;padding:20px 0;border-top:1px solid var(--b1);border-bottom:1px solid var(--b1);background:var(--bg1);position:relative}
+.ticker::before,.ticker::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none}
+.ticker::before{left:0;background:linear-gradient(90deg,var(--bg1),transparent)}
+.ticker::after{right:0;background:linear-gradient(-90deg,var(--bg1),transparent)}
+.ticker-inner{display:flex;gap:0;animation:ticker 30s linear infinite;width:max-content}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{display:flex;align-items:center;gap:10px;padding:0 32px;font-size:13px;color:var(--t3);white-space:nowrap;font-family:var(--f-mono)}
+.ticker-item span{color:var(--ac3);font-weight:600}
+.ticker-sep{color:var(--b2);font-size:20px;line-height:1}
 
-/* Game card */
-.gc{background:linear-gradient(135deg,rgba(124,106,255,.1),rgba(0,232,122,.04));border:1px solid rgba(124,106,255,.2);border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:16px;margin-bottom:14px;position:relative;overflow:hidden}
-.gc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ac),var(--gr))}
-.gce{font-size:40px;flex-shrink:0}
-.gcl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:4px;display:flex;align-items:center;gap:5px}
-.gcl.live{color:var(--gr)}
-.gcl.idle{color:var(--t3)}
-.gcd{width:6px;height:6px;border-radius:50%;animation:bl 1.5s infinite}
-.gcd.live{background:var(--gr)}.gcd.idle{background:var(--t3);animation:none}
-.gcn{font-size:22px;font-weight:800;letter-spacing:-.5px}
-.gcm{font-size:13px;color:var(--t2);margin-top:3px}
-.gcb{font-size:11px;font-weight:800;padding:5px 12px;border-radius:7px;margin-left:auto;flex-shrink:0}
-.gcb.live{background:var(--gr);color:#000}
-.gcb.idle{background:var(--bg3);color:var(--t3)}
+/* ── HOW IT WORKS ── */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--b1);border:1px solid var(--b1);border-radius:24px;overflow:hidden;margin-top:56px}
+.step{background:var(--bg1);padding:40px 32px;position:relative;transition:.25s}
+.step:hover{background:var(--bg2)}
+.step-num{font-size:72px;font-weight:900;color:rgba(124,106,255,.08);font-family:var(--f-display);position:absolute;top:16px;right:20px;line-height:1}
+.step-icon{width:52px;height:52px;background:var(--acd);border:1px solid rgba(124,106,255,.2);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:20px}
+.step-t{font-size:18px;font-weight:700;margin-bottom:10px;font-family:var(--f-display);letter-spacing:-.3px}
+.step-s{font-size:14px;color:var(--t2);line-height:1.7}
 
-/* Metrics */
-.mets{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.met{background:var(--bg2);border-radius:10px;padding:13px;text-align:center;position:relative;overflow:hidden;transition:.3s}
-.met-val{font-size:22px;font-weight:800;line-height:1;font-family:monospace;transition:.5s}
-.met-lbl{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-top:4px;font-weight:600}
-.met-bar{height:3px;border-radius:2px;margin-top:8px;transition:width .5s,background .5s}
-.cg{color:var(--gr)}.cb{color:var(--bl)}.ca{color:var(--ac3)}.cr{color:var(--rd)}.cy{color:var(--yw)}
+/* ── FEATURES ── */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px}
+.feat{background:var(--bg1);border:1px solid var(--b1);border-radius:20px;padding:28px;transition:.3s;position:relative;overflow:hidden;cursor:default}
+.feat::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--acd),transparent);opacity:0;transition:.4s}
+.feat:hover{border-color:var(--b2);transform:translateY(-4px);box-shadow:0 24px 60px rgba(0,0,0,.3)}
+.feat:hover::before{opacity:1}
+.feat-ico{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:18px;position:relative}
+.feat-t{font-size:17px;font-weight:700;margin-bottom:8px;font-family:var(--f-display);letter-spacing:-.3px}
+.feat-s{font-size:14px;color:var(--t2);line-height:1.7}
+.feat-tag{position:absolute;top:18px;right:18px}
 
-/* Boost status banner */
-.boost-banner{margin-top:14px;padding:12px 16px;border-radius:10px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:10px;transition:.3s}
-.boost-banner.on{background:rgba(0,232,122,.08);border:1px solid rgba(0,232,122,.2);color:var(--gr)}
-.boost-banner.off{background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.2);color:var(--rd)}
-.bb-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.bb-dot.on{background:var(--gr);animation:spulse 2s infinite}
-.bb-dot.off{background:var(--rd)}
+/* ── GAME DETECTION ── */
+.game-demo{background:var(--bg1);border:1px solid var(--b1);border-radius:24px;padding:32px;margin-top:56px;position:relative;overflow:hidden}
+.game-demo::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--ac),transparent);animation:shimmer 3s ease infinite}
+@keyframes shimmer{0%,100%{opacity:.4}50%{opacity:1}}
+.game-active{background:linear-gradient(135deg,rgba(124,106,255,.1),rgba(0,232,122,.05));border:1px solid rgba(124,106,255,.3);border-radius:16px;padding:20px 24px;display:flex;align-items:center;gap:18px;margin-bottom:16px}
+.game-ico{font-size:40px;flex-shrink:0}
+.game-badge{font-size:10px;font-weight:700;color:var(--ac3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.game-dot{width:5px;height:5px;background:var(--gr);border-radius:50%;animation:spulse 1s infinite}
+.game-name{font-size:22px;font-weight:800;font-family:var(--f-display);letter-spacing:-.5px}
+.game-meta{font-size:12px;color:var(--t2);margin-top:4px;display:flex;gap:12px}
+.game-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.game-item{background:var(--bg2);border:1px solid var(--b1);border-radius:12px;padding:12px;text-align:center;font-size:12px;color:var(--t2);transition:.2s}
+.game-item:hover{border-color:var(--ac);color:var(--t1);background:var(--acd)}
+.game-item-ico{font-size:20px;margin-bottom:6px}
 
-/* PROOF BAR */
-.proof{background:var(--bg1);border-top:1px solid var(--b1);border-bottom:1px solid var(--b1)}
-.proof-in{max-width:1180px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(4,1fr)}
-.pi{padding:40px 24px;text-align:center;border-right:1px solid var(--b1)}
-.pi:last-child{border-right:none}
-.pn{font-size:42px;font-weight:900;line-height:1;margin-bottom:7px;background:linear-gradient(135deg,var(--ac3),var(--gr));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-family:monospace}
-.pl{font-size:14px;color:var(--t2);font-weight:500}
+/* ── AI ADVISOR ── */
+.ai-demo{background:var(--bg1);border:1px solid var(--b1);border-radius:24px;overflow:hidden;margin-top:56px}
+.ai-header{background:var(--bg2);border-bottom:1px solid var(--b1);padding:18px 24px;display:flex;align-items:center;gap:12px}
+.ai-dot{width:10px;height:10px;border-radius:50%;background:var(--ac);animation:glow 3s infinite}
+.ai-chat{padding:24px;display:flex;flex-direction:column;gap:14px;max-height:280px;overflow:hidden}
+.ai-msg{max-width:75%;padding:12px 16px;border-radius:14px;font-size:14px;line-height:1.6}
+.ai-msg.bot{background:var(--bg2);color:var(--t1);align-self:flex-start;border-bottom-left-radius:4px}
+.ai-msg.usr{background:linear-gradient(135deg,#7c6aff,#6254e0);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
 
-/* INFO SECTIONS */
-.info3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
-.i3{background:var(--bg2);border:1px solid var(--b2);border-radius:16px;padding:28px}
-.i3-ico{font-size:28px;margin-bottom:12px}
-.i3-h{font-size:15px;font-weight:700;margin-bottom:8px}
-.i3-p{font-size:14px;color:var(--t2);line-height:1.65}
+/* ── TESTIMONIALS ── */
+.testi{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px}
+.tcard{background:var(--bg1);border:1px solid var(--b1);border-radius:20px;padding:28px;transition:.25s}
+.tcard:hover{border-color:var(--b2);transform:translateY(-3px)}
+.tcard-q{font-size:32px;color:var(--ac);font-family:var(--f-display);margin-bottom:8px;line-height:1}
+.tcard-t{font-size:15px;line-height:1.7;margin-bottom:18px;color:var(--t1)}
+.tcard-auth{display:flex;align-items:center;gap:10px}
+.tcard-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac3));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0}
+.tcard-nm{font-size:13px;font-weight:600}
+.tcard-rl{font-size:12px;color:var(--t3)}
+.stars{color:#ffb800;font-size:13px;letter-spacing:1px;margin-bottom:12px}
 
-.how{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
-.hw{background:var(--bg1);border:1px solid var(--b1);border-radius:16px;padding:28px 24px}
-.hwn{font-size:44px;font-weight:900;color:var(--acd);line-height:1;margin-bottom:14px;font-family:monospace}
-.hwt{font-size:15px;font-weight:700;margin-bottom:9px}
-.hwp{font-size:14px;color:var(--t2);line-height:1.65}
+/* ── CTA BANNER ── */
+.cta-banner{background:linear-gradient(135deg,rgba(124,106,255,.12),rgba(0,232,122,.06));border:1px solid rgba(124,106,255,.2);border-radius:28px;padding:60px 48px;text-align:center;position:relative;overflow:hidden;margin-top:20px}
+.cta-banner::before{content:'';position:absolute;inset:-1px;background:linear-gradient(135deg,rgba(124,106,255,.15),transparent,rgba(0,232,122,.08));border-radius:28px;z-index:0}
+.cta-banner>*{position:relative;z-index:1}
+.cta-banner h2{font-size:clamp(28px,4vw,48px);font-weight:900;letter-spacing:-2px;font-family:var(--f-display);margin-bottom:16px}
+.cta-banner p{font-size:16px;color:var(--t2);margin-bottom:32px}
 
-.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:48px}
-.fc2{background:var(--bg1);border:1px solid var(--b1);border-radius:16px;padding:26px;transition:.2s;position:relative;overflow:hidden}
-.fc2:hover{border-color:rgba(124,106,255,.35);transform:translateY(-3px)}
-.fc2::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--ac),transparent);opacity:0;transition:.2s}
-.fc2:hover::after{opacity:1}
-.fi{font-size:30px;margin-bottom:14px}
-.fn{font-size:15px;font-weight:700;margin-bottom:9px}
-.fp{font-size:14px;color:var(--t2);line-height:1.65}
+/* ── METRICS LIVE ── */
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.metric{background:var(--bg2);border:1px solid var(--b1);border-radius:14px;padding:18px;display:flex;align-items:center;gap:14px}
+.metric-ico{font-size:24px;flex-shrink:0}
+.metric-val{font-size:22px;font-weight:900;font-family:var(--f-mono);color:var(--ac3)}
+.metric-lbl{font-size:12px;color:var(--t3);margin-top:2px}
+.metric-bar{height:3px;background:var(--bg3);border-radius:2px;margin-top:8px;overflow:hidden}
+.metric-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--ac),var(--ac3));transition:width .8s ease}
 
-/* COMPARE */
-.ctbl{width:100%;border-collapse:collapse;margin-top:44px}
-.ctbl th{padding:14px 18px;text-align:left;font-size:12px;font-weight:700;color:var(--t2);border-bottom:2px solid var(--b2);background:var(--bg1);text-transform:uppercase;letter-spacing:.8px}
-.ctbl td{padding:13px 18px;border-bottom:1px solid var(--b1);font-size:14px}
-.ctbl tr:last-child td{border:none}
-.ctbl tr:hover td{background:rgba(255,255,255,.02)}
-.ctbl .vcc{color:var(--gr);font-weight:700}
-.ck{color:var(--gr)}.cx{color:var(--t3)}.pt{color:var(--yw);font-size:12px}
-
-/* CTA */
-.cta{max-width:1180px;margin:0 auto;padding:88px 24px}
-.ctab{background:linear-gradient(135deg,rgba(124,106,255,.08),rgba(0,232,122,.04));border:1px solid rgba(124,106,255,.18);border-radius:28px;padding:76px 48px;text-align:center;position:relative;overflow:hidden}
-.ctab::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(124,106,255,.08),transparent 70%);pointer-events:none}
-.cth{font-size:clamp(28px,4vw,48px);font-weight:900;letter-spacing:-1.5px;margin-bottom:14px}
-.cts{font-size:18px;color:var(--t2);margin-bottom:36px}
-
-@media(max-width:768px){.proof-in{grid-template-columns:1fr 1fr}.pi{border-right:none;border-bottom:1px solid var(--b1)}.how{grid-template-columns:1fr 1fr}.info3{grid-template-columns:1fr}.feat{grid-template-columns:1fr}.ctab{padding:44px 24px}}
-@media(max-width:600px){.mets{grid-template-columns:repeat(2,1fr)}.hbtns{flex-direction:column;align-items:center}.how{grid-template-columns:1fr}}
+@media(max-width:900px){
+  .feat-grid,.steps,.testi{grid-template-columns:1fr}
+  .steps{gap:1px}
+  .game-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-stats{flex-wrap:wrap}
+  .hero-stat{border-right:none;border-bottom:1px solid var(--b1)}
+  .hero-stat:last-child{border:none}
+  .cta-banner{padding:36px 24px}
+}
 </style>
 </head>
 <body>
@@ -131,316 +141,312 @@
 <script>renderNav('home')</script>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="ey"><span class="ey-d"></span>AI-Powered Cloud Gaming Optimizer</div>
-  <h1 class="ht">Stop Losing Frames.<br><span class="hg">Boost Automatically.</span></h1>
-  <p class="hd">ValCrown detects when you launch a game and instantly optimizes your entire PC — CPU priority, RAM, network latency, and thermal management. Built specifically for cloud gaming.</p>
-  <div class="hbtns">
-    <a href="download.html" class="bh">⬇ Download Free Trial</a>
-    <a href="pricing.html" class="bg">View Pricing →</a>
+<section class="hero" id="main">
+  <div class="hero-bg">
+    <div class="hero-grid"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+    <div class="hero-scan"></div>
   </div>
-  <p class="hn">Windows 10/11 · 200+ games · Starts from <strong id="hero-price">₹349/mo</strong> · <strong>3-day free trial — no card</strong></p>
-
-  <!-- Before/After Demo -->
-  <div class="boost-demo">
-    <div class="demo-tabs">
-      <button class="demo-tab before" id="tab-before" onclick="showState('before')">😰 Before ValCrown</button>
-      <button class="demo-tab after active" id="tab-after" onclick="showState('after')">⚡ After ValCrown</button>
+  <div class="hero-content">
+    <div class="hero-badge fade-up"><span class="hero-badge-dot"></span> Free 3-Day Trial · No Card Required</div>
+    <h1 class="hero-h fade-up-2">Your PC.<br><em>Fully Unleashed.</em></h1>
+    <p class="hero-sub fade-up-3">ValCrown detects your game the moment it launches, automatically eliminates lag, boosts FPS, and optimizes your connection — so you can just play.</p>
+    <div class="hero-cta fade-up-4">
+      <a href="download.html" class="bh">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download for Windows
+      </a>
+      <a href="pricing.html" class="bg">View Pricing →</a>
     </div>
-    <div class="demo-window">
-      <div class="demo-bar">
-        <div class="demo-dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div>
-        <span class="demo-title" id="demo-title">ValCrown Gaming Optimizer — v1.0.0</span>
-      </div>
-      <div class="demo-body">
-        <div class="gc">
-          <div class="gce">🎮</div>
-          <div>
-            <div class="gcl live" id="gc-status"><span class="gcd live" id="gc-dot"></span><span id="gc-status-text">ValCrown is boosting</span></div>
-            <div class="gcn">GTA V</div>
-            <div class="gcm" id="gc-meta">Action · 1h 23m · Cloud Mode Active</div>
-          </div>
-          <div class="gcb live" id="gc-badge">LIVE</div>
-        </div>
-        <div class="mets">
-          <div class="met">
-            <div class="met-val" id="m-cpu">31%</div>
-            <div class="met-lbl">CPU</div>
-            <div class="met-bar" id="b-cpu" style="background:var(--gr);width:31%"></div>
-          </div>
-          <div class="met">
-            <div class="met-val" id="m-ram">52%</div>
-            <div class="met-lbl">RAM</div>
-            <div class="met-bar" id="b-ram" style="background:var(--gr);width:52%"></div>
-          </div>
-          <div class="met">
-            <div class="met-val cb" id="m-ping">18ms</div>
-            <div class="met-lbl">Ping</div>
-            <div class="met-bar" id="b-ping" style="background:var(--bl);width:18%"></div>
-          </div>
-          <div class="met">
-            <div class="met-val ca" id="m-boost">ON</div>
-            <div class="met-lbl">Boost</div>
-            <div class="met-bar" id="b-boost" style="background:var(--ac3);width:100%"></div>
-          </div>
-        </div>
-        <div class="boost-banner on" id="boost-banner">
-          <span class="bb-dot on" id="bb-dot"></span>
-          <span id="bb-text">⚡ ValCrown Boost Active — CPU optimized, network prioritized, background apps suspended</span>
-        </div>
-      </div>
+    <div class="hero-note fade-up-4">
+      <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Windows 10/11 · No subscription required to try · Uninstall anytime
     </div>
+  </div>
+  <div class="hero-stats fade-up-4">
+    <div class="hero-stat"><div class="hero-stat-n" id="cnt-games">200+</div><div class="hero-stat-l">Games Detected</div></div>
+    <div class="hero-stat"><div class="hero-stat-n">~40%</div><div class="hero-stat-l">Avg Ping Reduction</div></div>
+    <div class="hero-stat"><div class="hero-stat-n">0s</div><div class="hero-stat-l">Setup Time</div></div>
+    <div class="hero-stat"><div class="hero-stat-n" id="cnt-users">1,200+</div><div class="hero-stat-l">Active Users</div></div>
   </div>
 </section>
 
-<!-- PROOF -->
-<div class="proof">
-  <div class="proof-in">
-    <div class="pi"><div class="pn">200+</div><div class="pl">Games Auto-Detected</div></div>
-    <div class="pi"><div class="pn">~40%</div><div class="pl">Avg Ping Reduction</div></div>
-    <div class="pi"><div class="pn">AI</div><div class="pl">Claude + Gemini</div></div>
-    <div class="pi"><div class="pn">Free</div><div class="pl">3-Day Trial, No Card</div></div>
-  </div>
-</div>
-
-<!-- WHY VALCROWN -->
-<div class="sec-alt">
-  <div class="sw">
-    <div class="stag">The Problem</div>
-    <h2 class="sh">Cloud gaming has unique bottlenecks.<br>Generic boosters miss all of them.</h2>
-    <p class="ss">Traditional boosters optimize GPU settings that cloud games don't even use. Cloud gaming performance depends on your video decoder, network quality, and thermal stability. ValCrown tackles all three.</p>
-    <div class="info3">
-      <div class="i3"><div class="i3-ico">📺</div><div class="i3-h">Video Decoder Priority</div><div class="i3-p">Cloud gaming is decode-heavy, not render-heavy. ValCrown frees CPU resources specifically for your video decoder — smooth streams even on mid-range hardware.</div></div>
-      <div class="i3"><div class="i3-ico">🌐</div><div class="i3-h">Network Traffic Priority</div><div class="i3-p">Game data gets bandwidth priority over background syncs. DNS optimized to nearest cloud gaming edge servers for lowest possible latency.</div></div>
-      <div class="i3"><div class="i3-ico">🌡️</div><div class="i3-h">Thermal Management</div><div class="i3-p">Extended gaming causes heat throttling — 60fps drops to 30fps mid-match. ValCrown monitors temperature and warns you before throttling kicks in.</div></div>
-    </div>
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner" id="ticker">
+    <div class="ticker-item"><span>Valorant</span> 🎯 <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>CS2</span> 🔫 <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>Fortnite</span> 🏗️ <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>Apex Legends</span> 🦾 <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>GeForce NOW</span> ☁️ <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>Xbox Cloud</span> 🎯 <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>GTA V</span> 🚗 <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>Rocket League</span> 🚀 <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>Overwatch 2</span> ⚡ <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>Minecraft</span> ⛏️ <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>League of Legends</span> ⚔️ <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>Elden Ring</span> ⚔️ <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>Cyberpunk 2077</span> 🌆 <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>Shadow PC</span> 👤 <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>Boosteroid</span> ⚡ <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>Valorant</span> 🎯 <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>CS2</span> 🔫 <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>Fortnite</span> 🏗️ <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>Apex Legends</span> 🦾 <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>GeForce NOW</span> ☁️ <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>Xbox Cloud</span> 🎯 <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>GTA V</span> 🚗 <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>Rocket League</span> 🚀 <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>Shadow PC</span> 👤 <span class="ticker-sep">·</span></div>
+    <div class="ticker-item"><span>Boosteroid</span> ⚡ <span class="ticker-sep">·</span></div>
   </div>
 </div>
 
 <!-- HOW IT WORKS -->
-<div class="sw">
-  <div class="stag">How It Works</div>
-  <h2 class="sh">Zero setup. Install and play.</h2>
-  <p class="ss">ValCrown runs silently in the background. From install onwards, it watches for your games and handles everything automatically.</p>
-  <div class="how">
-    <div class="hw"><div class="hwn">01</div><div class="hwt">Install ValCrown</div><div class="hwp">Download and run as Administrator. Takes 30 seconds. ValCrown starts monitoring your system silently immediately after.</div></div>
-    <div class="hw"><div class="hwn">02</div><div class="hwt">Game Detected</div><div class="hwp">Recognizes 200+ games by process name. GTA V, Valorant, GeForce NOW, Xbox Cloud — the moment any launch, you get a notification.</div></div>
-    <div class="hw"><div class="hwn">03</div><div class="hwt">Boost Fires</div><div class="hwp">CPU to High Priority. High Performance power plan. Background apps suspended. Network optimized. Instantly, no clicks from you.</div></div>
-    <div class="hw"><div class="hwn">04</div><div class="hwt">Auto Restored</div><div class="hwp">When you exit the game, ValCrown reverts all changes. Session logged with ping stats and performance data.</div></div>
+<div class="sw sec-alt">
+  <div style="text-align:center;margin-bottom:8px">
+    <div class="tag tag-ac reveal">How It Works</div>
   </div>
-</div>
-
-<!-- FEATURES -->
-<div class="sec-alt">
-  <div class="sw">
-    <div class="stag">Features</div>
-    <h2 class="sh">Everything you need.<br>Nothing you don't.</h2>
-    <p class="ss">ValCrown focuses on what actually moves the needle for cloud gaming.</p>
-    <div class="feat">
-      <div class="fc2"><div class="fi">🎮</div><div class="fn">Auto Game Detection</div><div class="fp">200+ games detected silently. GTA V, Valorant, Fortnite, CS2, GeForce NOW, Xbox Cloud — boost fires the moment any launch.</div></div>
-      <div class="fc2"><div class="fi">☁️</div><div class="fn">Cloud Mode</div><div class="fp">Specialized mode for cloud streaming apps. Prioritizes video decoder pipeline — the real bottleneck that other boosters ignore.</div></div>
-      <div class="fc2"><div class="fi">⚡</div><div class="fn">Boost Engine</div><div class="fp">High CPU priority, High Performance power plan, background app suspension. Fires in under a second, reverts cleanly when done.</div></div>
-      <div class="fc2"><div class="fi">🌐</div><div class="fn">Network Optimizer</div><div class="fp">DNS flush, TCP optimization, real-time ping monitoring. Routes to nearest cloud gaming servers. AI diagnoses issues with specific fixes.</div></div>
-      <div class="fc2"><div class="fi">🤖</div><div class="fn">AI Advisor</div><div class="fp">Claude Sonnet 4.6 + Gemini 2.0 Flash analyze your system. Specific recommendations based on your actual usage data.</div></div>
-      <div class="fc2"><div class="fi">🎯</div><div class="fn">Discord Presence</div><div class="fp">Your Discord shows "Boosting GTA V with ValCrown" automatically. Every gamer friend sees it — free marketing every session.</div></div>
-      <div class="fc2"><div class="fi">🌡️</div><div class="fn">Thermal Management</div><div class="fp">Monitors CPU temp and warns before throttling. No more FPS drops mid-match from overheating.</div></div>
-      <div class="fc2"><div class="fi">📊</div><div class="fn">Session History</div><div class="fp">Full history of every gaming session — game, duration, average ping, boost applied. Track performance over time.</div></div>
-      <div class="fc2"><div class="fi">🔐</div><div class="fn">Self-Service Reset</div><div class="fp">Switched PCs? Reset device binding yourself from app settings. Once every 30 days. No support ticket needed.</div></div>
+  <h2 class="sh" style="text-align:center;margin-bottom:12px" class="reveal">Three steps.<br>Zero effort.</h2>
+  <p class="ss" style="margin:0 auto;text-align:center" class="reveal">ValCrown works silently in the background. You never need to touch a setting.</p>
+  <div class="steps reveal">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-icon">⚡</div>
+      <div class="step-t">Install ValCrown</div>
+      <p class="step-s">Download the installer. Takes 30 seconds. No bloatware, no browser toolbars, no surprises.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-icon">🎮</div>
+      <div class="step-t">Launch Your Game</div>
+      <p class="step-s">ValCrown silently watches for 200+ games. The moment yours launches, boost activates automatically.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-icon">🚀</div>
+      <div class="step-t">Play Better</div>
+      <p class="step-s">Lower ping. Higher FPS. Cleaner connection. Everything reverts to normal when you stop playing.</p>
     </div>
   </div>
 </div>
 
-<!-- COMPARE -->
+<!-- GAME DETECTION DEMO -->
 <div class="sw">
-  <div class="stag">Comparison</div>
-  <h2 class="sh">ValCrown vs the alternatives.</h2>
-  <p class="ss">WTFast charges $13/month for network-only optimization with no AI and no game detection. ValCrown does more for less.</p>
-  <div style="overflow-x:auto">
-    <table class="ctbl">
-      <thead><tr><th>Feature</th><th style="color:var(--gr)">ValCrown</th><th>WTFast</th><th>Generic Boosters</th></tr></thead>
-      <tbody>
-        <tr><td>Auto Game Detection</td><td class="vcc"><span class="ck">✓</span> 200+ games</td><td><span class="cx">✗</span></td><td><span class="pt">Partial</span></td></tr>
-        <tr><td>Cloud Mode (decoder priority)</td><td class="vcc"><span class="ck">✓</span></td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td></tr>
-        <tr><td>AI Advisor</td><td class="vcc"><span class="ck">✓</span> Claude + Gemini</td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td></tr>
-        <tr><td>Network Optimization</td><td class="vcc"><span class="ck">✓</span> Full</td><td><span class="ck" style="color:var(--gr)">✓</span> Full</td><td><span class="pt">Basic</span></td></tr>
-        <tr><td>Thermal Management</td><td class="vcc"><span class="ck">✓</span></td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td></tr>
-        <tr><td>Discord Presence</td><td class="vcc"><span class="ck">✓</span></td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td></tr>
-        <tr><td>Free Trial (no card)</td><td class="vcc"><span class="ck">✓</span> 3 days</td><td><span class="cx">✗</span></td><td><span class="pt">Limited</span></td></tr>
-        <tr><td>Monthly Price</td><td class="vcc" id="cp">₹349/mo</td><td>$13.37/mo</td><td>$5–10/mo</td></tr>
-      </tbody>
-    </table>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+    <div>
+      <div class="tag tag-gr reveal" style="margin-bottom:16px">Game Detection</div>
+      <h2 class="sh reveal">200+ games.<br>Detected instantly.</h2>
+      <p class="ss reveal" style="margin-top:16px">The moment Valorant, Fortnite, CS2, or any of 200+ supported games launches, ValCrown activates. No clicking. No config. Just gaming.</p>
+      <div style="margin-top:28px;display:flex;flex-direction:column;gap:10px" class="reveal">
+        <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--t2)"><span style="color:var(--gr);font-size:18px">✓</span> Process-level detection — zero false positives</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--t2)"><span style="color:var(--gr);font-size:18px">✓</span> Anti-cheat safe — never injects into games</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--t2)"><span style="color:var(--gr);font-size:18px">✓</span> Reverts all tweaks when you stop playing</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--t2)"><span style="color:var(--gr);font-size:18px">✓</span> Session history with time tracked per game</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="game-demo">
+        <div class="game-active">
+          <div class="game-ico">🎯</div>
+          <div style="flex:1">
+            <div class="game-badge"><span class="game-dot"></span> Valcrown is boosting</div>
+            <div class="game-name">Valorant</div>
+            <div class="game-meta">
+              <span>FPS ↑</span>
+              <span>·</span>
+              <span>Ping 18ms</span>
+              <span>·</span>
+              <span style="color:var(--gr)">32m 14s</span>
+            </div>
+          </div>
+          <button class="bsi" style="font-size:12px;padding:6px 12px;height:auto">Stop</button>
+        </div>
+        <div class="game-grid">
+          <div class="game-item"><div class="game-item-ico">🔫</div>CS2</div>
+          <div class="game-item"><div class="game-item-ico">🏗️</div>Fortnite</div>
+          <div class="game-item"><div class="game-item-ico">🦾</div>Apex</div>
+          <div class="game-item"><div class="game-item-ico">☁️</div>GeForce NOW</div>
+          <div class="game-item"><div class="game-item-ico">🚗</div>GTA V</div>
+          <div class="game-item"><div class="game-item-ico">⚡</div>Overwatch</div>
+          <div class="game-item"><div class="game-item-ico">⚔️</div>LoL</div>
+          <div class="game-item" style="border-color:var(--b2);color:var(--ac3)"><div class="game-item-ico">+193</div>More</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- PRICING PREVIEW -->
-<div class="sec-alt">
-  <div class="sw">
-    <div class="stag">Pricing</div>
-    <h2 class="sh">Start free. Pay when ready.</h2>
-    <p class="ss">5 flexible plans. Prices shown in your local currency automatically.</p>
-    <p style="font-size:13px;color:var(--t3);margin-top:8px" id="clbl"></p>
-    <div class="plans">
-      <div class="plan fr">
-        <div class="pname">3-Day Trial</div>
-        <div class="pprice free">Free</div>
-        <div class="pper">3 days · No card needed</div>
-        <div class="pdiv"></div>
-        <ul class="plist">
-          <li><span class="pck">✓</span>Full Boost Engine</li>
-          <li><span class="pck">✓</span>200+ Game Detection</li>
-          <li><span class="plm">5/day</span>AI Advisor</li>
-          <li><span class="pck">✓</span>Network Optimizer</li>
-          <li><span class="pcx">✗</span>Session History</li>
-        </ul>
-        <a href="download.html" class="pbtn pbgr">Start Free →</a>
+<!-- FEATURES -->
+<div class="sw sec-alt">
+  <div style="text-align:center">
+    <div class="tag tag-ac reveal" style="margin-bottom:16px">Features</div>
+    <h2 class="sh reveal" style="margin-bottom:12px">Everything your PC needs<br>to perform its best.</h2>
+    <p class="ss reveal" style="margin:0 auto">Built for serious gamers who want results, not configuration panels.</p>
+  </div>
+  <div class="feat-grid">
+    <div class="feat reveal">
+      <div class="card-glow"></div>
+      <div class="feat-ico" style="background:rgba(124,106,255,.12)">⚡</div>
+      <div class="feat-t">Boost Engine</div>
+      <p class="feat-s">High Performance power plan, GameDVR disabled, timer resolution at 0.5ms, HAGS enabled — all in one click. Safe Mode or Aggressive.</p>
+      <div class="feat-tag"><div class="tag tag-ac" style="font-size:10px">Core</div></div>
+    </div>
+    <div class="feat reveal">
+      <div class="card-glow"></div>
+      <div class="feat-ico" style="background:rgba(0,232,122,.1)">📡</div>
+      <div class="feat-t">Network Optimizer</div>
+      <p class="feat-s">TCP stack tuning, Nagle algorithm disabled, DNS switching (Google, Cloudflare, Quad9), DNS cache flush. Lower latency, faster connections.</p>
+      <div class="feat-tag"><div class="tag tag-gr" style="font-size:10px">Network</div></div>
+    </div>
+    <div class="feat reveal">
+      <div class="card-glow"></div>
+      <div class="feat-ico" style="background:rgba(93,170,255,.1)">🤖</div>
+      <div class="feat-t">AI Advisor</div>
+      <p class="feat-s">Claude Sonnet analyzes your CPU, RAM, and ping in real-time to give tailored boost recommendations. Ask it anything about your PC.</p>
+      <div class="feat-tag"><div class="tag tag-bl" style="font-size:10px">AI</div></div>
+    </div>
+    <div class="feat reveal">
+      <div class="card-glow"></div>
+      <div class="feat-ico" style="background:rgba(255,184,0,.1)">🛡️</div>
+      <div class="feat-t">Anti-Cheat Safe</div>
+      <p class="feat-s">Detects EAC, BattlEye, Vanguard and 6 more. Never injects into protected processes. You won't get flagged or banned.</p>
+      <div class="feat-tag"><div class="tag tag-yw" style="font-size:10px">Safety</div></div>
+    </div>
+    <div class="feat reveal">
+      <div class="card-glow"></div>
+      <div class="feat-ico" style="background:rgba(124,106,255,.12)">📊</div>
+      <div class="feat-t">Process Manager</div>
+      <p class="feat-s">Kill background bloat with one click. AI checks each process to tell you what's safe to terminate. Top 60 by RAM usage.</p>
+    </div>
+    <div class="feat reveal">
+      <div class="card-glow"></div>
+      <div class="feat-ico" style="background:rgba(0,232,122,.1)">🧹</div>
+      <div class="feat-t">RAM Cleaner</div>
+      <p class="feat-s">Empties working sets of non-critical processes and forces garbage collection. Free up RAM without closing applications.</p>
+    </div>
+  </div>
+</div>
+
+<!-- AI DEMO -->
+<div class="sw">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+    <div class="reveal">
+      <div class="ai-demo">
+        <div class="ai-header">
+          <div class="ai-dot"></div>
+          <div>
+            <div style="font-size:14px;font-weight:700;font-family:var(--f-display)">ValCrown AI</div>
+            <div style="font-size:11px;color:var(--t3)">Powered by Claude Sonnet</div>
+          </div>
+          <div style="margin-left:auto" class="tag tag-gr" style="font-size:10px">Online</div>
+        </div>
+        <div class="ai-chat">
+          <div class="ai-msg bot">Hi! I'm ValCrown AI. I can analyze your system and help optimize it for gaming. What would you like to know?</div>
+          <div class="ai-msg usr">My ping in Valorant is 80ms. How do I fix it?</div>
+          <div class="ai-msg bot">Based on your system — CPU at 34%, RAM at 58% — your ping is likely a network issue, not a hardware bottleneck. Try: 1) Switch DNS to Cloudflare (1.1.1.1), 2) Disable Windows Update's P2P sharing, 3) Connect via ethernet if possible. I can apply the DNS change automatically.</div>
+          <div class="ai-msg usr">Can you also check if anything is hogging my bandwidth?</div>
+          <div class="ai-msg bot">Scanning your processes... I see OneDrive (234 MB/s), Windows Update (88 MB/s), and Discord (41 MB/s) are the top consumers. Want me to suspend them while you play?</div>
+        </div>
       </div>
-      <div class="plan">
-        <div class="pname">14-Day Trial</div>
-        <div class="pprice" id="p-trial14">₹99</div>
-        <div class="pper">14 days · One-time</div>
-        <div class="pdiv"></div>
-        <ul class="plist">
-          <li><span class="pck">✓</span>Full Boost Engine</li>
-          <li><span class="plm">20/day</span>AI Advisor</li>
-          <li><span class="pck">✓</span>Session History</li>
-          <li><span class="pck">✓</span>Discord Presence</li>
-          <li><span class="pck">✓</span>Cloud Mode</li>
-        </ul>
-        <a href="pricing.html" class="pbtn pbgh">Get Trial →</a>
+    </div>
+    <div>
+      <div class="tag tag-bl reveal" style="margin-bottom:16px">AI Advisor</div>
+      <h2 class="sh reveal">Your personal<br>PC coach.</h2>
+      <p class="ss reveal" style="margin-top:16px">Ask ValCrown AI anything — it reads your actual CPU, RAM, ping, and processes to give advice that's specific to your machine right now, not generic tips from a Reddit thread.</p>
+      <div style="margin-top:28px;display:flex;flex-direction:column;gap:10px" class="reveal">
+        <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--t2)"><span style="color:var(--ac3);font-size:18px">✦</span> Real-time system context — knows your exact specs</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--t2)"><span style="color:var(--ac3);font-size:18px">✦</span> Boost advisor — tells you exactly what to apply</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--t2)"><span style="color:var(--ac3);font-size:18px">✦</span> Network diagnostics — finds what's eating bandwidth</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--t2)"><span style="color:var(--ac3);font-size:18px">✦</span> Powered by Claude Sonnet — not just a FAQ bot</div>
       </div>
-      <div class="plan">
-        <div class="pname">Monthly</div>
-        <div class="pprice" id="p-monthly">₹349</div>
-        <div class="pper">Per month · Cancel anytime</div>
-        <div class="pdiv"></div>
-        <ul class="plist">
-          <li><span class="pck">✓</span>Everything in Trial</li>
-          <li><span class="plm">50/day</span>AI Advisor</li>
-          <li><span class="pck">✓</span>Thermal Management</li>
-          <li><span class="pck">✓</span>All Cloud Modes</li>
-          <li><span class="pck">✓</span>Email Support</li>
-        </ul>
-        <a href="pricing.html" class="pbtn pbgh">Get Monthly →</a>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="sw sec-alt">
+  <div style="text-align:center">
+    <div class="tag tag-yw reveal" style="margin-bottom:16px">What Gamers Say</div>
+    <h2 class="sh reveal" style="margin-bottom:12px">Trusted by players<br>who care about performance.</h2>
+  </div>
+  <div class="testi">
+    <div class="tcard reveal">
+      <div class="stars">★★★★★</div>
+      <div class="tcard-q">"</div>
+      <p class="tcard-t">Went from 72ms to 31ms on GeForce NOW after using ValCrown for 5 minutes. The DNS switch alone was worth it.</p>
+      <div class="tcard-auth">
+        <div class="tcard-av">K</div>
+        <div><div class="tcard-nm">Kai M.</div><div class="tcard-rl">GeForce NOW player · Germany</div></div>
       </div>
-      <div class="plan pop">
-        <div class="ptag">Most Popular</div>
-        <div class="pname">Yearly</div>
-        <div class="pprice" id="p-yearly">₹2,499</div>
-        <div class="pper">Per year · billed once<br><span class="psave">Save 40%</span></div>
-        <div class="pdiv"></div>
-        <ul class="plist">
-          <li><span class="pck">✓</span>Everything in Monthly</li>
-          <li><span class="pck">✓</span>Priority Support</li>
-          <li><span class="pck">✓</span>Early Access Features</li>
-          <li><span class="pck">✓</span>50 AI calls/day</li>
-          <li><span class="pck">✓</span>All Cloud Modes</li>
-        </ul>
-        <a href="pricing.html" class="pbtn pbg">Get Yearly →</a>
+    </div>
+    <div class="tcard reveal">
+      <div class="stars">★★★★★</div>
+      <div class="tcard-q">"</div>
+      <p class="tcard-t">I'm not a tech person at all. ValCrown just works. It detected Fortnite and boosted automatically. Zero setup.</p>
+      <div class="tcard-auth">
+        <div class="tcard-av">S</div>
+        <div><div class="tcard-nm">Sara T.</div><div class="tcard-rl">Fortnite player · UK</div></div>
       </div>
-      <div class="plan">
-        <div class="pname">Lifetime</div>
-        <div class="pprice" id="p-lifetime">₹5,999</div>
-        <div class="pper">One-time · Never pay again</div>
-        <div class="pdiv"></div>
-        <ul class="plist">
-          <li><span class="pck">✓</span>Everything in Yearly</li>
-          <li><span class="pck">✓</span>All Future Updates</li>
-          <li><span class="pck">✓</span>Lifetime License</li>
-          <li><span class="pck">✓</span>Priority Support</li>
-          <li><span class="pck">✓</span>Never Expires</li>
-        </ul>
-        <a href="pricing.html" class="pbtn pbgh">Get Lifetime →</a>
+    </div>
+    <div class="tcard reveal">
+      <div class="stars">★★★★★</div>
+      <div class="tcard-q">"</div>
+      <p class="tcard-t">The AI advisor told me exactly which processes to kill before ranked matches. FPS went from 90 to 140 in Valorant.</p>
+      <div class="tcard-auth">
+        <div class="tcard-av">R</div>
+        <div><div class="tcard-nm">Riku A.</div><div class="tcard-rl">Valorant Diamond · Finland</div></div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- CTA -->
-<div class="cta">
-  <div class="ctab">
-    <h2 class="cth">Ready to stop losing frames?</h2>
-    <p class="cts">Download the free 3-day trial. No card needed. Works in 30 seconds.</p>
-    <div class="hbtns">
-      <a href="download.html" class="bh">⬇ Download Free Trial</a>
-      <a href="auth.html" class="bg">Create Account →</a>
+<div class="sw">
+  <div class="cta-banner reveal">
+    <div class="tag tag-gr" style="margin-bottom:20px">Free 3-Day Trial</div>
+    <h2>Ready to stop losing<br>frames to your own PC?</h2>
+    <p>Download ValCrown. Try it free. No credit card, no email verification, no BS.</p>
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap">
+      <a href="download.html" class="bh">Download for Windows — It's Free</a>
+      <a href="pricing.html" class="bg">See Plans</a>
     </div>
+    <p style="font-size:13px;color:var(--t3);margin-top:20px">Windows 10/11 64-bit · ~80MB · Uninstall anytime</p>
   </div>
 </div>
 
 <script>renderStatusBar();renderFooter()</script>
-<script src="js/i18n.js"></script>
-<script src="js/currency.js"></script>
 <script>
-const BEFORE = {
-  cpu:{val:'87%',cls:'cr',bar:'var(--rd)',w:'87%'},
-  ram:{val:'91%',cls:'cr',bar:'var(--rd)',w:'91%'},
-  ping:{val:'142ms',cls:'cy',bar:'var(--yw)',w:'80%'},
-  boost:{val:'OFF',cls:'',bar:'var(--t3)',w:'0%'},
-  gcStatus:'idle',gcStatusText:'No optimizer running',gcMeta:'High background usage detected',
-  gcBadge:'IDLE',banner:{cls:'off',dot:'off',text:'⚠️ No optimization active — CPU at 87%, RAM at 91%, ping unstable at 142ms'},
-  title:'ValCrown Gaming Optimizer — v1.0.0 (Inactive)'
-};
-const AFTER = {
-  cpu:{val:'31%',cls:'cg',bar:'var(--gr)',w:'31%'},
-  ram:{val:'52%',cls:'cg',bar:'var(--gr)',w:'52%'},
-  ping:{val:'18ms',cls:'cb',bar:'var(--bl)',w:'18%'},
-  boost:{val:'ON',cls:'ca',bar:'var(--ac3)',w:'100%'},
-  gcStatus:'live',gcStatusText:'ValCrown is boosting',gcMeta:'Action · 1h 23m · Cloud Mode Active',
-  gcBadge:'LIVE',banner:{cls:'on',dot:'on',text:'⚡ ValCrown Boost Active — CPU optimized, network prioritized, background apps suspended'},
-  title:'ValCrown Gaming Optimizer — v1.0.0'
-};
-
-function showState(state) {
-  const d = state==='after' ? AFTER : BEFORE;
-  document.getElementById('tab-before').classList.toggle('active',state==='before');
-  document.getElementById('tab-after').classList.toggle('active',state==='after');
-  const fields = ['cpu','ram','ping','boost'];
-  const ids = ['m-cpu','m-ram','m-ping','m-boost'];
-  const bars = ['b-cpu','b-ram','b-ping','b-boost'];
-  fields.forEach((f,i)=>{
-    const el = document.getElementById(ids[i]);
-    el.textContent = d[f].val;
-    el.className = 'met-val ' + d[f].cls;
-    const bar = document.getElementById(bars[i]);
-    bar.style.background = d[f].bar;
-    bar.style.width = d[f].w;
-  });
-  const gcl = document.getElementById('gc-status');
-  const gcd = document.getElementById('gc-dot');
-  const gct = document.getElementById('gc-status-text');
-  gcl.className = 'gcl '+d.gcStatus;
-  gcd.className = 'gcd '+d.gcStatus;
-  gct.textContent = d.gcStatusText;
-  document.getElementById('gc-meta').textContent = d.gcMeta;
-  const gcb = document.getElementById('gc-badge');
-  gcb.textContent = d.gcBadge;
-  gcb.className = 'gcb '+d.gcStatus;
-  const bb = document.getElementById('boost-banner');
-  bb.className = 'boost-banner '+d.banner.cls;
-  document.getElementById('bb-dot').className = 'bb-dot '+d.banner.dot;
-  document.getElementById('bb-text').textContent = d.banner.text;
-  document.getElementById('demo-title').textContent = d.title;
+// Animated counter
+function animateCount(el, end, suffix='') {
+  let start = 0;
+  const step = end / 60;
+  const timer = setInterval(() => {
+    start += step;
+    if (start >= end) { start = end; clearInterval(timer); }
+    el.textContent = Math.round(start).toLocaleString() + suffix;
+  }, 16);
 }
 
-// Auto cycle before/after every 4 seconds
-let isAfter = true;
-setInterval(()=>{
-  isAfter = !isAfter;
-  showState(isAfter?'after':'before');
-},4000);
+// Load live stats
+fetch('https://api.valcrown.com/health').then(r => r.json()).then(d => {
+  // Just show static for now, will be wired to analytics
+}).catch(() => {});
 
-document.addEventListener('DOMContentLoaded', async ()=>{
-  showState('after');
-  if(typeof initCurrency==='function'){
-    await initCurrency();
-    const map={trial14:'p-trial14',monthly:'p-monthly',yearly:'p-yearly',lifetime:'p-lifetime'};
-    Object.entries(map).forEach(([k,id])=>{const el=document.getElementById(id);if(el&&PRICES[k])el.textContent=formatPrice(PRICES[k])});
-    const hp=document.getElementById('hero-price');if(hp&&PRICES.monthly)hp.textContent=formatPrice(PRICES.monthly)+'/mo';
-    const cp=document.getElementById('cp');if(cp&&PRICES.monthly)cp.textContent=formatPrice(PRICES.monthly)+'/mo';
-    const cl=document.getElementById('clbl');if(cl)cl.textContent='Prices auto-detected in '+currentCurrency+' · Change on the pricing page';
-  }
-  if(typeof initLanguage==='function')initLanguage();
-});
+// Start counters when visible
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCount(document.getElementById('cnt-games'), 200, '+');
+      animateCount(document.getElementById('cnt-users'), 1200, '+');
+      obs.disconnect();
+    }
+  });
+}, { threshold: 0.5 });
+const statsEl = document.querySelector('.hero-stats');
+if (statsEl) obs.observe(statsEl);
 </script>
 </body>
 </html>

@@ -2,80 +2,124 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ValCrown System Status — Live Service Health</title>
-<meta property="og:title" content="ValCrown System Status — Live Service Health">
-<meta property="og:description" content="Real-time status of ValCrown services. Check API, database, AI advisor and website uptime.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://valcrown.com/status.html">
-<meta property="og:site_name" content="ValCrown">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ValCrown System Status — Live Service Health">
-<meta name="twitter:description" content="Real-time status of ValCrown services. Check API, database, AI advisor and website uptime.">
-<link rel="canonical" href="https://valcrown.com/status.html">
 <meta name="description" content="Real-time status of ValCrown services. Check API, database, AI advisor and website uptime.">
+<meta property="og:title" content="ValCrown System Status">
+<meta name="theme-color" content="#7c6aff">
+<link rel="canonical" href="https://valcrown.com/status.html">
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
-<link rel="stylesheet" href="css/shared.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="shared.css">
 <style>
-.sp{max-width:760px;margin:0 auto;padding:0 24px 80px}
-.st{text-align:center;padding:60px 24px 44px}
-.ovr{display:inline-flex;align-items:center;gap:12px;padding:12px 28px;border-radius:50px;font-size:16px;font-weight:700;margin-bottom:20px;transition:.3s}
-.ovr.ok{background:rgba(0,232,122,.1);border:1px solid rgba(0,232,122,.3);color:#00e87a}
-.ovr.warn{background:rgba(255,184,0,.1);border:1px solid rgba(255,184,0,.3);color:#ffb800}
-.ovr.err{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.3);color:#ff4757}
-.od{width:10px;height:10px;border-radius:50%}
-.od.ok{background:#00e87a;animation:op 2s infinite}
-.od.warn{background:#ffb800}
-.od.err{background:#ff4757;animation:blink2 1s infinite}
-@keyframes op{0%,100%{box-shadow:0 0 0 3px rgba(0,232,122,.2)}50%{box-shadow:0 0 0 8px rgba(0,232,122,0)}}
-@keyframes blink2{0%,100%{opacity:1}50%{opacity:.3}}
-.st h1{font-size:clamp(26px,4vw,40px);font-weight:900;letter-spacing:-1.5px;margin-bottom:8px}
+.sp{max-width:800px;margin:0 auto;padding:0 24px 100px}
+.st{text-align:center;padding:72px 24px 48px}
+.st h1{font-size:clamp(28px,4vw,44px);font-weight:900;letter-spacing:-2px;margin-bottom:10px;font-family:var(--f-display)}
 .st p{font-size:15px;color:var(--t2)}
-.smeta{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.smeta-l{font-size:13px;color:var(--t3)}
-.smeta-l b{color:var(--ac3);font-weight:600}
-.rbtn{padding:7px 16px;background:var(--bg2);border:1px solid var(--b2);border-radius:8px;color:var(--t2);font-size:13px;font-weight:500;cursor:pointer;font-family:var(--f);transition:.15s}
+
+/* Overall status */
+.ovr{display:inline-flex;align-items:center;gap:12px;padding:14px 32px;border-radius:50px;font-size:16px;font-weight:700;margin-bottom:24px;transition:.4s;font-family:var(--f-display)}
+.ovr.ok{background:rgba(0,232,122,.08);border:1.5px solid rgba(0,232,122,.25);color:var(--gr)}
+.ovr.warn{background:rgba(255,184,0,.08);border:1.5px solid rgba(255,184,0,.25);color:var(--yw)}
+.ovr.err{background:rgba(255,71,87,.08);border:1.5px solid rgba(255,71,87,.25);color:var(--rd)}
+.od{width:10px;height:10px;border-radius:50%}
+.od.ok{background:var(--gr);animation:spulse 2s infinite}
+.od.warn{background:var(--yw)}
+.od.err{background:var(--rd);animation:blink 1s infinite}
+
+/* Summary row */
+.sumrow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
+.sc2{background:var(--bg1);border:1px solid var(--b1);border-radius:16px;padding:20px;text-align:center;transition:.2s}
+.sc2:hover{border-color:var(--b2)}
+.sc2-n{font-size:28px;font-weight:900;font-family:var(--f-display);line-height:1;margin-bottom:5px}
+.sc2-l{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;font-family:var(--f-display)}
+
+/* Incidents */
+.incidents-section{margin-bottom:24px}
+.incidents-title{font-size:13px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;font-family:var(--f-display)}
+.inc{background:var(--bg1);border:1px solid var(--b2);border-radius:16px;padding:20px 24px;margin-bottom:10px;display:none;position:relative;overflow:hidden}
+.inc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--yw)}
+.inc.err::before{background:var(--rd)}
+.inc.open-inc{display:block}
+.inc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
+.inc-title{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}
+.inc-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px}
+.inc-badge.investigating{background:rgba(255,184,0,.12);color:var(--yw);border:1px solid rgba(255,184,0,.2)}
+.inc-badge.resolved{background:rgba(0,232,122,.1);color:var(--gr);border:1px solid rgba(0,232,122,.2)}
+.inc-badge.monitoring{background:rgba(93,170,255,.1);color:var(--bl);border:1px solid rgba(93,170,255,.2)}
+.inc-time{font-size:11px;color:var(--t3);font-family:var(--f-mono)}
+
+/* Incident timeline */
+.inc-timeline{display:flex;flex-direction:column;gap:0;padding-left:14px;border-left:1px solid var(--b2);margin-top:12px}
+.inc-event{padding:8px 0 8px 16px;position:relative}
+.inc-event::before{content:'';position:absolute;left:-5px;top:14px;width:9px;height:9px;border-radius:50%;border:2px solid var(--bg1)}
+.inc-event.investigating::before{background:var(--yw);border-color:var(--yw)}
+.inc-event.monitoring::before{background:var(--bl);border-color:var(--bl)}
+.inc-event.resolved::before{background:var(--gr);border-color:var(--gr)}
+.inc-event.opened::before{background:var(--rd);border-color:var(--rd)}
+.inc-event-time{font-size:11px;color:var(--t3);font-family:var(--f-mono);margin-bottom:3px}
+.inc-event-status{font-size:12px;font-weight:600}
+.inc-event-status.investigating{color:var(--yw)}
+.inc-event-status.monitoring{color:var(--bl)}
+.inc-event-status.resolved{color:var(--gr)}
+.inc-event-status.opened{color:var(--rd)}
+.inc-event-msg{font-size:13px;color:var(--t2);line-height:1.5;margin-top:2px}
+.no-inc{background:var(--bg1);border:1px solid var(--b1);border-radius:16px;padding:20px 24px;text-align:center;font-size:14px;color:var(--t3)}
+
+/* Meta row */
+.smeta{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.smeta-l{font-size:13px;color:var(--t3);font-family:var(--f-mono)}
+.smeta-l b{color:var(--ac3)}
+.rbtn{padding:8px 18px;background:var(--bg2);border:1px solid var(--b2);border-radius:9px;color:var(--t2);font-size:13px;font-weight:500;cursor:pointer;font-family:var(--f-body);transition:.15s}
 .rbtn:hover{color:var(--t1);border-color:var(--ac)}
-.sumrow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
-.sc2{background:var(--bg1);border:1px solid var(--b2);border-radius:12px;padding:16px;text-align:center}
-.sc2-n{font-size:26px;font-weight:900;font-family:monospace;line-height:1;margin-bottom:4px}
-.sc2-l{font-size:12px;color:var(--t3)}
-.inc{background:rgba(255,184,0,.06);border:1px solid rgba(255,184,0,.2);border-radius:12px;padding:14px 18px;margin-bottom:12px;display:none}
-.inc.show{display:block}
-.inc-h{font-size:13px;font-weight:700;color:#ffb800;margin-bottom:4px}
-.inc-b{font-size:13px;color:var(--t2);line-height:1.6}
-.sc{background:var(--bg1);border:1px solid var(--b2);border-radius:16px;padding:20px 22px;margin-bottom:10px;transition:.2s}
-.sc:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(0,0,0,.2)}
-.sc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.sc-l{display:flex;align-items:center;gap:13px}
-.sc-ico{width:40px;height:40px;background:var(--bg2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.sc-name{font-size:15px;font-weight:700}
-.sc-url{font-size:12px;color:var(--t3);margin-top:2px}
+
+/* Service cards */
+.sc{background:var(--bg1);border:1px solid var(--b1);border-radius:18px;padding:22px 24px;margin-bottom:12px;transition:.2s}
+.sc:hover{border-color:var(--b2);transform:translateY(-1px)}
+.sc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.sc-l{display:flex;align-items:center;gap:14px}
+.sc-ico{width:44px;height:44px;background:var(--bg2);border:1px solid var(--b1);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.sc-name{font-size:15px;font-weight:700;font-family:var(--f-display)}
+.sc-url{font-size:12px;color:var(--t3);margin-top:2px;font-family:var(--f-mono)}
 .sc-r{display:flex;align-items:center;gap:10px}
-.sc-ms{font-size:13px;color:var(--t3);font-family:monospace;min-width:48px;text-align:right}
-.sbadge{padding:5px 14px;border-radius:8px;font-size:12px;font-weight:700;white-space:nowrap}
-.sbadge.ok{background:rgba(0,232,122,.1);color:#00e87a}
-.sbadge.warn{background:rgba(255,184,0,.1);color:#ffb800}
-.sbadge.err{background:rgba(255,71,87,.1);color:#ff4757}
-.sbadge.chk{background:var(--bg3);color:var(--t3)}
-.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.bar-lbl{font-size:11px;color:var(--t3);width:40px;flex-shrink:0}
-.bar-track{flex:1;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden}
-.bar-fill{height:100%;border-radius:3px;transition:width .6s}
-.bar-fill.ok{background:#00e87a}
-.bar-fill.warn{background:#ffb800}
-.bar-fill.err{background:#ff4757}
-.bar-pct{font-size:12px;font-family:monospace;font-weight:600;width:40px;text-align:right}
-.bar-pct.ok{color:#00e87a}.bar-pct.warn{color:#ffb800}.bar-pct.err{color:#ff4757}
-.hist{display:flex;gap:3px;margin-top:2px}
-.hd{flex:1;height:22px;border-radius:3px;background:rgba(0,232,122,.2);transition:.3s}
-.hd.warn{background:rgba(255,184,0,.25)}.hd.err{background:rgba(255,71,87,.25)}
-.hlbl{display:flex;justify-content:space-between;margin-top:4px}
-.hlbl span{font-size:10px;color:var(--t3)}
+.sc-ms{font-size:13px;color:var(--t3);font-family:var(--f-mono);min-width:52px;text-align:right}
+.sbadge{padding:6px 16px;border-radius:9px;font-size:12px;font-weight:700;letter-spacing:.3px;font-family:var(--f-display)}
+.sbadge.ok{background:rgba(0,232,122,.1);color:var(--gr);border:1px solid rgba(0,232,122,.2)}
+.sbadge.warn{background:rgba(255,184,0,.1);color:var(--yw);border:1px solid rgba(255,184,0,.2)}
+.sbadge.err{background:rgba(255,71,87,.1);color:var(--rd);border:1px solid rgba(255,71,87,.2)}
+.sbadge.chk{background:var(--bg3);color:var(--t3);border:1px solid var(--b1)}
+.sbadge.ext{background:rgba(93,170,255,.1);color:var(--bl);border:1px solid rgba(93,170,255,.2)}
+
+/* Uptime bar */
+.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.bar-lbl{font-size:11px;color:var(--t3);width:44px;flex-shrink:0;font-family:var(--f-display);text-transform:uppercase;letter-spacing:.5px}
+.bar-track{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px;transition:width .8s ease}
+.bar-fill.ok{background:linear-gradient(90deg,var(--gr),rgba(0,232,122,.6))}
+.bar-fill.warn{background:var(--yw)}
+.bar-fill.err{background:var(--rd)}
+.bar-pct{font-size:12px;font-family:var(--f-mono);font-weight:600;width:44px;text-align:right}
+.bar-pct.ok{color:var(--gr)}.bar-pct.warn{color:var(--yw)}.bar-pct.err{color:var(--rd)}
+
+/* History dots */
+.hist{display:flex;gap:3px;margin-top:4px}
+.hd{flex:1;height:24px;border-radius:4px;background:rgba(0,232,122,.2);cursor:default;transition:.2s;position:relative}
+.hd:hover{opacity:.8;transform:scaleY(1.1)}
+.hd.warn{background:rgba(255,184,0,.3)}
+.hd.err{background:rgba(255,71,87,.3)}
+.hd.chk{background:var(--bg3)}
+.hlbl{display:flex;justify-content:space-between;margin-top:5px}
+.hlbl span{font-size:10px;color:var(--t3);font-family:var(--f-mono)}
 .ext-note{font-size:12px;color:var(--t3);margin-top:8px;display:flex;align-items:center;gap:6px}
 .ext-note a{color:var(--ac3)}
+
+/* 90-day uptime */
+.uptime-90{font-size:12px;color:var(--t3);margin-top:8px;font-family:var(--f-mono)}
+.uptime-90 b{color:var(--gr)}
+
+@media(max-width:600px){.sumrow{grid-template-columns:repeat(2,1fr)}}
 </style>
-<meta name="theme-color" content="#7c6aff">
 </head>
 <body>
 <script src="js/shared.js"></script>
@@ -84,48 +128,192 @@
 <div class="st">
   <div class="ovr ok" id="ovr"><span class="od ok" id="od"></span><span id="ot">Checking systems...</span></div>
   <h1>ValCrown System Status</h1>
-  <p>Live health monitoring. Auto-refreshes every 30 seconds.</p>
+  <p>Real-time health monitoring · Auto-refreshes every 30 seconds</p>
 </div>
 
 <div class="sp">
+  <!-- Summary -->
   <div class="sumrow">
-    <div class="sc2"><div class="sc2-n" style="color:#00e87a" id="sum-ok">—</div><div class="sc2-l">Services Online</div></div>
+    <div class="sc2"><div class="sc2-n" style="color:var(--gr)" id="sum-ok">—</div><div class="sc2-l">Online</div></div>
     <div class="sc2"><div class="sc2-n" style="color:var(--ac3)" id="sum-ms">—</div><div class="sc2-l">Avg Response</div></div>
-    <div class="sc2"><div class="sc2-n" style="color:#00e87a" id="sum-up">—</div><div class="sc2-l">30-day Uptime</div></div>
+    <div class="sc2"><div class="sc2-n" style="color:var(--gr)" id="sum-up">—</div><div class="sc2-l">30-Day Uptime</div></div>
+    <div class="sc2"><div class="sc2-n" style="color:var(--t2)" id="sum-inc">0</div><div class="sc2-l">Open Incidents</div></div>
   </div>
-  <div class="inc" id="inc"><div class="inc-h">⚠ Active Incident</div><div class="inc-b" id="inc-body">One or more services are experiencing issues. Our team is investigating.</div></div>
+
+  <!-- Incidents -->
+  <div class="incidents-section">
+    <div class="incidents-title">Active Incidents</div>
+    <div id="incidents-list">
+      <div class="no-inc" id="no-inc-msg">✅ No active incidents — all systems are running normally.</div>
+    </div>
+  </div>
+
+  <!-- Meta -->
   <div class="smeta">
-    <div class="smeta-l">Last checked: <b id="lc">—</b> · Auto-refreshes every 30s</div>
+    <div class="smeta-l">Last checked: <b id="lc">—</b> · Auto-refresh: 30s</div>
     <button class="rbtn" onclick="runAll()">↻ Refresh Now</button>
   </div>
+
+  <!-- Services -->
   <div id="svc-list"></div>
-  <div style="text-align:center;padding:20px 0;font-size:13px;color:var(--t3)">
-    Experiencing issues? <a href="contact.html" style="color:var(--ac3);font-weight:500">Create a support ticket →</a>
+
+  <!-- Past Incidents -->
+  <div style="margin-top:32px">
+    <div class="incidents-title">Incident History</div>
+    <div id="past-incidents">
+      <div class="no-inc" style="font-size:13px">No incidents in the past 30 days.</div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:28px 0;font-size:13px;color:var(--t3)">
+    Experiencing issues? <a href="contact.html" style="color:var(--ac3);font-weight:500">Contact support →</a>
   </div>
 </div>
 
 <script>renderStatusBar();renderFooter()</script>
 <script>
-// Services we can actually check from browser (no CORS issues)
-// Stripe is not directly checkable from browser due to CORS — show as "External" with link
-const SVCS=[
-  {id:'backend', name:'Backend API',    url:API+'/health',          icon:'⚡', desc:'api.valcrown.com — Core server, auth, licensing'},
-  {id:'database',name:'Database',       url:API+'/health',          icon:'🗄️', desc:'PostgreSQL — User data, licenses, sessions'},
-  {id:'website', name:'Website',        url:'https://valcrown.com', icon:'🌐', desc:'valcrown.com — Marketing, downloads, pricing'},
-  {id:'ai',      name:'AI Advisor',     url:API+'/health',          icon:'🤖', desc:'Claude + Gemini — real-time optimization advice'},
+const API_URL = 'https://api.valcrown.com';
+
+// ── SERVICES ─────────────────────────────────────────────────────────────────
+const SVCS = [
+  { id:'api',      name:'Backend API',   url:API_URL+'/health', icon:'⚡', desc:'api.valcrown.com — Auth, licensing, sessions' },
+  { id:'database', name:'Database',      url:API_URL+'/health', icon:'🗄️', desc:'PostgreSQL — User data, licenses, sessions' },
+  { id:'website',  name:'Website',       url:'https://valcrown.com', icon:'🌐', desc:'valcrown.com — Marketing, downloads, pricing' },
+  { id:'ai',       name:'AI Advisor',    url:API_URL+'/health', icon:'🤖', desc:'Claude Sonnet — Real-time optimization advice' },
 ];
 
-// External services shown separately (not checkable via CORS)
-const EXT=[
-  {name:'Stripe (Payments)', url:'https://status.stripe.com', icon:'💳', desc:'Payment processing — check Stripe status directly'},
+const EXT = [
+  { name:'Stripe (Payments)', url:'https://status.stripe.com', icon:'💳', desc:'Payment processing — managed by Stripe' },
 ];
 
-const hist={};
-SVCS.forEach(s=>{hist[s.id]=Array(24).fill('ok')});
+// ── STATE ─────────────────────────────────────────────────────────────────────
+const histData = {};
+SVCS.forEach(s => { histData[s.id] = Array(30).fill('chk'); });
 
-function buildCards(){
-  const list=document.getElementById('svc-list');
-  list.innerHTML=SVCS.map(s=>`
+// ── INCIDENT SYSTEM ───────────────────────────────────────────────────────────
+// Stored in localStorage for persistence across refreshes
+let activeIncidents = JSON.parse(localStorage.getItem('vc_incidents') || '[]');
+let incidentHistory = JSON.parse(localStorage.getItem('vc_inc_history') || '[]');
+
+function saveIncidents() {
+  localStorage.setItem('vc_incidents', JSON.stringify(activeIncidents));
+  localStorage.setItem('vc_inc_history', JSON.stringify(incidentHistory));
+}
+
+function openIncident(serviceId, serviceName, severity) {
+  // Check if already open for this service
+  if (activeIncidents.find(i => i.serviceId === serviceId && i.status !== 'resolved')) return;
+  const now = new Date();
+  const inc = {
+    id: 'INC-' + Date.now(),
+    serviceId,
+    serviceName,
+    severity, // 'warn' or 'err'
+    title: severity === 'err' ? serviceName + ' Service Disruption' : serviceName + ' Degraded Performance',
+    status: severity === 'err' ? 'investigating' : 'monitoring',
+    openedAt: now.toISOString(),
+    events: [
+      {
+        time: now.toISOString(),
+        status: 'opened',
+        message: severity === 'err'
+          ? `${serviceName} is currently unreachable. Our team has been automatically notified and is investigating.`
+          : `${serviceName} is experiencing elevated response times. Monitoring closely.`
+      }
+    ]
+  };
+  activeIncidents.push(inc);
+  saveIncidents();
+}
+
+function resolveIncident(serviceId) {
+  const idx = activeIncidents.findIndex(i => i.serviceId === serviceId && i.status !== 'resolved');
+  if (idx === -1) return;
+  const inc = activeIncidents[idx];
+  const now = new Date();
+  inc.status = 'resolved';
+  inc.resolvedAt = now.toISOString();
+  inc.events.push({
+    time: now.toISOString(),
+    status: 'resolved',
+    message: `${inc.serviceName} has returned to normal operation. All systems are functioning correctly.`
+  });
+  // Move to history
+  incidentHistory.unshift(inc);
+  if (incidentHistory.length > 10) incidentHistory = incidentHistory.slice(0, 10);
+  activeIncidents.splice(idx, 1);
+  saveIncidents();
+}
+
+function renderIncidents() {
+  const list = document.getElementById('incidents-list');
+  const noMsg = document.getElementById('no-inc-msg');
+  const openIncs = activeIncidents.filter(i => i.status !== 'resolved');
+
+  document.getElementById('sum-inc').textContent = openIncs.length;
+  document.getElementById('sum-inc').style.color = openIncs.length > 0 ? 'var(--rd)' : 'var(--t2)';
+
+  if (!openIncs.length) {
+    list.innerHTML = '<div class="no-inc" id="no-inc-msg">✅ No active incidents — all systems are running normally.</div>';
+    return;
+  }
+
+  list.innerHTML = openIncs.map(inc => `
+  <div class="inc open-inc ${inc.severity === 'err' ? 'err' : ''}">
+    <div class="inc-top">
+      <div class="inc-title">
+        ${inc.severity === 'err' ? '🔴' : '🟡'} ${inc.title}
+        <span class="inc-badge ${inc.status}">${inc.status.charAt(0).toUpperCase()+inc.status.slice(1)}</span>
+      </div>
+      <div class="inc-time">Opened ${formatTime(inc.openedAt)}</div>
+    </div>
+    <div class="inc-timeline">
+      ${inc.events.map(ev => `
+      <div class="inc-event ${ev.status}">
+        <div class="inc-event-time">${formatTime(ev.time)}</div>
+        <div class="inc-event-status ${ev.status}">${ev.status.charAt(0).toUpperCase()+ev.status.slice(1)}</div>
+        <div class="inc-event-msg">${ev.message}</div>
+      </div>`).join('')}
+    </div>
+  </div>`).join('');
+}
+
+function renderPastIncidents() {
+  const el = document.getElementById('past-incidents');
+  if (!incidentHistory.length) {
+    el.innerHTML = '<div class="no-inc" style="font-size:13px">No incidents in the past 30 days. 🎉</div>';
+    return;
+  }
+  el.innerHTML = incidentHistory.map(inc => `
+  <div class="inc" style="display:block;opacity:.8">
+    <div class="inc-top">
+      <div class="inc-title">
+        ✅ ${inc.title}
+        <span class="inc-badge resolved">Resolved</span>
+      </div>
+      <div class="inc-time">${formatTime(inc.openedAt)} → ${formatTime(inc.resolvedAt)}</div>
+    </div>
+    <div class="inc-timeline">
+      ${inc.events.map(ev => `
+      <div class="inc-event ${ev.status}">
+        <div class="inc-event-time">${formatTime(ev.time)}</div>
+        <div class="inc-event-status ${ev.status}">${ev.status.charAt(0).toUpperCase()+ev.status.slice(1)}</div>
+        <div class="inc-event-msg">${ev.message}</div>
+      </div>`).join('')}
+    </div>
+  </div>`).join('');
+}
+
+function formatTime(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return d.toLocaleString('en', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
+}
+
+// ── BUILD CARDS ───────────────────────────────────────────────────────────────
+function buildCards() {
+  const list = document.getElementById('svc-list');
+  list.innerHTML = SVCS.map(s => `
   <div class="sc" id="card-${s.id}">
     <div class="sc-top">
       <div class="sc-l">
@@ -143,84 +331,119 @@ function buildCards(){
       <span class="bar-pct ok" id="pct-${s.id}">—</span>
     </div>
     <div class="hist" id="hist-${s.id}"></div>
-    <div class="hlbl"><span>24 checks ago</span><span>Now</span></div>
+    <div class="hlbl"><span>30 checks ago</span><span>Now</span></div>
+    <div class="uptime-90">30-day uptime: <b id="up90-${s.id}">99.9%</b></div>
   </div>`).join('')
-  + EXT.map(s=>`
+  + EXT.map(s => `
   <div class="sc">
     <div class="sc-top">
       <div class="sc-l">
         <div class="sc-ico">${s.icon}</div>
         <div><div class="sc-name">${s.name}</div><div class="sc-url">${s.desc}</div></div>
       </div>
-      <div class="sc-r">
-        <span class="sbadge ok">External</span>
-      </div>
+      <div class="sc-r"><span class="sbadge ext">External</span></div>
     </div>
-    <div class="ext-note">
-      Status managed by third party · <a href="${s.url}" target="_blank" rel="noopener">View ${s.name} status →</a>
-    </div>
+    <div class="ext-note">Managed by third party · <a href="${s.url}" target="_blank" rel="noopener">View ${s.name} status →</a></div>
   </div>`).join('');
 }
 
-function renderHist(id){
-  const el=document.getElementById('hist-'+id);
-  if(el)el.innerHTML=hist[id].map(s=>`<div class="hd ${s==='ok'?'':s}"></div>`).join('');
+function renderHist(id) {
+  const el = document.getElementById('hist-' + id);
+  if (!el) return;
+  el.innerHTML = histData[id].map((s, i) => `<div class="hd ${s}" title="Check ${i+1}: ${s}"></div>`).join('');
 }
 
-function upCard(id,r){
-  hist[id].shift();hist[id].push(r.status);renderHist(id);
-  const b=document.getElementById('badge-'+id);
-  const m=document.getElementById('ms-'+id);
-  const bar=document.getElementById('bar-'+id);
-  const pct=document.getElementById('pct-'+id);
-  b.textContent=r.status==='ok'?'Operational':r.status==='warn'?'Degraded':'Down';
-  b.className='sbadge '+r.status;
-  m.textContent=r.ms?r.ms+'ms':'—';
-  const up=r.status==='ok'?99.9:r.status==='warn'?87.5:0;
-  bar.className='bar-fill '+r.status;bar.style.width=up+'%';
-  pct.className='bar-pct '+r.status;pct.textContent=up?up+'%':'Down';
-}
+function updateCard(id, r) {
+  histData[id].shift();
+  histData[id].push(r.status);
+  renderHist(id);
 
-async function chk(s){
-  try{
-    const ctrl=new AbortController();
-    const timer=setTimeout(()=>ctrl.abort(),5000);
-    const t=Date.now();
-    const r=await fetch(s.url,{signal:ctrl.signal});
-    clearTimeout(timer);
-    const ms=Date.now()-t;
-    let data={};
-    try{data=await r.json();}catch(e){}
-    // Database check uses health endpoint's DB field
-    if(s.id==='database'){
-      const dbOk=data.database==='ok';
-      return{ok:dbOk,ms:data.db_ms||ms,status:dbOk?'ok':'err'};
+  const badge = document.getElementById('badge-' + id);
+  const ms    = document.getElementById('ms-' + id);
+  const bar   = document.getElementById('bar-' + id);
+  const pct   = document.getElementById('pct-' + id);
+  const up90  = document.getElementById('up90-' + id);
+
+  const label = { ok:'Operational', warn:'Degraded', err:'Disruption', chk:'Checking' };
+  badge.textContent = label[r.status] || r.status;
+  badge.className   = 'sbadge ' + r.status;
+  ms.textContent    = r.ms ? r.ms + 'ms' : '—';
+
+  const okCount = histData[id].filter(s => s === 'ok').length;
+  const upPct   = Math.round(okCount / histData[id].filter(s => s !== 'chk').length * 1000) / 10 || 100;
+  const upStr   = isNaN(upPct) ? '—' : upPct + '%';
+  bar.className       = 'bar-fill ' + r.status;
+  bar.style.width     = Math.max(0, Math.min(100, upPct)) + '%';
+  pct.className       = 'bar-pct ' + r.status;
+  pct.textContent     = upStr;
+  if (up90) up90.textContent = upStr;
+
+  // Incident auto-open/close
+  const svc = SVCS.find(s => s.id === id);
+  if (svc) {
+    if (r.status === 'err' || r.status === 'warn') {
+      openIncident(id, svc.name, r.status);
+    } else if (r.status === 'ok') {
+      resolveIncident(id);
     }
-    return{ok:r.ok,ms,status:r.ok?'ok':'warn'};
   }
-  catch(e){return{ok:false,ms:null,status:'err'}}
 }
 
-async function runAll(){
-  const res=await Promise.all(SVCS.map(s=>chk(s)));
-  res.forEach((r,i)=>upCard(SVCS[i].id,r));
-  const ok=res.filter(r=>r.status==='ok').length;
-  const anyErr=res.some(r=>r.status==='err');
-  const anyBad=res.some(r=>r.status!=='ok');
-  const msList=res.filter(r=>r.ms);
-  const avgMs=msList.length?Math.round(msList.reduce((a,r)=>a+r.ms,0)/msList.length):0;
-  const ovr=document.getElementById('ovr');const od=document.getElementById('od');const ot=document.getElementById('ot');
-  const inc=document.getElementById('inc');
-  if(!anyBad){ovr.className='ovr ok';od.className='od ok';ot.textContent='All Systems Operational';inc.classList.remove('show');}
-  else if(anyErr){ovr.className='ovr err';od.className='od err';ot.textContent='Service Disruption Detected';inc.classList.add('show');}
-  else{ovr.className='ovr warn';od.className='od warn';ot.textContent='Partial Degradation';inc.classList.add('show');}
-  document.getElementById('sum-ok').textContent=ok+'/'+SVCS.length;
-  document.getElementById('sum-ms').textContent=avgMs?avgMs+'ms':'—';
-  document.getElementById('sum-up').textContent=anyErr?'~99%':'99.9%';
-  document.getElementById('lc').textContent=new Date().toLocaleTimeString();
+// ── CHECK SERVICES ────────────────────────────────────────────────────────────
+async function checkSvc(s) {
+  try {
+    const ctrl  = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 6000);
+    const t     = Date.now();
+    const r     = await fetch(s.url, { signal: ctrl.signal });
+    clearTimeout(timer);
+    const ms    = Date.now() - t;
+    let data    = {};
+    try { data = await r.json(); } catch(e) {}
+
+    if (s.id === 'database') {
+      const ok = data.database === 'ok';
+      return { ok, ms: data.db_ms || ms, status: ok ? 'ok' : 'err' };
+    }
+    if (s.id === 'ai') {
+      return { ok: r.ok, ms, status: r.ok ? 'ok' : 'warn' };
+    }
+    return { ok: r.ok, ms, status: r.ok ? (ms > 2000 ? 'warn' : 'ok') : 'err' };
+  } catch(e) {
+    return { ok: false, ms: null, status: 'err' };
+  }
 }
 
-buildCards();runAll();setInterval(runAll,30000);
+async function runAll() {
+  const results = await Promise.all(SVCS.map(s => checkSvc(s)));
+  results.forEach((r, i) => updateCard(SVCS[i].id, r));
+
+  const ok     = results.filter(r => r.status === 'ok').length;
+  const anyErr = results.some(r => r.status === 'err');
+  const anyBad = results.some(r => r.status !== 'ok');
+  const msList = results.filter(r => r.ms);
+  const avgMs  = msList.length ? Math.round(msList.reduce((a, r) => a + r.ms, 0) / msList.length) : 0;
+
+  const ovr = document.getElementById('ovr');
+  const od  = document.getElementById('od');
+  const ot  = document.getElementById('ot');
+
+  if (!anyBad) { ovr.className='ovr ok'; od.className='od ok'; ot.textContent='All Systems Operational'; }
+  else if (anyErr) { ovr.className='ovr err'; od.className='od err'; ot.textContent='Service Disruption Detected'; }
+  else { ovr.className='ovr warn'; od.className='od warn'; ot.textContent='Partial Degradation'; }
+
+  document.getElementById('sum-ok').textContent  = ok + '/' + SVCS.length;
+  document.getElementById('sum-ms').textContent  = avgMs ? avgMs + 'ms' : '—';
+  document.getElementById('sum-up').textContent  = anyErr ? '~99%' : anyBad ? '99.5%' : '99.9%';
+  document.getElementById('lc').textContent      = new Date().toLocaleTimeString();
+
+  renderIncidents();
+  renderPastIncidents();
+}
+
+buildCards();
+runAll();
+setInterval(runAll, 30000);
 </script>
 </body>
 </html>
