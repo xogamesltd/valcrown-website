@@ -357,6 +357,9 @@ async function go(planId) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        ref_code: window.getAffiliateRef ? (window.getAffiliateRef() || '') : (localStorage.getItem('vc_ref') || ''),
+        promo_code: window._appliedPromo || '',
+        user_id: '',
         planId,
         currency: typeof currentCurrency !== 'undefined' ? currentCurrency : 'USD',
         successUrl: window.location.origin + '/success.html?session_id={CHECKOUT_SESSION_ID}',
