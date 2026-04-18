@@ -112,7 +112,7 @@
 </head>
 <body>
 <script src="js/shared.js"></script>
-<script>
+<script data-cfasync="false">
 const API='https://api.valcrown.com';
 const _t=localStorage.getItem('vc_token');
 if(!_t||_t.length<10){location.replace('auth.html');}
@@ -121,7 +121,7 @@ function getL(){try{return JSON.parse(localStorage.getItem('vc_license')||'null'
 function _so(){['vc_token','vc_refresh','vc_email','vc_user','vc_license'].forEach(k=>localStorage.removeItem(k));location.replace('auth.html');}
 function signOut(){_so();}
 </script>
-<script>renderNav('')</script>
+<script data-cfasync="false">renderNav('')</script>
 
 <div class="dw" id="dw">
   <div class="spin-wrap"><div class="spin"></div>Loading your dashboard...</div>
@@ -138,8 +138,8 @@ function signOut(){_so();}
   </div>
 </div>
 
-<script>renderStatusBar();renderFooter();</script>
-<script>
+<script data-cfasync="false">renderStatusBar();renderFooter();</script>
+<script data-cfasync="false">
 const token=localStorage.getItem('vc_token');
 const email=localStorage.getItem('vc_email')||'';
 let userData=getU();
