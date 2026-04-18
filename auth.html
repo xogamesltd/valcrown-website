@@ -160,7 +160,7 @@ footer a{color:var(--ac3)}
 </footer>
 
 <script data-cfasync="false">
-const API='https://api.valcrown.com';
+const VC_API='https://api.valcrown.com';
 let resetToken='';
 
 // Already logged in? Go straight to dashboard
@@ -197,7 +197,7 @@ function save(d,email){
 async function api(url,body,token){
   const h={'Content-Type':'application/json'};
   if(token)h['Authorization']='Bearer '+token;
-  const r=await fetch(API+url,{method:'POST',headers:h,body:JSON.stringify(body)});
+  const r=await fetch(VC_API+url,{method:'POST',headers:h,body:JSON.stringify(body)});
   let d={};try{d=await r.json();}catch(e){}
   return{ok:r.ok,s:r.status,d};
 }
@@ -291,7 +291,7 @@ async function doRedeem(){
   if(!token||token.length<20){smsg('msg-redeem','warn','You need to be signed in to redeem a key. Sign in first.');setTimeout(()=>{show('login');$('l-em').value=em;},1500);return;}
   sbtn('btn-redeem','\u23F3 Activating\u2026',1);
   try{
-    const r=await fetch(API+'/api/auth/redeem-key',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({licenseKey:key,email:em})});
+    const r=await fetch(VC_API+'/api/auth/redeem-key',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({licenseKey:key,email:em})});
     let d={};try{d=await r.json();}catch(e){}
     if(r.ok&&d.success){
       if(d.license)localStorage.setItem('vc_license',JSON.stringify(d.license));
