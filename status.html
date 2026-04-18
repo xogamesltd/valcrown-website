@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>ValCrown System Status — Live Service Health</title>
 <meta property="og:title" content="ValCrown System Status — Live Service Health">
-<meta property="og:description" content="Real-time status of ValCrown services. Check API, database, AI advisor and website uptime.">
+<meta property="og:description" content="Real-time status of ValCrown services. Check API, database, Optimizer and website uptime.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://valcrown.com/status.html">
 <meta property="og:site_name" content="ValCrown">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ValCrown System Status — Live Service Health">
-<meta name="twitter:description" content="Real-time status of ValCrown services. Check API, database, AI advisor and website uptime.">
+<meta name="twitter:description" content="Real-time status of ValCrown services. Check API, database, Optimizer and website uptime.">
 <link rel="canonical" href="https://valcrown.com/status.html">
-<meta name="description" content="Real-time status of ValCrown services. Check API, database, AI advisor and website uptime.">
+<meta name="description" content="Real-time status of ValCrown services. Check API, database, Optimizer and website uptime.">
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <link rel="stylesheet" href="css/shared.css">
 <style>
@@ -112,7 +112,7 @@ const SVCS=[
   {id:'backend', name:'Backend API',    url:API+'/health',          icon:'⚡', desc:'api.valcrown.com — Core server, auth, licensing'},
   {id:'database',name:'Database',       url:API+'/health',          icon:'🗄️', desc:'PostgreSQL — User data, licenses, sessions'},
   {id:'website', name:'Website',        url:'https://valcrown.com', icon:'🌐', desc:'valcrown.com — Marketing, downloads, pricing'},
-  {id:'ai',      name:'Performance Optimizer',     url:API+'/health',          icon:'🤖', desc:'Real-time Optimizer — real-time optimization advice'},
+  {id:'ai',      name:'Performance Optimizer',     url:API+'/health',          icon:'⚡', desc:'Real-time Optimizer — real-time system optimization'},
 ];
 
 // External services shown separately (not checkable via CORS)
