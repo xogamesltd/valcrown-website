@@ -155,6 +155,33 @@ canvas{width:100%;height:100%}
 /* COPY TOAST */
 #copy-toast{position:fixed;bottom:24px;right:24px;background:var(--green);color:#07070f;padding:10px 18px;border-radius:var(--r);font-size:13px;font-weight:700;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:9999}
 #copy-toast.show{opacity:1}
+
+@media(max-width:768px){
+  .wrap{padding:16px 12px}
+  .nav{padding:0 16px}
+  .nav-badge{display:none}
+  .tabs{width:100%;overflow-x:auto;flex-wrap:nowrap}
+  .tab{padding:7px 12px;font-size:12px;white-space:nowrap}
+  .g2,.g3,.g4{grid-template-columns:1fr 1fr}
+  .stat{padding:12px}
+  .stat-val{font-size:22px}
+  .ref-box{flex-wrap:wrap;gap:8px}
+  .ref-url{min-width:0;width:100%}
+  .banner-grid{grid-template-columns:1fr}
+  .promo-grid{grid-template-columns:1fr 1fr}
+  .leaderboard-row{gap:8px}
+  .lb-earned{font-size:13px}
+}
+@media(max-width:480px){
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .tabs{gap:2px}
+  .tab{padding:6px 10px;font-size:11px}
+  .promo-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .stripe-banner{flex-direction:column;text-align:center}
+  .g3{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>

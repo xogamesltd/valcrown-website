@@ -226,6 +226,13 @@ textarea.finp{resize:vertical;min-height:120px}
 }
 
 /* ── REDUCED MOTION ─────────────────────────────────────────────────── */
+
+@media(max-width:600px){
+  #leaderboard-widget{padding:0 8px}
+  .lb-name{font-size:13px}
+  #affiliates-section h2{font-size:26px}
+}
+
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.01ms!important;transition-duration:.01ms!important}
   html{scroll-behavior:auto}
