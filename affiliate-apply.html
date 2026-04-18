@@ -138,18 +138,22 @@ async function apply() {
   btn.disabled = false; btn.textContent = 'Apply for Affiliate Program';
 
   if (!res) {
-    document.getElementById('apply-msg').innerHTML = '<div class="msg msg-error">Network error — try again</div>';
+    document.getElementById('apply-msg').innerHTML = '<div class="msg msg-error">Cannot connect to server. Check your connection and try again.</div>';
     return;
   }
   const d = await res.json();
   if (d.ok) {
-    document.getElementById('apply-msg').innerHTML = '<div class="msg msg-success">✅ Application received! We\'ll email you within 24 hours.</div>';
+    document.getElementById('apply-msg').innerHTML = '<div class="msg msg-success" style="font-size:15px;padding:16px">✅ Application received! We\'ll review and email you within 24 hours.</div>';
+    document.getElementById('apply-btn').style.display = 'none';
     document.getElementById('a-name').value = '';
     document.getElementById('a-email').value = '';
     document.getElementById('a-website').value = '';
     document.getElementById('a-reason').value = '';
   } else {
-    document.getElementById('apply-msg').innerHTML = `<div class="msg msg-error">${d.error || 'Submission failed'}</div>`;
+    const errMsg = d.error === 'Email already registered' 
+        ? 'This email is already registered. Check your inbox or contact support@valcrown.com'
+        : (d.error || 'Submission failed — try again');
+    document.getElementById('apply-msg').innerHTML = '<div class="msg msg-error">' + errMsg + '</div>';
   }
 }
 </script>
