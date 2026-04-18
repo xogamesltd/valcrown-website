@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ValCrown Affiliate Dashboard</title>
+<link rel="icon" href="/favicon.ico">
+<style>
+:root {
+  --bg: #07070f;
+  --bg2: #0e0e1c;
+  --bg3: #141428;
+  --accent: #7c6aff;
+  --accent2: #9d8fff;
+  --green: #00e87a;
+  --red: #ff4f4f;
+  --amber: #ffb74d;
+  --blue: #4fc3f7;
+  --border: #1c1c38;
+  --border2: #252545;
+  --text: #f0f0ff;
+  --text2: #9090c0;
+  --text3: #5a5a80;
+  --mono: 'JetBrains Mono', monospace;
+  --r: 10px;
+  --r-sm: 6px;
+  --r-lg: 14px;
+}
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;line-height:1.5}
+
+/* NAV */
+.nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px}
+.nav-logo-box{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),#5549cc);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px}
+.nav-badge{background:rgba(124,106,255,0.2);color:var(--accent);border:1px solid rgba(124,106,255,0.4);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;letter-spacing:0.5px}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-user{font-size:13px;color:var(--text2)}
+.btn-logout{background:transparent;border:1px solid var(--border2);color:var(--text2);padding:7px 14px;border-radius:var(--r-sm);font-size:12px;cursor:pointer;font-family:inherit;transition:all 0.15s}
+.btn-logout:hover{border-color:var(--red);color:var(--red)}
+
+/* LAYOUT */
+.wrap{max-width:1100px;margin:0 auto;padding:28px 24px}
+.page{display:none}.page.active{display:block}
+
+/* TABS */
+.tabs{display:flex;gap:4px;margin-bottom:24px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:5px;width:fit-content}
+.tab{padding:8px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;color:var(--text2);transition:all 0.15s;border:none;background:transparent;font-family:inherit}
+.tab.active{background:var(--accent);color:#fff}
+.tab:hover:not(.active){color:var(--text);background:var(--bg3)}
+
+/* CARDS */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;margin-bottom:16px}
+.card-head{font-size:13px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+
+/* STAT CARDS */
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px;text-align:center}
+.stat-val{font-size:28px;font-weight:800;letter-spacing:-1px;margin-bottom:4px}
+.stat-lbl{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px}
+.stat-sub{font-size:11px;color:var(--text3);margin-top:4px}
+.stat.green .stat-val{color:var(--green)}
+.stat.accent .stat-val{color:var(--accent)}
+.stat.amber .stat-val{color:var(--amber)}
+.stat.blue .stat-val{color:var(--blue)}
+
+/* REF LINK BOX */
+.ref-box{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.ref-url{font-family:var(--mono);font-size:13px;color:var(--accent2);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn{padding:9px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all 0.15s}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent2)}
+.btn-green{background:var(--green);color:#07070f}.btn-green:hover{opacity:0.9}
+.btn-ghost{background:transparent;border:1px solid var(--border2);color:var(--text2)}.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn-red{background:rgba(255,79,79,0.15);border:1px solid rgba(255,79,79,0.3);color:var(--red)}.btn-red:hover{background:rgba(255,79,79,0.25)}
+.btn-sm{padding:6px 12px;font-size:12px}
+.btn-xs{padding:4px 9px;font-size:11px}
+.btn:disabled{opacity:0.4;cursor:not-allowed}
+
+/* PROMO CODES */
+.promo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:12px}
+.promo-card{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:14px;position:relative;overflow:hidden}
+.promo-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--green))}
+.promo-code{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px;letter-spacing:2px}
+.promo-disc{font-size:12px;color:var(--green);font-weight:600;margin-bottom:4px}
+.promo-meta{font-size:11px;color:var(--text3)}
+.promo-uses{position:absolute;top:12px;right:12px;background:rgba(124,106,255,0.2);color:var(--accent);border-radius:20px;padding:2px 8px;font-size:10px;font-weight:700}
+
+/* BANNERS */
+.banner-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.banner-preview{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);overflow:hidden}
+.banner-img{width:100%;height:80px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.banner-label{font-size:10px;color:var(--text3);padding:8px 12px;display:flex;justify-content:space-between;align-items:center}
+
+/* LEADERBOARD */
+.leaderboard-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.leaderboard-row:last-child{border:none}
+.lb-rank{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0}
+.lb-rank.gold{background:linear-gradient(135deg,#ffd700,#ffb700);color:#000}
+.lb-rank.silver{background:linear-gradient(135deg,#c0c0c0,#a0a0a0);color:#000}
+.lb-rank.bronze{background:linear-gradient(135deg,#cd7f32,#a0522d);color:#fff}
+.lb-rank.other{background:var(--bg3);color:var(--text2)}
+.lb-name{font-weight:600;font-size:14px;flex:1}
+.lb-code{font-family:var(--mono);font-size:11px;color:var(--text3)}
+.lb-earned{font-weight:700;color:var(--green);font-size:14px}
+.lb-you{background:rgba(124,106,255,0.1);border-radius:4px;padding:2px 6px;font-size:10px;color:var(--accent);font-weight:700}
+
+/* TABLE */
+.table{width:100%;border-collapse:collapse;font-size:13px}
+.table th{text-align:left;color:var(--text3);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;padding:8px 0;border-bottom:1px solid var(--border)}
+.table td{padding:10px 0;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:middle}
+.table tr:last-child td{border:none}
+.table .mono{font-family:var(--mono);font-size:12px}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700}
+.badge-green{background:rgba(0,232,122,0.15);color:var(--green)}
+.badge-amber{background:rgba(255,183,77,0.15);color:var(--amber)}
+.badge-red{background:rgba(255,79,79,0.15);color:var(--red)}
+.badge-accent{background:rgba(124,106,255,0.15);color:var(--accent)}
+
+/* CHART */
+.chart-wrap{height:100px;position:relative;margin-top:8px}
+canvas{width:100%;height:100%}
+
+/* FORM */
+.form-group{margin-bottom:14px}
+.form-label{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;display:block}
+.form-input{width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:9px 12px;border-radius:var(--r-sm);font-size:13px;font-family:inherit;outline:none;transition:border 0.15s}
+.form-input:focus{border-color:var(--accent)}
+.form-hint{font-size:11px;color:var(--text3);margin-top:4px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* STRIPE CONNECT */
+.stripe-banner{background:linear-gradient(135deg,rgba(99,91,255,0.2),rgba(0,232,122,0.1));border:1px solid rgba(124,106,255,0.3);border-radius:var(--r-lg);padding:20px;display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.stripe-icon{font-size:36px;flex-shrink:0}
+.stripe-info h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.stripe-info p{font-size:13px;color:var(--text2)}
+
+/* LOGIN PAGE */
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
+.login-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:36px;width:100%;max-width:400px}
+.login-logo{text-align:center;margin-bottom:28px}
+.login-logo h1{font-size:22px;font-weight:800}
+.login-logo p{font-size:13px;color:var(--text2);margin-top:4px}
+.msg{padding:10px 14px;border-radius:var(--r-sm);font-size:13px;margin-bottom:12px}
+.msg-error{background:rgba(255,79,79,0.1);border:1px solid rgba(255,79,79,0.3);color:var(--red)}
+.msg-success{background:rgba(0,232,122,0.1);border:1px solid rgba(0,232,122,0.3);color:var(--green)}
+.empty{color:var(--text3);font-size:13px;padding:20px 0;text-align:center}
+.divider{height:1px;background:var(--border);margin:16px 0}
+
+/* COPY TOAST */
+#copy-toast{position:fixed;bottom:24px;right:24px;background:var(--green);color:#07070f;padding:10px 18px;border-radius:var(--r);font-size:13px;font-weight:700;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:9999}
+#copy-toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<div id="copy-toast">✓ Copied!</div>
+
+<!-- LOGIN PAGE -->
+<div id="pg-login" class="login-wrap">
+  <div class="login-box">
+    <div class="login-logo">
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px">
+        <div class="nav-logo-box">V</div>
+        <span style="font-weight:800;font-size:18px">ValCrown</span>
+      </div>
+      <p>Affiliate Dashboard — Sign in to manage your referrals</p>
+    </div>
+    <div id="login-msg"></div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input class="form-input" id="l-email" type="email" placeholder="your@email.com" onkeypress="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input class="form-input" id="l-pass" type="password" placeholder="Your ValCrown password" onkeypress="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn btn-primary" style="width:100%;margin-top:4px" onclick="doLogin()">Sign In</button>
+    <div class="divider"></div>
+    <div style="text-align:center;font-size:12px;color:var(--text3)">
+      Not an affiliate yet? <a href="/affiliate-apply.html" style="color:var(--accent);text-decoration:none">Apply here →</a>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="pg-app" style="display:none">
+  <nav class="nav">
+    <div class="nav-logo">
+      <div class="nav-logo-box">V</div>
+      ValCrown
+      <span class="nav-badge">AFFILIATE</span>
+    </div>
+    <div class="nav-right">
+      <span class="nav-user" id="nav-name">—</span>
+      <button class="btn-logout" onclick="doLogout()">Sign Out</button>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('overview')">📊 Overview</button>
+      <button class="tab" onclick="switchTab('promo')">🏷️ Promo Codes</button>
+      <button class="tab" onclick="switchTab('banners')">🖼️ Banners</button>
+      <button class="tab" onclick="switchTab('payouts')">💸 Payouts</button>
+      <button class="tab" onclick="switchTab('leaderboard')">🏆 Leaderboard</button>
+    </div>
+
+    <!-- OVERVIEW TAB -->
+    <div id="tab-overview" class="page active">
+      <!-- Ref link -->
+      <div class="ref-box">
+        <div style="font-size:11px;color:var(--text3);white-space:nowrap;font-weight:600">YOUR LINK</div>
+        <div class="ref-url" id="ref-url">loading...</div>
+        <button class="btn btn-primary btn-sm" onclick="copyRef()">Copy Link</button>
+        <button class="btn btn-ghost btn-sm" onclick="shareRef()">Share</button>
+      </div>
+
+      <!-- Stats -->
+      <div class="g4" style="margin-bottom:16px">
+        <div class="stat green">
+          <div class="stat-val" id="s-earned">$0</div>
+          <div class="stat-lbl">Total Earned</div>
+          <div class="stat-sub" id="s-paid">$0 paid out</div>
+        </div>
+        <div class="stat accent">
+          <div class="stat-val" id="s-pending">$0</div>
+          <div class="stat-lbl">Pending Payout</div>
+          <div class="stat-sub" id="s-min">Min $20 to request</div>
+        </div>
+        <div class="stat blue">
+          <div class="stat-val" id="s-clicks">0</div>
+          <div class="stat-lbl">Total Clicks</div>
+          <div class="stat-sub" id="s-cvr">0% conversion</div>
+        </div>
+        <div class="stat amber">
+          <div class="stat-val" id="s-sales">0</div>
+          <div class="stat-lbl">Sales</div>
+          <div class="stat-sub" id="s-comm">20% + $3 renewals</div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <!-- 30-day chart -->
+        <div class="card">
+          <div class="card-head">30-Day Clicks & Conversions</div>
+          <div class="chart-wrap"><canvas id="clicks-chart"></canvas></div>
+        </div>
+        <!-- Commission info -->
+        <div class="card">
+          <div class="card-head">Your Commission Structure</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--bg3);border-radius:var(--r-sm)">
+              <span style="font-size:13px;color:var(--text2)">First Sale Commission</span>
+              <span class="badge badge-green" id="comm-pct">20%</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--bg3);border-radius:var(--r-sm)">
+              <span style="font-size:13px;color:var(--text2)">Renewal Commission</span>
+              <span class="badge badge-accent" id="comm-fixed">$3 fixed</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--bg3);border-radius:var(--r-sm)">
+              <span style="font-size:13px;color:var(--text2)">Min Payout</span>
+              <span class="badge badge-amber" id="comm-min">$20</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--bg3);border-radius:var(--r-sm)">
+              <span style="font-size:13px;color:var(--text2)">Payout Method</span>
+              <span class="badge badge-accent">Stripe Connect</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent conversions -->
+      <div class="card">
+        <div class="card-head">Recent Conversions</div>
+        <table class="table">
+          <thead><tr>
+            <th>Date</th><th>Plan</th><th>Type</th><th>Sale</th><th>Commission</th><th>Status</th>
+          </tr></thead>
+          <tbody id="conv-table"><tr><td colspan="6" class="empty">No conversions yet</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PROMO CODES TAB -->
+    <div id="tab-promo" class="page">
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-head">Your Promo Codes</div>
+        <div class="promo-grid" id="promo-grid">
+          <div class="empty">No promo codes yet — create one below</div>
+        </div>
+        <div class="divider"></div>
+        <div class="card-head">Create New Code (max 5)</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Promo Code</label>
+            <input class="form-input" id="new-code" placeholder="e.g. SAVE20" maxlength="20" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
+            <div class="form-hint">Letters and numbers only, 4-20 chars</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Discount %</label>
+            <input class="form-input" id="new-disc" type="number" min="5" max="30" value="10" placeholder="10">
+            <div class="form-hint">5-30% off for the customer</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Max Uses (0 = unlimited)</label>
+            <input class="form-input" id="new-max" type="number" min="0" value="0">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Expires (optional)</label>
+            <input class="form-input" id="new-exp" type="date">
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="createPromo()">Create Code</button>
+        <div id="promo-msg" style="margin-top:10px"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">How Promo Codes Work</div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.8">
+          When a customer uses your promo code at checkout, they get the discount <em>and</em> you get credited for the sale — even if they didn't click your referral link. Promo codes are a great way to share discounts on YouTube, Discord, or social media.
+        </div>
+      </div>
+    </div>
+
+    <!-- BANNERS TAB -->
+    <div id="tab-banners" class="page">
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-head">Marketing Banners — Your link is embedded automatically</div>
+        <div class="banner-grid" id="banner-grid"></div>
+      </div>
+      <div class="card">
+        <div class="card-head">Embed Code</div>
+        <div style="font-size:13px;color:var(--text2);margin-bottom:10px">Copy the HTML embed code for any banner and paste it on your website, YouTube description, or blog.</div>
+        <select class="form-input" id="banner-select" onchange="updateEmbed()" style="margin-bottom:10px">
+          <option value="728x90">728×90 — Leaderboard</option>
+          <option value="300x250">300×250 — Medium Rectangle</option>
+          <option value="160x600">160×600 — Wide Skyscraper</option>
+          <option value="320x50">320×50 — Mobile Banner</option>
+        </select>
+        <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:12px;font-family:var(--mono);font-size:11px;color:var(--accent2);white-space:pre-wrap;word-break:break-all" id="embed-code"></div>
+        <button class="btn btn-ghost btn-sm" style="margin-top:8px" onclick="copyEmbed()">Copy Embed Code</button>
+      </div>
+    </div>
+
+    <!-- PAYOUTS TAB -->
+    <div id="tab-payouts" class="page">
+      <!-- Stripe Connect banner -->
+      <div class="stripe-banner" id="stripe-banner">
+        <div class="stripe-icon">💳</div>
+        <div class="stripe-info" style="flex:1">
+          <h3>Connect Stripe to Receive Payouts</h3>
+          <p>Set up Stripe Express to receive automatic payouts directly to your bank account.</p>
+        </div>
+        <button class="btn btn-primary" id="stripe-btn" onclick="connectStripe()">Connect Stripe →</button>
+      </div>
+
+      <!-- Payout stats -->
+      <div class="g3" style="margin-bottom:16px">
+        <div class="stat green">
+          <div class="stat-val" id="p-pending">$0</div>
+          <div class="stat-lbl">Pending Balance</div>
+        </div>
+        <div class="stat accent">
+          <div class="stat-val" id="p-paid">$0</div>
+          <div class="stat-lbl">Total Paid Out</div>
+        </div>
+        <div class="stat blue">
+          <div class="stat-val" id="p-earned">$0</div>
+          <div class="stat-lbl">Total Earned</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <div class="card-head" style="margin:0">Request Payout</div>
+          <button class="btn btn-green" id="payout-btn" onclick="requestPayout()">Request Payout</button>
+        </div>
+        <div style="font-size:13px;color:var(--text2)" id="payout-info">
+          Minimum payout is $20. Payouts are processed within 1-3 business days via Stripe Connect.
+        </div>
+        <div id="payout-msg" style="margin-top:10px"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">Payout History</div>
+        <table class="table">
+          <thead><tr><th>Date</th><th>Amount</th><th>Status</th><th>Transfer ID</th></tr></thead>
+          <tbody id="payout-table"><tr><td colspan="4" class="empty">No payouts yet</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- LEADERBOARD TAB -->
+    <div id="tab-leaderboard" class="page">
+      <div class="card">
+        <div class="card-head">🏆 Top Affiliates This Month</div>
+        <div id="leaderboard-list"></div>
+      </div>
+      <div class="card" style="margin-top:0">
+        <div class="card-head">Your Rank</div>
+        <div id="my-rank" style="font-size:15px;color:var(--text2)">—</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = 'https://api.valcrown.com';
+let token = localStorage.getItem('vc_token');
+let affData = null;
+
+// ── AUTH ─────────────────────────────────────────────────────────────────────
+async function doLogin() {
+  const email = document.getElementById('l-email').value.trim();
+  const pass  = document.getElementById('l-pass').value;
+  if (!email || !pass) return showMsg('login-msg', 'Email and password required', 'error');
+
+  const res = await fetch(`${API}/api/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password: pass })
+  }).catch(() => null);
+
+  if (!res || !res.ok) return showMsg('login-msg', 'Login failed — check credentials', 'error');
+  const data = await res.json();
+  if (!data.accessToken) return showMsg('login-msg', data.error || 'Login failed', 'error');
+
+  localStorage.setItem('vc_token', data.accessToken);
+  token = data.accessToken;
+  loadDashboard();
+}
+
+function doLogout() {
+  localStorage.removeItem('vc_token');
+  token = null;
+  document.getElementById('pg-login').style.display = 'flex';
+  document.getElementById('pg-app').style.display = 'none';
+}
+
+// ── LOAD ─────────────────────────────────────────────────────────────────────
+async function loadDashboard() {
+  const res = await fetch(`${API}/api/affiliate/dashboard`, {
+    headers: { Authorization: `Bearer ${token}` }
+  }).catch(() => null);
+
+  if (!res) return;
+
+  if (res.status === 404) {
+    showMsg('login-msg', 'You are not registered as an affiliate. Apply at valcrown.com/affiliate-apply.html', 'error');
+    return;
+  }
+  if (res.status === 401) { doLogout(); return; }
+
+  affData = await res.json();
+  renderDashboard(affData);
+
+  document.getElementById('pg-login').style.display = 'none';
+  document.getElementById('pg-app').style.display = 'block';
+}
+
+function renderDashboard(d) {
+  const a = d.affiliate;
+
+  document.getElementById('nav-name').textContent = a.name;
+  document.getElementById('ref-url').textContent = d.ref_url;
+
+  // Stats
+  document.getElementById('s-earned').textContent = '$' + parseFloat(a.total_earned).toFixed(2);
+  document.getElementById('s-paid').textContent = '$' + parseFloat(a.total_paid).toFixed(2) + ' paid out';
+  document.getElementById('s-pending').textContent = '$' + parseFloat(d.pending_payout).toFixed(2);
+  document.getElementById('s-min').textContent = 'Min $' + d.min_payout + ' to request';
+  document.getElementById('s-clicks').textContent = a.total_clicks;
+  const cvr = a.total_clicks > 0 ? ((a.total_sales / a.total_clicks) * 100).toFixed(1) : 0;
+  document.getElementById('s-cvr').textContent = cvr + '% conversion';
+  document.getElementById('s-sales').textContent = a.total_sales;
+  document.getElementById('s-comm').textContent = a.commission_pct + '% + $' + a.commission_fixed + ' renewals';
+
+  document.getElementById('comm-pct').textContent = a.commission_pct + '%';
+  document.getElementById('comm-fixed').textContent = '$' + a.commission_fixed + ' fixed';
+  document.getElementById('comm-min').textContent = '$' + d.min_payout;
+
+  // Payout tab
+  document.getElementById('p-pending').textContent = '$' + parseFloat(d.pending_payout).toFixed(2);
+  document.getElementById('p-paid').textContent = '$' + parseFloat(a.total_paid).toFixed(2);
+  document.getElementById('p-earned').textContent = '$' + parseFloat(a.total_earned).toFixed(2);
+
+  // Stripe banner
+  if (a.stripe_onboarded) {
+    document.getElementById('stripe-banner').style.display = 'none';
+  }
+
+  renderConversions(d.conversions);
+  renderPromos(d.promo_codes);
+  renderPayouts(d.payouts);
+  renderLeaderboard(d.leaderboard, a.ref_code);
+  renderBanners(d.ref_url);
+  drawChart(d.clicks_30d);
+}
+
+function renderConversions(list) {
+  const tbody = document.getElementById('conv-table');
+  if (!list.length) { tbody.innerHTML = '<tr><td colspan="6" class="empty">No conversions yet</td></tr>'; return; }
+  tbody.innerHTML = list.map(c => `
+    <tr>
+      <td>${new Date(c.created_at).toLocaleDateString()}</td>
+      <td>${c.plan || '—'}</td>
+      <td>${c.is_renewal ? '<span class="badge badge-accent">Renewal</span>' : '<span class="badge badge-green">New</span>'}</td>
+      <td class="mono">$${parseFloat(c.sale_amount).toFixed(2)}</td>
+      <td class="mono" style="color:var(--green)">$${parseFloat(c.commission).toFixed(2)}</td>
+      <td>${c.paid_out ? '<span class="badge badge-green">Paid</span>' : '<span class="badge badge-amber">Pending</span>'}</td>
+    </tr>`).join('');
+}
+
+function renderPromos(list) {
+  const grid = document.getElementById('promo-grid');
+  if (!list.length) { grid.innerHTML = '<div class="empty" style="grid-column:1/-1">No promo codes yet — create one below</div>'; return; }
+  const rankColors = ['badge-green','badge-accent','badge-amber','badge-blue','badge-red'];
+  grid.innerHTML = list.map((p,i) => `
+    <div class="promo-card">
+      <span class="promo-uses">${p.uses} uses</span>
+      <div class="promo-code">${p.code}</div>
+      <div class="promo-disc">🏷️ ${p.discount_pct}% off for customers</div>
+      <div class="promo-meta">${p.max_uses > 0 ? `${p.uses}/${p.max_uses} uses` : 'Unlimited uses'} · ${p.active ? 'Active' : 'Inactive'}</div>
+      <button class="btn btn-ghost btn-xs" style="margin-top:8px;width:100%" onclick="copyText('${p.code}')">Copy Code</button>
+    </div>`).join('');
+}
+
+function renderPayouts(list) {
+  const tbody = document.getElementById('payout-table');
+  if (!list.length) { tbody.innerHTML = '<tr><td colspan="4" class="empty">No payouts yet</td></tr>'; return; }
+  tbody.innerHTML = list.map(p => `
+    <tr>
+      <td>${new Date(p.created_at).toLocaleDateString()}</td>
+      <td class="mono" style="color:var(--green)">$${parseFloat(p.amount).toFixed(2)}</td>
+      <td>${p.status === 'completed' ? '<span class="badge badge-green">Completed</span>' : '<span class="badge badge-amber">Pending</span>'}</td>
+      <td class="mono" style="font-size:10px;color:var(--text3)">${p.stripe_transfer_id || '—'}</td>
+    </tr>`).join('');
+}
+
+function renderLeaderboard(list, myCode) {
+  const el = document.getElementById('leaderboard-list');
+  if (!list.length) { el.innerHTML = '<div class="empty">No data yet</div>'; return; }
+  const rankClass = (r) => r==1?'gold':r==2?'silver':r==3?'bronze':'other';
+  el.innerHTML = list.map(l => `
+    <div class="leaderboard-row">
+      <div class="lb-rank ${rankClass(l.rank)}">${l.rank}</div>
+      <div style="flex:1">
+        <div class="lb-name">${l.name} ${l.ref_code === myCode ? '<span class="lb-you">YOU</span>' : ''}</div>
+        <div class="lb-code">${l.ref_code} · ${l.total_sales} sales · ${l.total_clicks} clicks</div>
+      </div>
+      <div class="lb-earned">$${parseFloat(l.total_earned).toFixed(2)}</div>
+    </div>`).join('');
+
+  const me = list.find(l => l.ref_code === myCode);
+  document.getElementById('my-rank').innerHTML = me
+    ? `You are <strong style="color:var(--accent)">#${me.rank}</strong> with <strong style="color:var(--green)">$${parseFloat(me.total_earned).toFixed(2)}</strong> earned`
+    : 'Make your first sale to appear on the leaderboard!';
+}
+
+function renderBanners(refUrl) {
+  const sizes = [
+    { id:'728x90',  label:'728×90 — Leaderboard', h:90 },
+    { id:'300x250', label:'300×250 — Rectangle',  h:250 },
+    { id:'160x600', label:'160×600 — Skyscraper', h:160 },
+    { id:'320x50',  label:'320×50 — Mobile',       h:50 },
+  ];
+  document.getElementById('banner-grid').innerHTML = sizes.map(s => `
+    <div class="banner-preview">
+      <div class="banner-img" style="height:${Math.min(s.h,120)}px;background:linear-gradient(135deg,#0e0e1c,#1a1a35)">
+        <div style="text-align:center;padding:12px">
+          <div style="font-size:22px;font-weight:900;color:#7c6aff">ValCrown</div>
+          <div style="font-size:10px;color:#9090c0;margin-top:2px">Windows Cloud Gaming Optimizer</div>
+          <div style="margin-top:8px;background:#7c6aff;color:#fff;padding:5px 12px;border-radius:5px;font-size:10px;font-weight:700;display:inline-block">Try Free →</div>
+        </div>
+      </div>
+      <div class="banner-label">
+        <span style="color:var(--text2)">${s.label}</span>
+        <button class="btn btn-ghost btn-xs" onclick="copyEmbed('${s.id}')">Copy Code</button>
+      </div>
+    </div>`).join('');
+
+  updateEmbed();
+}
+
+function updateEmbed() {
+  if (!affData) return;
+  const size = document.getElementById('banner-select')?.value || '728x90';
+  const [w, h] = size.split('x');
+  const refUrl = affData.ref_url;
+  const embed = `<a href="${refUrl}" target="_blank" rel="noopener">
+  <img src="https://valcrown.com/banners/${size}.png" 
+       width="${w}" height="${h}" 
+       alt="ValCrown — Windows Cloud Gaming Optimizer"
+       style="border:none;display:block">
+</a>`;
+  const el = document.getElementById('embed-code');
+  if (el) el.textContent = embed;
+}
+
+function copyEmbed(size) {
+  if (size) document.getElementById('banner-select').value = size;
+  updateEmbed();
+  const code = document.getElementById('embed-code')?.textContent;
+  if (code) copyText(code);
+}
+
+// ── CHART ─────────────────────────────────────────────────────────────────────
+function drawChart(data) {
+  const canvas = document.getElementById('clicks-chart');
+  if (!canvas || !data.length) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.offsetWidth || 500;
+  const h = 100;
+  canvas.width = w; canvas.height = h;
+  const maxClicks = Math.max(...data.map(d => parseInt(d.clicks)), 1);
+  ctx.clearRect(0,0,w,h);
+
+  // Clicks line
+  ctx.strokeStyle = '#4fc3f7'; ctx.lineWidth = 2; ctx.beginPath();
+  data.forEach((d,i) => {
+    const x = (i / (data.length-1||1)) * w;
+    const y = h - (parseInt(d.clicks)/maxClicks) * (h-10) - 5;
+    i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+
+  // Conversions line
+  const maxConv = Math.max(...data.map(d => parseInt(d.conversions)), 1);
+  ctx.strokeStyle = '#00e87a'; ctx.lineWidth = 2; ctx.beginPath();
+  data.forEach((d,i) => {
+    const x = (i / (data.length-1||1)) * w;
+    const y = h - (parseInt(d.conversions)/maxConv) * (h-10) - 5;
+    i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+
+  // Legend
+  ctx.fillStyle = '#4fc3f7'; ctx.fillRect(w-90, 5, 10, 10);
+  ctx.fillStyle = '#9090c0'; ctx.font = '10px DM Sans'; ctx.fillText('Clicks', w-76, 14);
+  ctx.fillStyle = '#00e87a'; ctx.fillRect(w-90, 20, 10, 10);
+  ctx.fillStyle = '#9090c0'; ctx.fillText('Conversions', w-76, 29);
+}
+
+// ── ACTIONS ───────────────────────────────────────────────────────────────────
+function copyRef() { copyText(affData?.ref_url || ''); }
+
+function shareRef() {
+  const url = affData?.ref_url;
+  if (!url) return;
+  if (navigator.share) {
+    navigator.share({ title: 'ValCrown', text: 'Try ValCrown — Windows Cloud Gaming Optimizer', url });
+  } else { copyText(url); }
+}
+
+async function createPromo() {
+  const code    = document.getElementById('new-code').value.trim();
+  const disc    = document.getElementById('new-disc').value;
+  const max     = document.getElementById('new-max').value;
+  const exp     = document.getElementById('new-exp').value;
+  if (!code) return showMsg('promo-msg', 'Code is required', 'error');
+
+  const res = await fetch(`${API}/api/affiliate/promo`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ code, discount_pct: parseInt(disc), max_uses: parseInt(max), valid_until: exp || null })
+  });
+  const d = await res.json();
+  if (d.ok) {
+    showMsg('promo-msg', `Code ${d.code} created!`, 'success');
+    setTimeout(() => loadDashboard(), 1000);
+  } else {
+    showMsg('promo-msg', d.error || 'Failed', 'error');
+  }
+}
+
+async function connectStripe() {
+  const btn = document.getElementById('stripe-btn');
+  btn.disabled = true; btn.textContent = 'Connecting...';
+  const res = await fetch(`${API}/api/affiliate/stripe/connect`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  const d = await res.json();
+  if (d.url) { window.location.href = d.url; }
+  else { btn.disabled = false; btn.textContent = 'Connect Stripe →'; alert(d.error || 'Failed'); }
+}
+
+async function requestPayout() {
+  const btn = document.getElementById('payout-btn');
+  btn.disabled = true; btn.textContent = 'Processing...';
+  const res = await fetch(`${API}/api/affiliate/payout/request`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  const d = await res.json();
+  btn.disabled = false; btn.textContent = 'Request Payout';
+  if (d.ok) {
+    showMsg('payout-msg', `$${parseFloat(d.amount).toFixed(2)} payout initiated!`, 'success');
+    setTimeout(() => loadDashboard(), 1500);
+  } else {
+    showMsg('payout-msg', d.error || 'Failed', 'error');
+  }
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function copyText(text) {
+  navigator.clipboard.writeText(text).catch(() => {
+    const el = document.createElement('textarea');
+    el.value = text; document.body.appendChild(el);
+    el.select(); document.execCommand('copy');
+    document.body.removeChild(el);
+  });
+  const t = document.getElementById('copy-toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function showMsg(id, text, type) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = `<div class="msg msg-${type}">${text}</div>`;
+  setTimeout(() => { el.innerHTML = ''; }, 5000);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+// Handle Stripe Connect return
+const params = new URLSearchParams(location.search);
+if (params.get('stripe') === 'success') {
+  // Mark onboarded
+  fetch(`${API}/api/affiliate/stripe/webhook`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type: 'onboard_complete' })
+  });
+}
+
+if (token) {
+  document.getElementById('pg-login').style.display = 'none';
+  loadDashboard();
+}
+</script>
+</body>
+</html>
