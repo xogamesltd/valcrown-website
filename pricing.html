@@ -374,6 +374,125 @@ async function go(planId) {
   }
 }
 </script>
+
+<style>
+.promo-wrap{max-width:420px;margin:20px auto 0;padding:0 16px}
+.promo-row{display:flex;gap:8px;align-items:center}
+.promo-input{flex:1;background:#0e0e1c;border:1px solid #252545;color:#f0f0ff;padding:10px 14px;border-radius:8px;font-size:13px;font-family:inherit;outline:none;transition:border .15s;text-transform:uppercase;letter-spacing:1px}
+.promo-input:focus{border-color:#7c6aff}
+.promo-input::placeholder{text-transform:none;letter-spacing:0;color:#5a5a80}
+.promo-btn{background:#7c6aff;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.15s}
+.promo-btn:hover{background:#9d8fff}
+.promo-btn:disabled{opacity:.5;cursor:not-allowed}
+.promo-msg{margin-top:8px;font-size:12px;text-align:center;min-height:18px}
+.promo-msg.ok{color:#00e87a}
+.promo-msg.err{color:#ff4f4f}
+.promo-applied{display:flex;align-items:center;justify-content:space-between;background:rgba(0,232,122,0.1);border:1px solid rgba(0,232,122,0.3);border-radius:8px;padding:8px 12px;margin-top:8px}
+.promo-applied-text{font-size:12px;color:#00e87a;font-weight:600}
+.promo-remove{background:transparent;border:none;color:#9090c0;cursor:pointer;font-size:13px;font-family:inherit;padding:0}
+.promo-remove:hover{color:#ff4f4f}
+</style>
+
+<div class="promo-wrap" id="promo-section">
+  <div class="promo-row">
+    <input class="promo-input" id="promo-inp" placeholder="Have a promo code?" maxlength="20" oninput="this.value=this.value.toUpperCase()" onkeypress="if(event.key==='Enter')applyPromo()">
+    <button class="promo-btn" id="promo-btn" onclick="applyPromo()">Apply</button>
+  </div>
+  <div class="promo-msg" id="promo-msg"></div>
+  <div id="promo-applied" style="display:none" class="promo-applied">
+    <span class="promo-applied-text" id="promo-applied-text">Code applied!</span>
+    <button class="promo-remove" onclick="removePromo()">✕ Remove</button>
+  </div>
+</div>
+
+<script>
+window._appliedPromo = localStorage.getItem('vc_promo') || '';
+window._appliedDiscount = 0;
+
+// Restore applied promo on page load
+(function() {
+  const saved = localStorage.getItem('vc_promo');
+  const savedDisc = localStorage.getItem('vc_promo_disc');
+  if (saved && savedDisc) {
+    window._appliedPromo = saved;
+    window._appliedDiscount = parseInt(savedDisc);
+    document.getElementById('promo-inp').value = saved;
+    showApplied(saved, parseInt(savedDisc));
+  }
+})();
+
+async function applyPromo() {
+  const code = document.getElementById('promo-inp').value.trim();
+  if (!code) return;
+  const btn = document.getElementById('promo-btn');
+  const msg = document.getElementById('promo-msg');
+  btn.disabled = true; btn.textContent = 'Checking...';
+  msg.className = 'promo-msg'; msg.textContent = '';
+  try {
+    const res = await fetch('https://api.valcrown.com/api/affiliate/promo/validate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code })
+    });
+    const d = await res.json();
+    if (d.valid) {
+      window._appliedPromo = d.code;
+      window._appliedDiscount = d.discount_pct;
+      localStorage.setItem('vc_promo', d.code);
+      localStorage.setItem('vc_promo_disc', d.discount_pct);
+      showApplied(d.code, d.discount_pct);
+      updatePricesWithDiscount(d.discount_pct);
+      msg.className = 'promo-msg ok';
+      msg.textContent = '';
+    } else {
+      msg.className = 'promo-msg err';
+      msg.textContent = d.error || 'Invalid or expired code';
+      btn.disabled = false; btn.textContent = 'Apply';
+    }
+  } catch(e) {
+    msg.className = 'promo-msg err';
+    msg.textContent = 'Could not verify code — try again';
+    btn.disabled = false; btn.textContent = 'Apply';
+  }
+}
+
+function showApplied(code, disc) {
+  document.getElementById('promo-inp').style.display = 'none';
+  document.getElementById('promo-btn').style.display = 'none';
+  document.getElementById('promo-applied').style.display = 'flex';
+  document.getElementById('promo-applied-text').textContent = '🏷️ ' + code + ' — ' + disc + '% off applied!';
+}
+
+function removePromo() {
+  window._appliedPromo = '';
+  window._appliedDiscount = 0;
+  localStorage.removeItem('vc_promo');
+  localStorage.removeItem('vc_promo_disc');
+  document.getElementById('promo-inp').style.display = '';
+  document.getElementById('promo-inp').value = '';
+  document.getElementById('promo-btn').style.display = '';
+  document.getElementById('promo-btn').disabled = false;
+  document.getElementById('promo-btn').textContent = 'Apply';
+  document.getElementById('promo-applied').style.display = 'none';
+  document.getElementById('promo-msg').textContent = '';
+  updatePricesWithDiscount(0);
+}
+
+function updatePricesWithDiscount(pct) {
+  // Re-render prices with discount badge
+  document.querySelectorAll('[data-plan-price]').forEach(el => {
+    const base = parseFloat(el.dataset.basePrice || el.textContent.replace(/[^0-9.]/g,''));
+    if (!el.dataset.basePrice) el.dataset.basePrice = base;
+    if (pct > 0) {
+      const disc = (base * (1 - pct/100)).toFixed(0);
+      el.innerHTML = '<span style="text-decoration:line-through;opacity:.5;font-size:0.7em">' + el.dataset.origText + '</span> ' + el.dataset.symbol + disc;
+    } else {
+      el.textContent = el.dataset.origText;
+    }
+  });
+}
+</script>
+
 <script src="js/analytics.js"></script>
 <script src="js/affiliate.js"></script>
 </body>
