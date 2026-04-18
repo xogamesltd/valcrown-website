@@ -167,7 +167,11 @@ let resetToken='';
 (function(){
   const t=localStorage.getItem('vc_token');
   const p=new URLSearchParams(location.search);
-  if(t&&t.length>20&&!p.get('reset_token')) location.replace('dashboard.html');
+  if(t&&t.length>20&&!p.get('reset_token')){
+    try{var u=JSON.parse(localStorage.getItem('vc_user')||'{}');
+    location.replace(u.role==='admin'?'https://admin.valcrown.com':'dashboard.html');}
+    catch(e){location.replace('dashboard.html');}
+  }
 })();
 
 const $=id=>document.getElementById(id);
@@ -223,7 +227,17 @@ async function doLogin(){
   sbtn('btn-login','Signing in\u2026',1);
   try{
     const{ok,s,d}=await api('/api/auth/login',{email:em,password:pw,deviceVid:vid()});
-    if(ok&&d.accessToken){save(d,em);smsg('msg-login','ok','\u2713 Signed in! Loading your dashboard\u2026');setTimeout(()=>location.replace('dashboard.html'),700);return;}
+    if(ok&&d.accessToken){
+      save(d,em);
+      var role = d.user && d.user.role;
+      if(role==='admin'){
+        smsg('msg-login','ok','\u2713 Welcome back, Admin! Loading admin panel\u2026');
+        setTimeout(()=>location.replace('https://admin.valcrown.com'),700);
+      } else {
+        smsg('msg-login','ok','\u2713 Signed in! Loading your dashboard\u2026');
+        setTimeout(()=>location.replace('dashboard.html'),700);
+      }
+      return;}
     if(s===403&&d.code==='NO_LICENSE'){save(d,em);smsg('msg-login','warn','\u2713 Signed in! No active license yet \u2014 get one from your dashboard.');setTimeout(()=>location.replace('dashboard.html'),1200);return;}
     if(s===401){smsg('msg-login','err','Incorrect email or password. Please try again.');$('l-pw').value='';$('l-pw').focus();sbtn('btn-login','Sign In',0);return;}
     if(s===403&&d.code==='DEVICE_MISMATCH'){smsg('msg-login','err','This license is bound to another device. Go to your dashboard to reset it.');sbtn('btn-login','Sign In',0);return;}
@@ -246,7 +260,11 @@ async function doReg(){
       smsg('msg-reg','ok','\u2713 Account created! Signing you in\u2026');
       try{
         const r2=await api('/api/auth/login',{email:em,password:pw,deviceVid:vid()});
-        if(r2.d.accessToken){save(r2.d,em);setTimeout(()=>location.replace('dashboard.html'),800);return;}
+        if(r2.d.accessToken){
+        save(r2.d,em);
+        var role2 = r2.d.user && r2.d.user.role;
+        setTimeout(()=>location.replace(role2==='admin'?'https://admin.valcrown.com':'dashboard.html'),800);
+        return;}
         if(r2.s===403&&r2.d.code==='NO_LICENSE'){save(r2.d,em);setTimeout(()=>location.replace('dashboard.html'),800);return;}
       }catch(e2){}
       setTimeout(()=>{show('login');$('l-em').value=em;smsg('msg-login','ok','Account created! Enter your password to continue.');},1200);
