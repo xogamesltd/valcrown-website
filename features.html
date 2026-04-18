@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ValCrown Features — Everything Your PC Needs to Win</title>
+<meta name="description" content="Explore all ValCrown features — auto game detection, boost engine, network optimizer, process manager and more. Built for cloud gamers on Windows.">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="canonical" href="https://valcrown.com/features.html">
+<link rel="stylesheet" href="css/shared.css">
+<style>
+.feat-hero{max-width:760px;margin:0 auto;text-align:center;padding:80px 24px 60px}
+.feat-hero h1{font-size:48px;font-weight:900;letter-spacing:-2px;line-height:1.1;margin-bottom:16px}
+.feat-hero h1 span{background:linear-gradient(135deg,#7c6aff,#a89fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.feat-hero p{font-size:18px;color:var(--t2);max-width:520px;margin:0 auto 32px}
+.feat-section{max-width:1100px;margin:0 auto;padding:0 24px 80px}
+.feat-block{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-bottom:80px}
+.feat-block.reverse{direction:rtl}
+.feat-block.reverse>*{direction:ltr}
+.feat-visual{background:var(--bg1);border:1px solid var(--b1);border-radius:16px;padding:28px;position:relative;overflow:hidden}
+.feat-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(124,106,255,0.1),transparent 70%);pointer-events:none}
+.feat-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(124,106,255,0.15);border:1px solid rgba(124,106,255,0.3);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;color:#7c6aff;margin-bottom:14px;letter-spacing:0.5px}
+.feat-title{font-size:30px;font-weight:900;letter-spacing:-0.8px;margin-bottom:12px;line-height:1.2}
+.feat-desc{font-size:15px;color:var(--t2);line-height:1.75;margin-bottom:20px}
+.feat-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.feat-list li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--t2)}
+.feat-list li::before{content:"✓";color:#00e87a;font-weight:800;flex-shrink:0;margin-top:1px}
+.metric-row{display:flex;gap:24px;margin-top:20px}
+.metric{text-align:center}
+.metric-val{font-size:32px;font-weight:900;color:#7c6aff;letter-spacing:-1px}
+.metric-lbl{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:0.8px;margin-top:2px}
+.vis-stat{background:var(--bg2);border:1px solid var(--b2);border-radius:10px;padding:14px 16px;margin-bottom:10px}
+.vis-stat-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.vis-stat-name{font-size:13px;font-weight:600}
+.vis-stat-val{font-size:13px;font-weight:700;color:#00e87a;font-family:monospace}
+.vis-bar{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.vis-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#7c6aff,#00e87a)}
+.game-chip{display:inline-flex;align-items:center;gap:6px;background:var(--bg2);border:1px solid var(--b2);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:600;margin:3px}
+.ping-display{text-align:center;padding:20px 0}
+.ping-num{font-size:56px;font-weight:900;color:#00e87a;font-family:monospace;letter-spacing:-2px}
+.ping-lbl{font-size:12px;color:var(--t3);text-transform:uppercase;letter-spacing:1px}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:60px}
+.feat-card{background:var(--bg1);border:1px solid var(--b1);border-radius:14px;padding:22px;transition:.2s}
+.feat-card:hover{border-color:rgba(124,106,255,0.4);background:var(--bg2);transform:translateY(-2px)}
+.feat-card-icon{font-size:32px;margin-bottom:12px}
+.feat-card-title{font-size:15px;font-weight:700;margin-bottom:6px}
+.feat-card-desc{font-size:13px;color:var(--t2);line-height:1.6}
+.cta-band{background:linear-gradient(135deg,rgba(124,106,255,0.15),rgba(0,232,122,0.08));border:1px solid rgba(124,106,255,0.25);border-radius:20px;padding:48px;text-align:center;margin:0 24px 80px}
+.cta-band h2{font-size:36px;font-weight:900;letter-spacing:-1px;margin-bottom:12px}
+.cta-band p{font-size:16px;color:var(--t2);margin-bottom:28px}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+@media(max-width:768px){
+  .feat-hero h1{font-size:32px}
+  .feat-block{grid-template-columns:1fr;gap:28px}
+  .feat-block.reverse{direction:ltr}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .metric-row{gap:16px}
+  .cta-band{padding:32px 20px;margin:0 12px 60px}
+  .cta-band h2{font-size:26px}
+}
+@media(max-width:480px){
+  .feat-hero{padding:60px 16px 40px}
+  .feat-hero h1{font-size:26px}
+  .feat-section{padding:0 16px 60px}
+  .feat-grid{grid-template-columns:1fr}
+  .cta-btns{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+<script src="js/shared.js"></script>
+<script>renderNav('features')</script>
+
+<!-- Hero -->
+<div class="feat-hero">
+  <div class="feat-badge">⚡ FULL FEATURE OVERVIEW</div>
+  <h1>Every tool your PC needs<br><span>to dominate cloud gaming</span></h1>
+  <p>ValCrown is a complete Windows optimization suite built specifically for cloud gamers. Here's everything it does.</p>
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <a href="download.html" class="bct" style="display:inline-flex;align-items:center;gap:8px;background:#7c6aff;color:#fff;padding:13px 24px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none">Download Free Trial →</a>
+    <a href="pricing.html" class="bsi" style="display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none">See Pricing</a>
+  </div>
+</div>
+
+<!-- Feature blocks -->
+<div class="feat-section">
+
+  <!-- 1. Auto Game Detection -->
+  <div class="feat-block">
+    <div>
+      <div class="feat-badge">🎮 GAME DETECTION</div>
+      <h2 class="feat-title">Auto-detects 80+ games instantly</h2>
+      <p class="feat-desc">ValCrown watches your running processes in real-time. The moment you launch a game, it activates — no manual setup, no clicking buttons.</p>
+      <ul class="feat-list">
+        <li>Detects Valorant, CS2, Fortnite, Apex and 80+ more</li>
+        <li>Scans your Steam library for installed games</li>
+        <li>Works with Epic, Battle.net, Xbox and standalone launchers</li>
+        <li>Shows live session timer while game is running</li>
+        <li>Saves session history with duration and date</li>
+      </ul>
+      <div class="metric-row">
+        <div class="metric"><div class="metric-val">80+</div><div class="metric-lbl">Games</div></div>
+        <div class="metric"><div class="metric-val">5s</div><div class="metric-lbl">Detection time</div></div>
+        <div class="metric"><div class="metric-val">0</div><div class="metric-lbl">Setup needed</div></div>
+      </div>
+    </div>
+    <div class="feat-visual">
+      <div style="font-size:11px;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Detected Games</div>
+      <div>
+        <span class="game-chip">🎯 Valorant</span><span class="game-chip">🔫 CS2</span><span class="game-chip">🏗️ Fortnite</span>
+        <span class="game-chip">🦾 Apex Legends</span><span class="game-chip">🚀 Rocket League</span><span class="game-chip">⚔️ League of Legends</span>
+        <span class="game-chip">🌆 Cyberpunk 2077</span><span class="game-chip">🎯 PUBG</span><span class="game-chip">⚡ Overwatch 2</span>
+        <span class="game-chip">🛡️ Dota 2</span><span class="game-chip">🌌 Destiny 2</span><span class="game-chip">⛏️ Minecraft</span>
+        <span class="game-chip">🏆 The Finals</span><span class="game-chip">💥 Helldivers 2</span><span class="game-chip">☁️ GeForce NOW</span>
+      </div>
+      <div style="margin-top:16px;background:rgba(0,232,122,0.1);border:1px solid rgba(0,232,122,0.3);border-radius:8px;padding:10px 14px;font-size:13px;color:#00e87a;font-weight:600">
+        ● ValCrown is boosting — Valorant · 23m 14s
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Boost Engine -->
+  <div class="feat-block reverse">
+    <div>
+      <div class="feat-badge">⚡ BOOST ENGINE</div>
+      <h2 class="feat-title">System-level performance boost</h2>
+      <p class="feat-desc">ValCrown applies proven Windows optimizations the moment your game launches. More CPU headroom. Faster frame delivery. Less stutter.</p>
+      <ul class="feat-list">
+        <li>Sets game process to High Priority in Windows Task Manager</li>
+        <li>Switches power plan to High Performance automatically</li>
+        <li>Disables Xbox Game DVR and background recording</li>
+        <li>Optimizes Windows timer resolution for smoother frames</li>
+        <li>Reverts all changes when you close the game</li>
+      </ul>
+    </div>
+    <div class="feat-visual">
+      <div style="font-size:11px;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px">System Performance</div>
+      <div class="vis-stat">
+        <div class="vis-stat-top"><span class="vis-stat-name">CPU Usage</span><span class="vis-stat-val">34%</span></div>
+        <div class="vis-bar"><div class="vis-bar-fill" style="width:34%"></div></div>
+      </div>
+      <div class="vis-stat">
+        <div class="vis-stat-top"><span class="vis-stat-name">Process Priority</span><span class="vis-stat-val" style="color:#7c6aff">HIGH</span></div>
+        <div class="vis-bar"><div class="vis-bar-fill" style="width:100%"></div></div>
+      </div>
+      <div class="vis-stat">
+        <div class="vis-stat-top"><span class="vis-stat-name">Power Plan</span><span class="vis-stat-val" style="color:#ffb74d">High Performance</span></div>
+        <div class="vis-bar"><div class="vis-bar-fill" style="width:90%;background:linear-gradient(90deg,#ffb74d,#ff8c00)"></div></div>
+      </div>
+      <div class="vis-stat">
+        <div class="vis-stat-top"><span class="vis-stat-name">Game DVR</span><span class="vis-stat-val" style="color:#00e87a">DISABLED</span></div>
+        <div class="vis-bar"><div class="vis-bar-fill" style="width:100%;background:linear-gradient(90deg,#00e87a,#00c060)"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Network Optimizer -->
+  <div class="feat-block">
+    <div>
+      <div class="feat-badge">🌐 NETWORK OPTIMIZER</div>
+      <h2 class="feat-title">Lower ping. Less packet loss.</h2>
+      <p class="feat-desc">Cloud gaming lives and dies by your connection. ValCrown optimizes Windows TCP/IP settings and clears stale DNS cache to get you the best possible connection.</p>
+      <ul class="feat-list">
+        <li>Real-time ping monitor updated every 10 seconds</li>
+        <li>One-click DNS cache flush — removes stale entries instantly</li>
+        <li>TCP auto-tuning optimization for better throughput</li>
+        <li>RSS (Receive Side Scaling) enabled for multi-core network</li>
+        <li>Visual ping quality indicator — Good / Fair / Poor</li>
+      </ul>
+    </div>
+    <div class="feat-visual">
+      <div class="ping-display">
+        <div class="ping-num">14</div>
+        <div class="ping-lbl">ms ping · Excellent</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+        <div style="background:var(--bg2);border-radius:8px;padding:12px;text-align:center;border:1px solid var(--b2)">
+          <div style="font-size:18px;font-weight:800;color:#7c6aff">TCP</div>
+          <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:0.8px;margin-top:2px">Optimized</div>
+        </div>
+        <div style="background:var(--bg2);border-radius:8px;padding:12px;text-align:center;border:1px solid var(--b2)">
+          <div style="font-size:18px;font-weight:800;color:#00e87a">DNS</div>
+          <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:0.8px;margin-top:2px">Flushed</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Process Manager -->
+  <div class="feat-block reverse">
+    <div>
+      <div class="feat-badge">🖥️ PROCESS MANAGER</div>
+      <h2 class="feat-title">Kill background processes eating your RAM</h2>
+      <p class="feat-desc">See every process running on your PC sorted by memory usage. Kill anything that's slowing you down with one click.</p>
+      <ul class="feat-list">
+        <li>Lists all running processes with memory usage in MB</li>
+        <li>Kill any process instantly — no Task Manager needed</li>
+        <li>RAM cleaner to free up unused memory</li>
+        <li>Anti-cheat detector — checks for conflicting software</li>
+        <li>Startup manager — control what launches with Windows</li>
+      </ul>
+    </div>
+    <div class="feat-visual">
+      <div style="font-size:11px;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Running Processes</div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--bg2);border-radius:6px;border:1px solid var(--b2);font-size:12px">
+          <span style="font-weight:600">chrome.exe</span><span style="color:#ff4f4f;font-weight:700;font-family:monospace">412 MB</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--bg2);border-radius:6px;border:1px solid var(--b2);font-size:12px">
+          <span style="font-weight:600">discord.exe</span><span style="color:#ffb74d;font-weight:700;font-family:monospace">184 MB</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--bg2);border-radius:6px;border:1px solid var(--b2);font-size:12px">
+          <span style="font-weight:600">valorant.exe</span><span style="color:#00e87a;font-weight:700;font-family:monospace">2.1 GB</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(124,106,255,0.1);border-radius:6px;border:1px solid rgba(124,106,255,0.3);font-size:12px">
+          <span style="font-weight:600;color:#7c6aff">● ValCrown boosting</span><span style="color:#00e87a;font-weight:700;font-family:monospace">28 MB</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feature grid -->
+  <div style="text-align:center;margin-bottom:32px">
+    <div class="feat-badge" style="margin:0 auto 16px">MORE FEATURES</div>
+    <h2 style="font-size:32px;font-weight:900;letter-spacing:-1px">Everything else included</h2>
+  </div>
+  <div class="feat-grid">
+    <div class="feat-card">
+      <div class="feat-card-icon">📊</div>
+      <div class="feat-card-title">Session History</div>
+      <div class="feat-card-desc">Every gaming session logged with game name, duration, and date. Track your playtime automatically.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-card-icon">🔔</div>
+      <div class="feat-card-title">System Tray</div>
+      <div class="feat-card-desc">ValCrown lives in your system tray. Always running, always ready. Shows current game and boost status.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-card-icon">🔄</div>
+      <div class="feat-card-title">Auto Updates</div>
+      <div class="feat-card-desc">ValCrown updates itself silently in the background. You always have the latest version without lifting a finger.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-card-icon">🎯</div>
+      <div class="feat-card-title">Manual Target</div>
+      <div class="feat-card-desc">Set any .exe as a boost target. Perfect for games not in the auto-detect database or niche launchers.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-card-icon">🛡️</div>
+      <div class="feat-card-title">Anti-Cheat Check</div>
+      <div class="feat-card-desc">Detects conflicting anti-cheat software before you launch. Prevents false bans from software conflicts.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-card-icon">🚀</div>
+      <div class="feat-card-title">Startup Control</div>
+      <div class="feat-card-desc">Choose whether ValCrown starts with Windows. One toggle — clean and simple.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-card-icon">🔐</div>
+      <div class="feat-card-title">Encrypted Storage</div>
+      <div class="feat-card-desc">Your license and settings are stored with AES-256 encryption. Your data never leaves your machine.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-card-icon">💻</div>
+      <div class="feat-card-title">System Info</div>
+      <div class="feat-card-desc">See your CPU model, core count, RAM, and OS version in one place. Know your machine.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-card-icon">☁️</div>
+      <div class="feat-card-title">Cloud Gaming Ready</div>
+      <div class="feat-card-desc">Optimized specifically for GeForce NOW, Xbox Cloud Gaming, Shadow PC, Amazon Luna and more.</div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-band">
+    <h2>Ready to boost your game?</h2>
+    <p>Start with a free 3-day trial. No credit card required. Works on any Windows 10/11 PC.</p>
+    <div class="cta-btns">
+      <a href="download.html" style="background:#7c6aff;color:#fff;padding:14px 28px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;display:inline-flex;align-items:center;gap:8px">⬇️ Download Free Trial</a>
+      <a href="pricing.html" style="background:var(--bg2);border:1px solid var(--b2);color:var(--t1);padding:14px 28px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none;display:inline-flex;align-items:center;gap:8px">View Pricing →</a>
+    </div>
+  </div>
+
+</div>
+
+<script>renderStatusBar();renderFooter()</script>
+<script src="js/analytics.js"></script>
+<script src="js/affiliate.js"></script>
+</body>
+</html>
