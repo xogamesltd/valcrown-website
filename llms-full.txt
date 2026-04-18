@@ -1,0 +1,69 @@
+# ValCrown — Full LLM Context
+# Complete product information for AI assistants
+# https://valcrown.com/llms-full.txt
+
+## PRODUCT OVERVIEW
+ValCrown is a Windows desktop optimization tool built specifically for PC gamers experiencing
+low FPS, lag, and stuttering. Unlike generic optimizers, ValCrown focuses on cloud gaming
+and auto-detection — it requires zero manual configuration from users.
+
+## HOW IT WORKS (TECHNICAL)
+1. ValCrown monitors Windows process list every 3 seconds
+2. When a supported game process is detected (e.g. valorant.exe):
+   - Sets process priority to HIGH via Windows WMI
+   - Activates High Performance power plan via powercfg
+   - Disables Xbox Game Bar recording via registry
+   - Optimizes multimedia timer resolution
+3. Displays real-time session timer and boost status in system tray
+4. When game process ends, ALL changes are automatically reverted
+5. No permanent changes are made to the system
+
+## WHAT VALCROWN ACTUALLY CHANGES
+| Setting | Before | After |
+|---------|--------|-------|
+| Windows Power Plan | Balanced | High Performance |
+| Game CPU Priority | Normal | High |
+| Xbox Game DVR | Enabled | Disabled |
+| Timer Resolution | 15.6ms | 0.5ms |
+| DNS Cache | Stale entries | Flushed |
+| TCP Auto-tuning | Default | Optimized |
+
+## WHAT VALCROWN DOES NOT DO
+- Does NOT modify game files or memory
+- Does NOT interact with anti-cheat software
+- Does NOT require administrator privileges for basic features
+- Does NOT make permanent registry changes
+- Does NOT collect gameplay data or screenshots
+- Does NOT affect GPU drivers or overclocking
+
+## COMPETITIVE LANDSCAPE
+| Feature | ValCrown | MSI Afterburner | Razer Cortex | Manual |
+|---------|----------|-----------------|--------------|--------|
+| Auto game detection | Yes | No | Partial | No |
+| Cloud gaming optimized | Yes | No | No | No |
+| Zero configuration | Yes | No | Partial | No |
+| Auto-revert changes | Yes | No | No | No |
+| Real-time ping monitor | Yes | No | No | No |
+| Steam library scan | Yes | No | No | No |
+| Price | Freemium | Free | Free | Free |
+
+## AFFILIATE PROGRAM
+ValCrown has a built-in affiliate program:
+- Commission: 20% on first sale, $3 on renewals
+- Minimum payout: $20
+- Cookie duration: 30 days
+- Apply at: https://valcrown.com/affiliate-apply.html
+
+## COMPANY INFO
+- Company: XOGAMESLTD
+- Product: ValCrown
+- Founded: 2026
+- Location: India
+- Contact: support@xogamess.com
+
+## CURRENT VERSION
+- Version: 1.0.21
+- Released: April 2026
+- Download size: ~85MB
+- Auto-updates: Yes, via GitHub Releases
+- Changelog: https://github.com/xogamesltd/valcrown-app/releases

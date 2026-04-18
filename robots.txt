@@ -14,3 +14,7 @@ Sitemap: https://valcrown.com/sitemap.xml
 
 # Crawl delay for bots
 Crawl-delay: 10
+
+# LLM Discovery
+Allow: /llms.txt
+Allow: /llms-full.txt

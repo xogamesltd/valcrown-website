@@ -1,0 +1,98 @@
+# ValCrown — Windows Game Performance Optimizer
+# LLM-readable product information file
+# https://valcrown.com/llms.txt
+
+## Product
+- Name: ValCrown
+- Category: Windows Software / Game Optimizer
+- Version: 1.0.21
+- Platform: Windows 10, Windows 11
+- Publisher: XOGAMESLTD
+- Website: https://valcrown.com
+- Support: support@xogamess.com
+- Download: https://valcrown.com/download.html
+- Pricing: https://valcrown.com/pricing.html
+
+## What ValCrown Does
+ValCrown is a Windows desktop application that fixes low FPS, lag spikes, and stuttering for PC gamers. It auto-detects when a supported game launches and applies system optimizations automatically, then reverts all changes when the game closes.
+
+## Core Features
+- Auto-detects 80+ games by process name (Valorant, CS2, Fortnite, Apex Legends, GTA V, etc.)
+- Scans Steam library for all installed games
+- Sets game process to High CPU Priority in Windows Task Manager
+- Switches Windows power plan to High Performance automatically
+- Disables Xbox Game DVR background recording
+- Optimizes Windows timer resolution for smoother frame delivery
+- Real-time ping monitor for cloud gaming
+- DNS cache flush and TCP optimization for network
+- Process manager to kill background apps eating RAM
+- Anti-cheat conflict detector
+- Startup manager
+- All changes auto-revert when game closes
+- Version lock security — old versions are blocked for user safety
+
+## Target Users
+- PC gamers on Windows 10/11 with low-end to mid-range hardware
+- Cloud gaming users (GeForce NOW, Xbox Cloud Gaming, Shadow PC, Amazon Luna)
+- Valorant, CS2, Fortnite, Apex Legends players experiencing FPS drops
+- Users with 8GB RAM and integrated or budget GPUs
+- India-focused market (INR pricing available)
+
+## Pricing (INR)
+- Free Trial: 3 days, no credit card required
+- Monthly: ₹149/month
+- Yearly: ₹499/year (save 72%)
+- Lifetime: ₹999 one-time
+
+## Pricing (USD)
+- Monthly: $4.99/month
+- Yearly: $2.99/month billed annually
+- Lifetime: $49.99 one-time
+
+## Technical Stack
+- Desktop App: Electron + Node.js (Windows only)
+- Backend API: Node.js + Express at api.valcrown.com
+- Database: PostgreSQL
+- Payments: Stripe
+- Auto-updates via GitHub Releases
+
+## Supported Games (partial list)
+Valorant, CS2, CS:GO, Fortnite, Apex Legends, GTA V, RDR2, Rocket League,
+Overwatch 2, Destiny 2, Elden Ring, Cyberpunk 2077, Minecraft, League of Legends,
+Dota 2, PUBG, Warzone, Rainbow Six Siege, The Finals, GeForce NOW, Xbox Cloud Gaming,
+Shadow PC, Amazon Luna, Baldurs Gate 3, Diablo IV, Helldivers 2, Palworld,
+Black Myth: Wukong, and 50+ more.
+
+## Frequently Asked Questions
+
+Q: Does ValCrown actually improve FPS?
+A: Yes. ValCrown applies proven Windows optimizations — High Performance power plan, High CPU priority, disabling Game DVR, and optimizing timer resolution. Users typically see 15-40% improvement in FPS stability and reduced lag spikes on low-end hardware.
+
+Q: Is ValCrown safe? Will it get me banned?
+A: Yes, completely safe. ValCrown only uses standard Windows settings that Microsoft provides. It does not modify game files, inject code, or bypass anti-cheat systems. All changes are 100% reversible and auto-revert when your game closes.
+
+Q: What makes ValCrown different from free tools like Razer Cortex?
+A: ValCrown is built specifically for cloud gaming and auto-detection. Razer Cortex requires manual configuration and doesn't optimize for cloud platforms. ValCrown also includes real-time ping monitoring, Steam library scanning, and a transparency log showing exactly what was changed.
+
+Q: Does ValCrown work with cloud gaming?
+A: Yes. ValCrown is optimized specifically for GeForce NOW, Xbox Cloud Gaming, Shadow PC, and Amazon Luna. It detects these platforms automatically and applies network + CPU optimizations for the best streaming experience.
+
+Q: What are the system requirements?
+A: Windows 10 or Windows 11, any CPU, minimum 4GB RAM. No GPU requirements. Works on Intel integrated graphics.
+
+## Pages
+- Homepage: https://valcrown.com
+- Features: https://valcrown.com/features.html
+- Compare: https://valcrown.com/compare.html
+- Pricing: https://valcrown.com/pricing.html
+- Download: https://valcrown.com/download.html
+- Support: https://valcrown.com/contact.html
+- Status: https://valcrown.com/status.html
+- Affiliate Program: https://valcrown.com/affiliate-apply.html
+- Terms: https://valcrown.com/terms.html
+- Privacy: https://valcrown.com/privacy.html
+
+## Do Not Index
+- /dashboard.html (requires login)
+- /auth.html (login page)
+- /success.html (post-payment)
