@@ -12,6 +12,8 @@ function renderNav(activePage) {
 
   const pages = [
     ['index.html',    'home',    'Home'],
+    ['features.html', 'features','Features'],
+    ['compare.html',  'compare', 'Compare'],
     ['pricing.html',  'pricing', 'Pricing'],
     ['download.html', 'download','Download'],
     ['status.html',   'status',  'Status'],
@@ -206,6 +208,8 @@ function renderFooter() {
         <p class="fct">Product</p>
         <ul class="fcl">
           <li><a href="index.html">Home</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="compare.html">Compare</a></li>
           <li><a href="pricing.html">Pricing</a></li>
           <li><a href="download.html">Download</a></li>
           <li><a href="status.html">Server Status</a></li>
