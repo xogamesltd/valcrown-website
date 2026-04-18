@@ -305,7 +305,7 @@ async function doRedeem(){
     if(r.status===404){smsg('msg-redeem','err','Invalid license key. Please check and try again.');sbtn('btn-redeem','\uD83D\uDD13 Activate License Key',0);return;}
     if(r.status===409){smsg('msg-redeem','err','This key is already activated on another account.');sbtn('btn-redeem','\uD83D\uDD13 Activate License Key',0);return;}
     if(r.status===410){smsg('msg-redeem','err','This license key has expired.');sbtn('btn-redeem','\uD83D\uDD13 Activate License Key',0);return;}
-    smsg('msg-redeem','err',d.error||'Could not activate. Please contact support@valcrown.com');
+    smsg('msg-redeem','err',d.error||'Could not activate. Please contact support@xogamess.com');
   }catch(e){smsg('msg-redeem','err','Cannot reach server. Check your internet and try again.');}
   sbtn('btn-redeem','\uD83D\uDD13 Activate License Key',0);
 }
@@ -320,7 +320,7 @@ async function doForgot(){
     smsg('msg-forgot','ok','\u2713 If an account exists with that email, a reset link was sent. Check inbox and spam folder.');
     sbtn('btn-forgot','Link Sent \u2713',1);
   }catch(e){
-    smsg('msg-forgot','err','Cannot reach server. Email support@valcrown.com for a manual reset.');
+    smsg('msg-forgot','err','Cannot reach server. Email support@xogamess.com for a manual reset.');
     sbtn('btn-forgot','Send Reset Link',0);
   }
 }

@@ -5,7 +5,7 @@ const TRANSLATIONS = {
   en: {
     nav_home: 'Home', nav_pricing: 'Pricing', nav_download: 'Download',
     nav_signin: 'Sign In', nav_getvalcrown: 'Get ValCrown',
-    hero_badge: 'AI-Powered Gaming Optimizer',
+    hero_badge: ' Gaming Optimizer',
     hero_title: 'Your Games. Boosted. Automatically.',
     hero_sub: 'ValCrown detects when you launch a game and instantly optimizes your PC — CPU, RAM, network, everything. No clicks needed.',
     hero_download: 'Download Free Trial', hero_pricing: 'View Pricing',
@@ -14,7 +14,7 @@ const TRANSLATIONS = {
     feat1_title: 'Auto Game Detection', feat1_desc: 'Detects 200+ games automatically. GTA V, Valorant, Fortnite, CS2 and more.',
     feat2_title: 'Boost Engine', feat2_desc: 'CPU priority, power plan, background app control — instant when your game launches.',
     feat3_title: 'Network Optimizer', feat3_desc: 'DNS flush, TCP optimization, real-time ping monitor and AI diagnostics.',
-    feat4_title: 'Claude AI Advisor', feat4_desc: 'Powered by Claude Sonnet 4.6 — analyzes your system and gives specific fixes.',
+    feat4_title: 'Claude ', feat4_desc: 'Powered by Claude Sonnet 4.6 — analyzes your system and gives specific fixes.',
     feat5_title: 'Cloud Gaming Ready', feat5_desc: 'Optimized for GeForce NOW, Xbox Cloud, Boosteroid and all major platforms.',
     feat6_title: 'Discord Presence', feat6_desc: 'Shows friends what you\'re boosting — automatic and free.',
     stat1: 'Games Supported', stat2: 'Avg. Ping Reduction', stat3: 'Powered by Claude', stat4: 'Setup Time',

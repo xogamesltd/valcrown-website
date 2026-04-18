@@ -24,7 +24,7 @@
   <div class="quick-row">
     <a href="status.html" class="qcard"><div class="qcard-ico">🟢</div><div class="qcard-h">Server Status</div><div class="qcard-s">Check if services are up</div></a>
     <a href="refund.html" class="qcard"><div class="qcard-ico">💰</div><div class="qcard-h">Refund Policy</div><div class="qcard-s">7-day money back</div></a>
-    <a href="mailto:support@valcrown.com" class="qcard"><div class="qcard-ico">✉️</div><div class="qcard-h">Direct Email</div><div class="qcard-s">support@valcrown.com</div></a>
+    <a href="mailto:support@xogamess.com" class="qcard"><div class="qcard-ico">✉️</div><div class="qcard-h">Direct Email</div><div class="qcard-s">support@xogamess.com</div></a>
   </div>
   <div class="tbox">
     <h2>Create Support Ticket</h2>
@@ -51,8 +51,8 @@ async function submitTicket(){
   const btn=document.querySelector('.fsubmit');btn.disabled=true;btn.textContent='Submitting...';
   try{
     const res=await fetch('https://api.valcrown.com/api/tickets/create',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,subject,message,category:document.getElementById('t-cat').value})});
-    if(res.ok){ok.classList.add('show');}else{err.textContent='Failed. Email support@valcrown.com directly.';err.classList.add('show');}
-  }catch(e){ok.textContent='Please email support@valcrown.com directly.';ok.classList.add('show');}
+    if(res.ok){ok.classList.add('show');}else{err.textContent='Failed. Email support@xogamess.com directly.';err.classList.add('show');}
+  }catch(e){ok.textContent='Please email support@xogamess.com directly.';ok.classList.add('show');}
   btn.disabled=false;btn.textContent='Submit Ticket';
 }
 </script>
