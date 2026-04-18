@@ -108,6 +108,33 @@
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:768px){.smeta{grid-template-columns:1fr 1fr}.fgrid{grid-template-columns:1fr}.qarow{grid-template-columns:1fr 1fr}}
 @media(max-width:500px){.qarow{grid-template-columns:1fr}.dtabs{gap:2px}.dtab{padding:8px 12px;font-size:13px}}
+
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.stat-card{background:var(--bg1);border:1px solid var(--b2);border-radius:14px;padding:16px;text-align:center;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.stat-card.blue::before{background:linear-gradient(90deg,#7c6aff,#a89fff)}
+.stat-card.green::before{background:linear-gradient(90deg,#00e87a,#00c060)}
+.stat-card.yellow::before{background:linear-gradient(90deg,#ffb74d,#ff8c00)}
+.stat-card.red::before{background:linear-gradient(90deg,#ff4f4f,#cc0000)}
+.stat-val{font-size:28px;font-weight:900;letter-spacing:-1px;line-height:1}
+.stat-lbl{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-top:4px}
+.stat-sub{font-size:11px;color:var(--t2);margin-top:3px}
+.tip-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.tip-card{background:var(--bg1);border:1px solid var(--b2);border-radius:12px;padding:14px;display:flex;align-items:flex-start;gap:10px}
+.tip-ico{font-size:20px;flex-shrink:0;margin-top:1px}
+.tip-title{font-size:13px;font-weight:700;margin-bottom:3px}
+.tip-desc{font-size:12px;color:var(--t2);line-height:1.5}
+.activity-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--b1)}
+.activity-row:last-child{border:none}
+.activity-ico{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.activity-title{font-size:13px;font-weight:600}
+.activity-sub{font-size:11px;color:var(--t3);margin-top:1px}
+.activity-time{font-size:11px;color:var(--t3);margin-left:auto;white-space:nowrap}
+.welcome-band{background:linear-gradient(135deg,rgba(124,106,255,0.15),rgba(0,232,122,0.08));border:1px solid rgba(124,106,255,0.25);border-radius:16px;padding:20px 24px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.welcome-band-left h2{font-size:18px;font-weight:800;letter-spacing:-.3px;margin:0 0 4px}
+.welcome-band-left p{font-size:13px;color:var(--t2);margin:0}
+@media(max-width:600px){.stats-grid{grid-template-columns:1fr 1fr}.tip-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -221,13 +248,105 @@ function buildDash(){
   <!-- OVERVIEW -->
   <div class="dpanel on" id="dp-overview">
     ${licHTML}
-    <div class="qarow">
-      <a href="download.html" class="qa"><div class="qa-ico">⬇️</div><div class="qa-l">Download App</div><div class="qa-s">Windows 10/11</div></a>
-      <a href="pricing.html" class="qa"><div class="qa-ico">⚡</div><div class="qa-l">${hasLic?'Upgrade Plan':'Get a License'}</div><div class="qa-s">See all plans</div></a>
-      <a href="status.html" class="qa"><div class="qa-ico">🟢</div><div class="qa-l">Server Status</div><div class="qa-s">Live health</div></a>
-      <a href="contact.html" class="qa"><div class="qa-ico">💬</div><div class="qa-l">Support</div><div class="qa-s">24h response</div></a>
-      <a href="auth.html?tab=redeem" class="qa"><div class="qa-ico">🔑</div><div class="qa-l">Redeem Key</div><div class="qa-s">Activate license</div></a>
-      <a onclick="tab('profile')" class="qa"><div class="qa-ico">👤</div><div class="qa-l">Edit Profile</div><div class="qa-s">Name &amp; email</div></a>
+
+    <!-- Welcome band -->
+    <div class="welcome-band">
+      <div class="welcome-band-left">
+        <h2>Welcome back, ${userData.fullName||userData.full_name||email.split('@')[0]} 👋</h2>
+        <p>Your ValCrown dashboard — manage your license, device, and account</p>
+      </div>
+      <a href="download.html" class="dbtn p" style="flex-shrink:0">⬇️ Download App</a>
+    </div>
+
+    <!-- Stats grid -->
+    <div class="stats-grid" id="overview-stats-grid">
+      <div class="stat-card blue">
+        <div class="stat-val" id="ov-plan-name">—</div>
+        <div class="stat-lbl">Current Plan</div>
+        <div class="stat-sub" id="ov-plan-status">Loading...</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-val" id="ov-days">—</div>
+        <div class="stat-lbl">Days Left</div>
+        <div class="stat-sub" id="ov-expiry">Checking...</div>
+      </div>
+      <div class="stat-card yellow">
+        <div class="stat-val" id="ov-device">—</div>
+        <div class="stat-lbl">Device</div>
+        <div class="stat-sub" id="ov-device-sub">Checking...</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-val">80+</div>
+        <div class="stat-lbl">Games Supported</div>
+        <div class="stat-sub">Auto-detected</div>
+      </div>
+    </div>
+
+    <!-- Tips grid -->
+    <div class="tip-grid">
+      <div class="tip-card">
+        <div class="tip-ico">⚡</div>
+        <div>
+          <div class="tip-title">Activate Boost</div>
+          <div class="tip-desc">Launch any supported game and ValCrown auto-boosts. Or set a manual target app for any .exe.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-ico">🌐</div>
+        <div>
+          <div class="tip-title">Reduce Ping</div>
+          <div class="tip-desc">Open Network page → click DNS Flush + TCP Optimize before your gaming session for best results.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-ico">🎮</div>
+        <div>
+          <div class="tip-title">Cloud Gaming</div>
+          <div class="tip-desc">ValCrown is optimized for GeForce NOW, Xbox Cloud, Shadow PC and Amazon Luna. Set your client as target.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-ico">🔄</div>
+        <div>
+          <div class="tip-title">Stay Updated</div>
+          <div class="tip-desc">ValCrown auto-updates silently. Check Settings → Updates in the app to verify you're on the latest version.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick actions -->
+    <div class="dc">
+      <div class="dc-h">⚡ Quick Actions</div>
+      <div class="qarow">
+        <a href="download.html" class="qa"><div class="qa-ico">⬇️</div><div class="qa-l">Download App</div><div class="qa-s">Windows 10/11</div></a>
+        <a href="pricing.html" class="qa"><div class="qa-ico">🚀</div><div class="qa-l">${hasLic?'Upgrade Plan':'Get a License'}</div><div class="qa-s">See all plans</div></a>
+        <a href="status.html" class="qa"><div class="qa-ico">🟢</div><div class="qa-l">Server Status</div><div class="qa-s">Live health</div></a>
+        <a href="contact.html" class="qa"><div class="qa-ico">💬</div><div class="qa-l">Support</div><div class="qa-s">24h response</div></a>
+        <a href="auth.html?tab=redeem" class="qa"><div class="qa-ico">🔑</div><div class="qa-l">Redeem Key</div><div class="qa-s">Activate license</div></a>
+        <a onclick="tab('profile')" class="qa"><div class="qa-ico">👤</div><div class="qa-l">Edit Profile</div><div class="qa-s">Name &amp; email</div></a>
+      </div>
+    </div>
+
+    <!-- Recent activity -->
+    <div class="dc">
+      <div class="dc-h">📋 Account Activity</div>
+      <div id="ov-activity">
+        <div class="activity-row">
+          <div class="activity-ico" style="background:rgba(0,232,122,0.15)">✅</div>
+          <div><div class="activity-title">Account created</div><div class="activity-sub">Welcome to ValCrown!</div></div>
+          <div class="activity-time" id="ov-created">—</div>
+        </div>
+        <div class="activity-row">
+          <div class="activity-ico" style="background:rgba(124,106,255,0.15)">🎮</div>
+          <div><div class="activity-title">Trial license activated</div><div class="activity-sub">3-day free trial started</div></div>
+          <div class="activity-time" id="ov-trial-start">—</div>
+        </div>
+        <div class="activity-row">
+          <div class="activity-ico" style="background:rgba(255,183,77,0.15)">💻</div>
+          <div><div class="activity-title">Last app login</div><div class="activity-sub" id="ov-device-info">No device bound yet</div></div>
+          <div class="activity-time" id="ov-last-seen">Never</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -334,6 +453,61 @@ function buildDash(){
   </div>`;
 
   loadDevice();
+  loadOverviewStats();
+}
+
+
+async function loadOverviewStats() {
+  try {
+    const d = await apiFetch('/api/auth/me');
+    if (!d) return;
+
+    // Plan name
+    const plan = d.license?.plan || 'none';
+    const planNames = { trial:'Trial', monthly:'Monthly', yearly:'Yearly', lifetime:'Lifetime', none:'No License' };
+    document.getElementById('ov-plan-name').textContent = planNames[plan] || plan;
+
+    // Days left
+    if (plan === 'lifetime') {
+      document.getElementById('ov-days').textContent = '∞';
+      document.getElementById('ov-expiry').textContent = 'Never expires';
+      document.getElementById('ov-plan-status').textContent = 'Active · Lifetime';
+    } else if (d.license?.expires_at) {
+      const exp = new Date(d.license.expires_at);
+      const days = Math.ceil((exp - Date.now()) / 86400000);
+      document.getElementById('ov-days').textContent = days > 0 ? days : '0';
+      document.getElementById('ov-expiry').textContent = days > 0 ? 'Expires ' + exp.toLocaleDateString() : 'Expired';
+      document.getElementById('ov-plan-status').textContent = days > 0 ? 'Active' : 'Expired';
+      // Color based on days
+      const card = document.getElementById('ov-days').closest('.stat-card');
+      if (card) { card.className = 'stat-card ' + (days > 7 ? 'green' : days > 0 ? 'yellow' : 'red'); }
+    } else {
+      document.getElementById('ov-days').textContent = '—';
+      document.getElementById('ov-expiry').textContent = 'No active license';
+      document.getElementById('ov-plan-status').textContent = 'Inactive';
+    }
+
+    // Device
+    if (d.deviceVid) {
+      document.getElementById('ov-device').textContent = '1';
+      document.getElementById('ov-device-sub').textContent = 'Device bound';
+    } else {
+      document.getElementById('ov-device').textContent = '0';
+      document.getElementById('ov-device-sub').textContent = 'No device yet';
+    }
+
+    // Activity timestamps
+    if (d.createdAt || d.created_at) {
+      document.getElementById('ov-created').textContent = new Date(d.createdAt || d.created_at).toLocaleDateString();
+      document.getElementById('ov-trial-start').textContent = new Date(d.createdAt || d.created_at).toLocaleDateString();
+    }
+    if (d.lastSeen) {
+      document.getElementById('ov-last-seen').textContent = new Date(d.lastSeen).toLocaleString();
+    }
+    if (d.osVersion || d.os_version) {
+      document.getElementById('ov-device-info').textContent = d.osVersion || d.os_version;
+    }
+  } catch(e) {}
 }
 
 async function loadDevice(){
